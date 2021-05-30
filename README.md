@@ -62,28 +62,34 @@ These results attempt to demonstrate the effect backlogging may be having on per
 
 ### Time-lapse of Cases
 
-<img src="https://github.com/chasewnelson/SARS-CoV-2-ORF3d/blob/master/images/cover_image.png?raw=true" title="Overlapping gene products" alt="Overlapping gene products" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210529.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
+
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210529.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
 
 Results are depicted by DAYS LATE (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago.
+
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210529.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
+
+Here results are instead depicted by date added (shade of orange).
 
 
 ### Seven-Day Average of Total Reported
 
-<img src="https://github.com/chasewnelson/SARS-CoV-2-ORF3d/blob/master/images/cover_image.png?raw=true" title="Overlapping gene products" alt="Overlapping gene products" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210529.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
 
 Seven (7)-day averages (red line) using non-backlogged totals REPORTED each day (gray bars). Each day is the mean of itself & the previous 6.
 
 
 ### Backlog Time Distribution
 
-<img src="https://github.com/chasewnelson/SARS-CoV-2-ORF3d/blob/master/images/cover_image.png?raw=true" title="Overlapping gene products" alt="Overlapping gene products" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210529.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
 
 On this day the backlog is ~35k tests. To that point, 21.3% of tests had been assigned to the previous day; 17.5% to the day before that; and so on. This should allows a guess of how the current backlog will be distributed.
 
 
 ### Projected Totals After Revision
 
-<img src="https://github.com/chasewnelson/SARS-CoV-2-ORF3d/blob/master/images/cover_image.png?raw=true" title="Overlapping gene products" alt="Overlapping gene products" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210529.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
 
 For this date, given 1.8% of the ~35k backlog will test positive and be distributed to previous dates in the same manner observed so far, Albert Lin 林書弘 and I made this projection.
 
