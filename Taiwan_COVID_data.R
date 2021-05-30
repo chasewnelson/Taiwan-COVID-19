@@ -13,7 +13,7 @@ library(scales)
 library(RColorBrewer)
 #library(lubridate)
 
-case_data <- read_tsv("/Users/cwnelson88/Desktop/Taiwan_COVID_data/covid19_tw_specimen.tsv")
+case_data <- read_tsv("~/Desktop/Taiwan_COVID_data/covid19_tw_specimen.tsv")
 # New_Local_Cases - the number of new local cases reported that day
 # Total - SEEMINGLY the number of tests reported that day
 
@@ -33,7 +33,7 @@ head(case_data$Date_of_Reporting)
 (case_data$New_Local_Cases_Original <- as.integer(case_data$New_Local_Cases_Original))
 
 ########## ADD TO THIS EVERY DAY ##########
-# format case counts for individual dates
+# format case counts for individual dates, for DAYS BEFORE PRESENT
 (case_data$New_Local_Cases_20210522 <- as.integer(case_data$New_Local_Cases_20210522))
 (case_data$New_Local_Cases_20210523 <- as.integer(case_data$New_Local_Cases_20210523))
 (case_data$New_Local_Cases_20210524 <- as.integer(case_data$New_Local_Cases_20210524))
@@ -41,6 +41,7 @@ head(case_data$Date_of_Reporting)
 (case_data$New_Local_Cases_20210526 <- as.integer(case_data$New_Local_Cases_20210526))
 (case_data$New_Local_Cases_20210527 <- as.integer(case_data$New_Local_Cases_20210527))
 (case_data$New_Local_Cases_20210528 <- as.integer(case_data$New_Local_Cases_20210528))
+(case_data$New_Local_Cases_20210529 <- as.integer(case_data$New_Local_Cases_20210529))
 ########## ADD TO THIS EVERY DAY ##########
 
 # find minimum and maximum dates
@@ -160,6 +161,7 @@ for(i in 1:(max(case_data$day) - WINDOW_SIZE + 1)) { # each window of time start
     
   } # else leave it as NA
 } # end last window
+# WARNINGS are ok, indicating early days without data (NA)
 
 # format sw_center as date
 case_data$sw_start_date <- as.Date((time0 - 1) + case_data$sw_start)
@@ -175,12 +177,14 @@ View(case_data)
 #MIN_DATE_DISPLAYED <- as.Date("2021-04-20")
 LABOR_DAY <- as.Date("2021-04-30")
 LEVEL3_DAY <- as.Date("2021-05-15")
+LEVEL3_DAY_COUNTRY <- as.Date("2021-05-19")
 #INCUBATION_TIME <- round(5.7) # Ferretti et al. 2021 preprint
 #MIN_DATE_DISPLAYED <- timenow - 4 * INCUBATION_TIME
 INCUBATION_TIME <- round(5) # Ferretti et al. 2021 preprint
-MIN_DATE_DISPLAYED <- timenow - 5 * INCUBATION_TIME
+#MIN_DATE_DISPLAYED <- timenow - 5 * INCUBATION_TIME
+MIN_DATE_DISPLAYED <- as.Date("2021-05-01")
 
-## PLOT 1 - num cases vs. prop positive
+## PLOT 1 - num cases vs. prop positive - NOT INFORMATIVE (?)
 #PROP_DISPLAY_FACTOR <- max(case_data$New_Local_Cases, na.rm = TRUE) / max(case_data$sw_prop_tests_positive_CIhigh, na.rm = TRUE) # get it to equal max cases
 #(localCases_propPos_PLOT <- ggplot(data = filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED), mapping = aes(x = Date_of_Reporting, y = New_Local_Cases)) + # color = significant
 #    geom_bar(stat = 'identity') +
@@ -237,7 +241,7 @@ MIN_DATE_DISPLAYED <- timenow - 5 * INCUBATION_TIME
 ##View(filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED))
 #
 ## SAVE
-#png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_propPos_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+#png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_propPos_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 #localCases_propPos_PLOT
 #dev.off()
 
@@ -300,7 +304,7 @@ PROP_DISPLAY_FACTOR <- max(case_data$New_Local_Cases, na.rm = TRUE) / max(case_d
 # ONE will be missing: the RED LINE TOTAL
 
 # SAVE
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_propPos_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/propPos_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_propPos_PLOT
 dev.off()
 
@@ -310,7 +314,7 @@ dev.off()
 # Ideally we would have more testing and broader surveillance.
 
 
-# PLOT 2 - Num cases vs. tests
+# PLOT 2 - Num cases vs. tests - NOT EASY TO INTERP
 TESTS_DISPLAY_FACTOR <- max(case_data$sw_new_local_cases_sum, na.rm = TRUE) / max(case_data$sw_new_tests_sum, na.rm = TRUE) # get it to equal max cases
 (localCases_TestsPerformed_PLOT <- ggplot(data = filter(case_data, sw_end_date >= MIN_DATE_DISPLAYED), mapping = aes(x = sw_end_date, y = sw_new_local_cases_sum / WINDOW_SIZE)) + # color = significant
     geom_bar(stat = 'identity') +
@@ -363,7 +367,7 @@ TESTS_DISPLAY_FACTOR <- max(case_data$sw_new_local_cases_sum, na.rm = TRUE) / ma
 #View(filter(case_data, sw_end_date >= MIN_DATE_DISPLAYED))
 
 # SAVE
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_TestsPerformed_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/testsPerformed_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_TestsPerformed_PLOT
 dev.off()
 
@@ -437,7 +441,7 @@ case_data$New_Local_Cases_Revised_CUMSUM <- NA
 case_data[case_data$Date_of_Reporting >= MIN_DATE_DISPLAYED, ]$New_Local_Cases_Revised_CUMSUM <- 
   cumsum(replace_na(data = case_data[case_data$Date_of_Reporting >= MIN_DATE_DISPLAYED, ]$New_Local_Cases_Revised, replace = 0))
 
-# PLOT 3 - num daily cases vs. cumsum
+# PLOT 3 - num daily cases vs. cumsum - REVISED VALUES NOT RECOMMENDED, ARTIFACTUAL DROP
 (localCases_cumSum_PLOT <- ggplot(data = filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED), mapping = aes(x = Date_of_Reporting, y = New_Local_Cases_Revised)) + # color = significant
     
     # Show cumulative with bars?
@@ -509,8 +513,8 @@ case_data[case_data$Date_of_Reporting >= MIN_DATE_DISPLAYED, ]$New_Local_Cases_R
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 
 # SAVE
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_cumSum_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
-#png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_cumSum_PLOT_wLINE_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+#png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_cumSum_PLOT_wLINE_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_cumSum_PLOT
 dev.off()
 
@@ -522,7 +526,7 @@ filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED)$New_Local_Cases / fil
 
 
 ###############################################################################
-# PLOT 4 - showing revised values
+# PLOT 4 - showing revised values - REVISED VALUE NOT RECOMMENDED, ARTIFACTUAL DROP
 # Taiwan blue: #5B9CD6
 # Taiwan orange: #EE7E32
 (localCases_cumSumRevised_PLOT <- ggplot(data = filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED), mapping = aes(x = Date_of_Reporting, y = New_Local_Cases_Original)) + # color = significant
@@ -600,8 +604,8 @@ filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED)$New_Local_Cases / fil
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 
 # SAVE
-#png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_cumSum_PLOTRevised_wLINE_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+#png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cumSumRevisedLINE_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_cumSumRevised_PLOT
 dev.off()
 
@@ -613,9 +617,14 @@ dev.off()
 (localCases_originalTotalsWindow_PLOT <- ggplot(data = filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED), 
                                                 mapping = aes(x = sw_end_date, y = sw_new_local_cases_mean)) + # color = significant
    
-   # LEVEL 3 ALERT
-   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 500, linetype = "dashed", color = brewer.pal(9, "Set1")[2]) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY, y = 500, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Set1")[2], hjust = 0.5, vjust = -0.25) + #, size = 2.75) +
+   # LEVEL 3 ALERT Taipei
+   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 400, linetype = "dashed", color = brewer.pal(9, "Set1")[2], size = 0.3) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY, y = 400, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Set1")[2], hjust = 0.5, vjust = -0.25, size = 2.5) + #, size = 2.75) +
+   
+   # LEVEL 3 ALERT COUNTRYWIDE
+   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 550, linetype = "dashed", color = brewer.pal(9, "Set1")[2], size = 0.3) + # , size = 0.4) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY_COUNTRY, y = 550, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Set1")[2], hjust = 0.5, vjust = -0.25, size = 2.5) + #, size = 2) + #, size = 2.75) +
+   
    
    # Show daily reported with bars
    geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = brewer.pal(9, 'Greys')[3], stat = "identity", color = "NA", alpha = 0.75) + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8]
@@ -625,7 +634,7 @@ dev.off()
    geom_ribbon(mapping = aes(ymin = sw_new_local_cases_mean - sw_new_local_cases_SE, ymax = sw_new_local_cases_mean + sw_new_local_cases_SE), 
                alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Reds')[8]) + # brewer.pal(9, 'Set1')[1]) +
    
-   ggtitle(label = "Taiwan Reported Local COVID-19 Cases (7-Day Average)", subtitle = todaystring) + #, " / First-Day (Non-Backlogged) Values")) +
+   ggtitle(label = "2021 Taiwan Local COVID-19 Cases Reported (7-Day Average)", subtitle = todaystring) + #, " / First-Day (Non-Backlogged) Values")) +
    
    #geom_abline(slope = 0, intercept = 1, linetype = "dashed", color = "grey") +
    theme_classic() +
@@ -633,8 +642,8 @@ dev.off()
          plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
          legend.position = 'none',
          legend.title = element_blank(),
-         plot.title = element_text(hjust = 0.5), #, size = 12),
-         plot.subtitle = element_text(hjust = 0.5), #, size = 10),
+         plot.title = element_text(hjust = 0.5, size = 11), #, size = 12),
+         plot.subtitle = element_text(hjust = 0.5, size = 9), #, size = 10),
          #axis.text.x = element_text(size = 7),
          #axis.text.x = element_blank(),
          axis.text.y = element_text(size = 9),
@@ -652,7 +661,7 @@ dev.off()
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 
 # SAVE
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_originalTotalsWindow_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_reported_7dayWindow_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_originalTotalsWindow_PLOT
 dev.off()
 
@@ -670,6 +679,8 @@ dev.off()
 # start darker, step by 2:
 # start darkerx4, step by 3: BD550F ED701D F19455 F6B78E FADBC8
 
+
+### MANUALLY ADD BARS EACH DAY
 (localCases_dateRevised_PLOT <- ggplot(data = filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED), mapping = aes(x = Date_of_Reporting, y = New_Local_Cases_Original)) + # color = significant
    
    # Show cumulative with bars?
@@ -694,13 +705,16 @@ dev.off()
  #start darkerx4, step by 2: 97440C BD550F E26612 EE7E32 F19455 F4AB7B F7C3A1 FADBC6-- for 5/28
  #start darkerx4, step by 3: BD550F ED701D F19455 F6B78E FADBC6
  
- # Show REVISED (TODAY, 5/29)
- geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#97440C', stat = "identity", color = "NA") + # 
+ # Show REVISED (TODAY, 5/30)
+ geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#713309', stat = "identity", color = "NA") + # 
    
    ### MOVE DOWN AND ADD HERE ###
-   # Show REVISED (5/28)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210528), fill = '#BD550F', stat = "identity", color = "NA") + # 
+   # Show REVISED (5/29)
+   geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = '#97440C', stat = "identity", color = "NA") + # 
    ################
+   
+ # Show REVISED (5/28)
+ geom_bar(mapping = aes(y = New_Local_Cases_20210528), fill = '#BD550F', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/27)
  geom_bar(mapping = aes(y = New_Local_Cases_20210527), fill = '#E26612', stat = "identity", color = "NA") + # 
@@ -754,13 +768,15 @@ dev.off()
                 breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
    #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
    #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-   scale_y_continuous(expand = expand_scale(mult = c(0, 0)))) #
+   scale_y_continuous(expand = expand_scale(mult = c(0, 0.05)))) #
 #      sec.axis = sec_axis(~.*(max(case_data$sw_prop_tests_positive_CIhigh, na.rm = TRUE) / max(case_data$New_Local_Cases_Revised_CUMSUM, na.rm = TRUE)),
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
+# MISSING VALUES OK -- days from which none assigned
+
 
 # SAVE
-#png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_dateRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+#png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_by_date_added_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_dateRevised_PLOT
 dev.off()
 
@@ -888,7 +904,7 @@ View(case_data)
 
 # SAVE RESULTS
 write_tsv(case_data, 
-          paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/results_", timenow, ".tsv"))
+          paste0("~/Desktop/Taiwan_COVID_data/results_", timenow, ".tsv"))
 
 
 
@@ -959,7 +975,7 @@ case_data_forDelayLONG$days_delayed <- factor(x = case_data_forDelayLONG$days_de
 ##display.brewer.all()
 #
 ## SAVE
-#png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_daysDelayed_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+#png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_daysDelayed_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 #localCases_daysDelayed_PLOT
 #dev.off()
 
@@ -971,9 +987,9 @@ case_data_forDelayLONG$days_delayed <- factor(x = case_data_forDelayLONG$days_de
 date_chart_start <- as.Date("2021-05-1")
 date_range_start <- as.Date("2021-05-13")
 date_range_end <- timenow
-
+  
 # defined directory for saving charts
-chart_dir <- "/Users/cwnelson88/Desktop/Taiwan_COVID_data/TIME_LAPSE/"
+chart_dir <- "~/Desktop/Taiwan_COVID_data/TIME_LAPSE/"
 
 # Loop
 this_curr_date <- date_range_start
@@ -1092,7 +1108,8 @@ while (this_curr_date <= date_range_end) {
       xlab("") + ylab("Daily cases") +
       scale_x_date(labels = date_format("%b %d"),
                    expand = expand_scale(mult = c(0, 0)),
-                   limits = c(date_chart_start - 1, date_range_end + 1)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
+                   limits = c(date_chart_start - 1, date_range_end + 1),
+                   breaks = seq(date_chart_start, as.Date(timenow), by = INCUBATION_TIME)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
       #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
       #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
       #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
@@ -1110,11 +1127,11 @@ while (this_curr_date <= date_range_end) {
 }
 
 ####
-## SAVE REPRINT TODAY'S
-#this_curr_date_filename <- paste0(chart_dir, "time_lapse_created", timenow, "_0.png")
-#png(filename = this_curr_date_filename, width = 5.5, height = 3.3, units = 'in', res = 500)
-#print(localCases_daysDelayed_TIMELAPSE_PLOT)
-#dev.off()
+## SAVE LATEST TODAY'S
+this_curr_date_filename <- paste0("~/Desktop/Taiwan_COVID_data/cases_by_days_late_", timenow, ".png")
+png(filename = this_curr_date_filename, width = 5.5, height = 3.3, units = 'in', res = 500)
+print(localCases_daysDelayed_TIMELAPSE_PLOT)
+dev.off()
 ####
 
 
@@ -1124,7 +1141,7 @@ while (this_curr_date <= date_range_end) {
 #View(case_data_filtered)
 #
 #write_tsv(case_data_filtered, 
-#          paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/data_processed_", timenow, ".tsv"))
+#          paste0("~/Desktop/Taiwan_COVID_data/data_processed_", timenow, ".tsv"))
 #
 ## exact counts
 #(New_Local_Cases_Original_sum <- sum(case_data_filtered$New_Local_Cases_Original))
@@ -1148,8 +1165,8 @@ while (this_curr_date <= date_range_end) {
 ###############################################################################
 ###############################################################################
 
-# Thanks to Albert Lin and Samuel Liu
-(case_data2 <- read_tsv("/Users/cwnelson88/Desktop/Taiwan_COVID_data/covid19_tw_metadata.tsv"))
+# Thanks to Albert Lin and Samuel Liu and g0v open data compilation: https://docs.google.com/spreadsheets/d/12tQKCRuaiBZfc9yDd6tmlOdsm62ke_4AcKmNJ6q4gdU/htmlview#
+(case_data2 <- read_tsv("~/Desktop/Taiwan_COVID_data/covid19_tw_metadata.tsv"))
 
 # format dates and sort
 head(case_data2$date)
@@ -1320,9 +1337,17 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
    #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_PREDICTED_cases_mean - sw_PREDICTED_cases_sd, ymax = sw_PREDICTED_cases_mean + sw_PREDICTED_cases_sd), 
    #             alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Greys')[8]) + 
     
+   # LEVEL 3 ALERT - Taipei
+   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 525, linetype = "dashed", color = brewer.pal(9, "Greens")[8], size = 0.2) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY, y = 525, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Greens")[8], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
+   
+   # LEVEL 3 ALERT - COUNTRY
+   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 585, linetype = "dashed", color = brewer.pal(9, "Greens")[8], size = 0.2) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY_COUNTRY, y = 585, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Greens")[8], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
+   
 #    # Date
-    geom_rect(xmin = as.Date("2021-05-03"), xmax = as.Date("2021-05-11"), ymin = 375, ymax = 575, fill = brewer.pal(9, "YlGn")[3]) + # yellow
-    geom_text(x = as.Date("2021-05-7"), y = 475, label = "Projected\nTotal", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
+    geom_rect(xmin = as.Date("2021-05-02"), xmax = as.Date("2021-05-10"), ymin = 425, ymax = 625, fill = brewer.pal(9, "YlGn")[3]) + # yellow
+    geom_text(x = as.Date("2021-05-6"), y = 525, label = "Projected\nTotal", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
 
     # Attribution
     #geom_text(x = as.Date("2021-05-02"), y = 335, color = brewer.pal(9, "Greys")[4], hjust = 0, vjust = 0.5, size = 1.6, 
@@ -1365,12 +1390,12 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
     #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
     #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
     #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-    scale_y_continuous(expand = expand_scale(mult = c(0, 0))))# + , limits = c(0, 600)
+    scale_y_continuous(limits = c(0, 650), expand = expand_scale(mult = c(0, 0.05))))# + , limits = c(0, 600)
     #scale_fill_manual(values = c("#5B9CD6", brewer.pal(9, "Purples")[3], brewer.pal(9, "RdPu")[2:3], brewer.pal(9, "Reds")[3:9]), 
     #                  name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
 
 # SAVE
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_PROJECTED_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/projected_total_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 print(localCases_PROJECTED_PLOT)
 dev.off()
 
@@ -1387,7 +1412,7 @@ dev.off()
 # Taiwan orange: #EE7E32
 
 (localCases_ADDITIONS_PLOT <- ggplot(data = backlog_additions_df, 
-                                     mapping = aes(x = days_late, y = days_late_proportions)) +
+                                     mapping = aes(x = days_late, y =  days_late_PREDICTED_ADDITIONS)) + #y = days_late_proportions)) +
     
     # PREDICTED values
     geom_bar(stat = "identity", fill = "#F4AB7B", position = position_dodge(width = 0)) + # , width = 10, #F7C3A1 / #EE7E32 / F3A068 / F4AB7B
@@ -1403,8 +1428,10 @@ dev.off()
   #ggtitle(label = "2021 Taiwan Local COVID-19 Cases") + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
     
     theme_classic() +
-    theme(panel.grid = element_blank(),
-          plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
+    theme(#panel.grid.minor = element_blank(),
+          #panel.grid.major.x = element_blank(),
+          panel.grid.major.y = element_line(color = "lightgray"),
+          plot.margin = unit(x = c(1, 1, 1, 1), units = "line"),
           plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5, face = "bold"),
           legend.position = c(0.125, 0.525), # 'none',
@@ -1413,25 +1440,33 @@ dev.off()
           legend.text = element_text(size = 7), #legend.title = element_blank(),
           #axis.text.x = element_text(size = 7),
           #axis.text.x = element_blank(),
-          axis.text.y = element_blank(), # element_text(size = 9),
-          axis.title.y = element_blank(), # element_text(size = 9),
-          axis.line.y = element_blank(), # 
-          axis.ticks.y = element_blank(), # 
+          #axis.text.y = element_blank(), # element_text(size = 9),
+          #axis.title.y = element_blank(), # element_text(size = 9),
+          #axis.line.y = element_blank(), # 
+          #axis.ticks.y = element_blank(), # 
           strip.background = element_blank()) +
-    xlab("Days ago") + ylab("Proportion assigned") +
+    xlab("Days ago") + ylab("Projected positive cases") +
     scale_x_reverse(limits = c(12.5, 0.5), breaks = 12:1) + 
     #scale_x_date(labels = date_format("%b %d"),
     #             expand = expand_scale(mult = c(0, 0)),
     #             limits = c(date_chart_start - 1, date_range_end + 1)) + 
-    scale_y_continuous(expand = expand_scale(mult = c(0, 0.05)), labels = percent_format()))
+    #scale_y_continuous(expand = expand_scale(mult = c(0, 0.05)), labels = percent_format()))
+    scale_y_continuous(limits = c(0, 120), expand = expand_scale(mult = c(0, 0.05))))
 
 
-png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_ADDITIONS_PLOT_", timenow, ".png"), width = 5.5, height = 2.75, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/backlog_time_distribution_", timenow, ".png"), width = 5.5, height = 2.75, units = 'in', res = 500)
 print(localCases_ADDITIONS_PLOT)
 dev.off()
 
 
 
+####
+
+# SAVE RESULTS
+write_tsv(case_data_projecting, 
+          paste0("~/Desktop/Taiwan_COVID_data/results_and_projected_", timenow, ".tsv"))
+write_tsv(backlog_additions_df, 
+          paste0("~/Desktop/Taiwan_COVID_data/projected_backlog_distribution_", timenow, ".tsv"))
 
 
 
@@ -1499,7 +1534,7 @@ dev.off()
 ##                  name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
 #
 ## SAVE
-#png(filename = paste0("/Users/cwnelson88/Desktop/Taiwan_COVID_data/localCases_PROPORTIONS_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
+#png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_PROPORTIONS_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 #print(localCases_PROPORTIONS_PLOT)
 #dev.off()
 #
