@@ -66,7 +66,7 @@ Data were downloaded or manually recorded from the aforemenetioned sources. All 
 
 ## <a name="results"></a>Results
 
-I here provide demonstrations of the results produced for the data of May 30, 2021 (20210530). The charts will not be regularly updated; instead, updates will be regularly posted to <a target="_blank" href="https://twitter.com/chasewnelson">Twitter</a> and <a target="_blank" href="https://www.facebook.com/chasewnelson">Facebook</a>. 
+I here provide demonstrations of the results produced for the data of May 31, 2021 (20210531). The charts will not be regularly updated; instead, updates will be regularly posted to <a target="_blank" href="https://twitter.com/chasewnelson">Twitter</a> and <a target="_blank" href="https://www.facebook.com/chasewnelson">Facebook</a>. 
 
 ### <a name="backlogging"></a>Backlogging
 
@@ -77,39 +77,39 @@ The visualizations below attempt to demonstrate the effect backlogging may be ha
 
 ### <a name="time"></a>Time-Lapse of Cases
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210530.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210531.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210530.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210531.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
 
 Here results are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago.
 
 
 ### <a name="cases"></a>Cases by Date Added
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210530.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210531.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
 
 Here results are instead depicted by **date added** (shade of orange) during backlogging.
 
 
 ### <a name="seven"></a>Seven-Day Average of Total Reported
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210530.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210531.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
 
 Here results are shown as 7-day averages (red line) using non-backlogged totals REPORTED each day (gray bars). Each day is the mean of itself and the previous 6 days. This provides a decent measure of trend when outstanding tests remain unfinished and the extent of possible revisions to previous dates is uncertain.
 
 
 ### <a name="backlog"></a>Backlog Time Distribution
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210530.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210531.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
 
-On the day shown (May 30, 2021) the backlog was ~30k tests. To that point, 21.5% of tests had been assigned to the previous day; 18.0% to the day before that; and so on. This allows a projection of how the current backlog will be distributed (next section).
+On the day shown (May 31, 2021) the backlog was ~30k tests. To that point, 21.5% of tests had been assigned to the previous day; 18.0% to the day before that; and so on. This allows a projection of how the current backlog will be distributed (next section).
 
 
 ### <a name="projected"></a>Projected Totals After Revision
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210530.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210531.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
 
-For this date (May 30, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate is that 1.8% of the ~30k backlog will test positive and be distributed to previous dates in the same manner (distribution) observed so far. Based on this reasoning, Albert Lin 林書弘 and I made the projection above.
+For this date (May 31, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate is that 1.8% of the ~30k backlog will test positive and be distributed to previous dates in the same manner (distribution) observed so far. Based on this reasoning, Albert Lin 林書弘 and I made the projection above.
 
 
 ## <a name="notes"></a>Notes and Clarifications

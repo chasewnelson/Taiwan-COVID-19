@@ -7,25 +7,11 @@
 #(1) Tian Xia, https://web.cw.com.tw/covid-live-updates-2021-en/index.html
 #(2) Taiwan CDC daily report photos, e.g. https://www.facebook.com/mohw.gov.tw/photos/?ref=page_internal
 #(3) Taiwan CDC Daily Number of Cases Suspected SARS -CoV-2 Infection Tested, e.g. https://data.cdc.gov.tw/en/dataset/daily-cases-suspected-sars-cov-2-infection_tested 
-#install.packages("ggimage")
-#install.packages("rsvg")
-#install.packages("svg")
-#install.packages("emojifont")
 
-#library(emojifont)
 library(tidyverse)
 library(scales)
 library(RColorBrewer)
 #library(lubridate)
-#library(ggimage)
-#library(rsvg)
-#library(svg)
-#library(png)
-#library(grid)
-#devtools::install_github("clauswilke/ggtext")
-#library(ggtext)
-#library(emo)
-
 
 case_data <- read_tsv("~/Desktop/Taiwan_COVID_data/covid19_tw_specimen.tsv")
 # New_Local_Cases - the number of new local cases reported that day
@@ -56,7 +42,6 @@ head(case_data$Date_of_Reporting)
 (case_data$New_Local_Cases_20210527 <- as.integer(case_data$New_Local_Cases_20210527))
 (case_data$New_Local_Cases_20210528 <- as.integer(case_data$New_Local_Cases_20210528))
 (case_data$New_Local_Cases_20210529 <- as.integer(case_data$New_Local_Cases_20210529))
-(case_data$New_Local_Cases_20210530 <- as.integer(case_data$New_Local_Cases_20210530))
 ########## ADD TO THIS EVERY DAY ##########
 
 # find minimum and maximum dates
@@ -720,16 +705,13 @@ dev.off()
  #start darkerx4, step by 2: 97440C BD550F E26612 EE7E32 F19455 F4AB7B F7C3A1 FADBC6-- for 5/28
  #start darkerx4, step by 3: BD550F ED701D F19455 F6B78E FADBC6
  
- # Show REVISED (TODAY, 5/31)
- geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#4B2206', stat = "identity", color = "NA") + # 
+ # Show REVISED (TODAY, 5/30)
+ geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#713309', stat = "identity", color = "NA") + # 
    
    ### MOVE DOWN AND ADD HERE ###
-   # Show REVISED (5/30)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210530), fill = '#713309', stat = "identity", color = "NA") + # 
+   # Show REVISED (5/29)
+   geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = '#97440C', stat = "identity", color = "NA") + # 
    ################
-   
- # Show REVISED (5/29)
- geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = '#97440C', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/28)
  geom_bar(mapping = aes(y = New_Local_Cases_20210528), fill = '#BD550F', stat = "identity", color = "NA") + # 
@@ -764,7 +746,7 @@ dev.off()
    #ggtitle("Local Cases in Taiwan Since April 23") +
    #geom_text(mapping = aes(x = mean(range(filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED)$Date_of_Reporting)), y = Inf),
    #          label = "Taiwan Local Cases\n(May 1-25)", vjust = 1.25, size = 4.25) +
-   ggtitle(label = "2021 Taiwan Local COVID-19 Cases", subtitle = todaystring) + # vjust = 1.25, , size = 4.25
+   ggtitle(label = "Taiwan Daily Local COVID-19 Cases", subtitle = todaystring) + # vjust = 1.25, , size = 4.25
    
    #geom_abline(slope = 0, intercept = 1, linetype = "dashed", color = "grey") +
    theme_classic() +
@@ -779,7 +761,7 @@ dev.off()
          axis.text.y = element_text(size = 9),
          axis.title.y = element_text(size = 9),
          strip.background = element_blank()) +
-   xlab("") + ylab("Daily cases") +
+   xlab("") + ylab("Cases") +
    scale_x_date(labels = date_format("%b %d"),
                 expand = expand_scale(mult = c(0, 0)),
                 limits = c(MIN_DATE_DISPLAYED - 1, timenow + 1), #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
@@ -941,7 +923,7 @@ write_tsv(case_data,
 
 # filter out if the number of days actually wasn't observed
 case_data_forDelayLONG <- filter(case_data_forDelayLONG, days_delayed %in% days_late_observed) # 5,478 x 4
-unique(case_data_forDelayLONG$days_delayed) # [1]  0  1  2  3  4  5  6  7  8  9 10 11 12 13 15
+unique(case_data_forDelayLONG$days_delayed) # [1]  0  1  2  3  4  5  6  7  8  9 10 11 12
 
 case_data_forDelayLONG$days_delayed <- factor(x = case_data_forDelayLONG$days_delayed, 
                                               levels = days_late_observed,
@@ -1005,10 +987,7 @@ case_data_forDelayLONG$days_delayed <- factor(x = case_data_forDelayLONG$days_de
 date_chart_start <- as.Date("2021-05-1")
 date_range_start <- as.Date("2021-05-13")
 date_range_end <- timenow
-
-#LOCK_PNG <- png::readPNG("/Users/cwnelson88/Desktop/Taiwan_COVID_data/LOCK.png")
-##LOCK_PNG <- readPNG(system.file("img", "/Users/cwnelson88/Desktop/Taiwan_COVID_data/LOCK.png", package="png"))
-
+  
 # defined directory for saving charts
 chart_dir <- "~/Desktop/Taiwan_COVID_data/TIME_LAPSE/"
 
@@ -1071,21 +1050,14 @@ while (this_curr_date <= date_range_end) {
   
   #FACTOR for only 11 categories, with days 10-12 pooled
   this_curr_date_data$days_delayed <- as.character(this_curr_date_data$days_delayed)
-  this_curr_date_data[this_curr_date_data$days_delayed %in% c('10', '11', '12', '13', '14', '15'), ]$days_delayed <- "10-15"
+  this_curr_date_data[this_curr_date_data$days_delayed %in% c('10', '11', '12'), ]$days_delayed <- "10-12"
   this_curr_date_data$days_delayed <- factor(x = this_curr_date_data$days_delayed,
-                                             levels = c("On time", 1:9, "10-15"))
+                                             levels = c("On time", 1:9, "10-12"))
   
   ### PLOT ###
   (localCases_daysDelayed_TIMELAPSE_PLOT <- ggplot(data = this_curr_date_data, 
                                                    mapping = aes(x = Date_of_Reporting, y = as.integer(sum_after_delay),  fill = as.factor(days_delayed))) +
       
-      # LOCKED-IN bars
-      #geom_bar(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = 'black', 
-      #         fill = brewer.pal(9, "Reds")[9], inherit.aes = FALSE, stat = 'identity') + #, size = 1.0
-      #geom_text(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = 'black', 
-      #         inherit.aes = FALSE, label = sprintf('\u1f512')) + #, size = 1.0
-      #
-    
       # Latest revised sums
       geom_bar(stat = "identity", color = "NA", position = position_dodge(width = 0), width = 10) + # 
       #geom_text(aes(label = sum_after_delay), vjust = -0.2, size = rel(2)) +
@@ -1108,30 +1080,11 @@ while (this_curr_date <= date_range_end) {
       geom_text(x = as.Date("2021-05-07"), y = 205-50, label = paste0("Backlogged: ", backlog_count), fontface = "bold", color = brewer.pal(9, "Reds")[4], hjust = 0, vjust = 0.5, size = 2.6) + #, size = 2.75) +
       geom_text(x = as.Date("2021-05-07"), y = 175-50, label = paste0("Today: ", today_count), fontface = "bold", color = brewer.pal(9, "Blues")[5], hjust = 0, vjust = 0.5, size = 2.6) + # "#5B9CD6"
       
-      # LOCKED dates
-      #geom_image(mapping = aes(image = "~/Desktop/Taiwan_COVID_data/LOCK.svg"), size = 1) +
-      #annotation_custom(grob = rasterGrob(image = LOCK_PNG, width = 200, height = 200, -Inf, Inf, -Inf, Inf), 
-      #                  xmin = as.Date("2021-05-07"), xmax = as.Date("2021-05-12"),
-      #                  ymin = 200, ymax = 400) +
       # current trendline
       #geom_line(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = brewer.pal(11, "Spectral")[11], inherit.aes = FALSE, size = 1.0) +
       #geom_point(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = brewer.pal(11, "Spectral")[11], inherit.aes = FALSE) +
       
-      # LOCKED-IN bars
-    #geom_bar(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = 'black', 
-    #         fill = brewer.pal(9, "Reds")[9], inherit.aes = FALSE, stat = 'identity') + #, size = 1.0
-    #geom_text(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = 'black', 
-    #          inherit.aes = FALSE, label = parse(text = '\u1f512'), parse = TRUE) + #, size = 1.0 # <-- ENDED HERE
-    
-      # this may be best bet
-      #search_emoji("lock")
-      #geom_emoji(alias = 'lock', size = 2, x = as.Date("2021-05-15"), y = 400, color = 'black', inherit.aes = FALSE) + # fill = 'black',
       
-    #geom_richtext(aes(), fill = NA, label.color = NA, label = link_to_img("~/Desktop/Taiwan_COVID_data/LOCK.png"),
-    #               label.padding = grid::unit(rep(0, 4), "pt")) +
-    
-      #geom_text(x = as.Date("2021-05-15"), y = 400, color = 'black', family="EmojiOne", size=10) +
-    
       # original trendline
       #geom_line(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE, size = 1.0) +
       #geom_point(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE) +
@@ -1168,10 +1121,6 @@ while (this_curr_date <= date_range_end) {
   png(filename = this_curr_date_filename, width = 5.5, height = 3.3, units = 'in', res = 500)
   print(localCases_daysDelayed_TIMELAPSE_PLOT)
   dev.off()
-  
-  
-  #ggsave(filename = paste0(this_curr_date_filename, 'lala_ggsave.png'), plot = localCases_daysDelayed_TIMELAPSE_PLOT,
-  #      width = 5.5, height = 3.3, device = 'png', units = 'in', dpi = 500)
   
   # increment the day
   this_curr_date <- this_curr_date + 1
@@ -1466,7 +1415,7 @@ dev.off()
                                      mapping = aes(x = days_late, y =  days_late_PREDICTED_ADDITIONS)) + #y = days_late_proportions)) +
     
     # PREDICTED values
-    geom_bar(stat = "identity", fill = "#F7C3A1", position = position_dodge(width = 0)) + ##F4AB7B, width = 10, #F7C3A1 / #EE7E32 / F3A068 / F4AB7B
+    geom_bar(stat = "identity", fill = "#F4AB7B", position = position_dodge(width = 0)) + # , width = 10, #F7C3A1 / #EE7E32 / F3A068 / F4AB7B
     geom_text(aes(label = days_late_Percent), vjust = -0.2, size = rel(2.5)) +
 #    #    # Date
 #    geom_rect(xmin = as.Date("2021-05-02"), xmax = as.Date("2021-05-12"), ymin = 375, ymax = 575, fill = "#FFE033") +
@@ -1497,7 +1446,7 @@ dev.off()
           #axis.ticks.y = element_blank(), # 
           strip.background = element_blank()) +
     xlab("Days ago") + ylab("Projected positive cases") +
-    scale_x_reverse(limits = c(15.5, 0.5), breaks = 15:1) + 
+    scale_x_reverse(limits = c(12.5, 0.5), breaks = 12:1) + 
     #scale_x_date(labels = date_format("%b %d"),
     #             expand = expand_scale(mult = c(0, 0)),
     #             limits = c(date_chart_start - 1, date_range_end + 1)) + 
