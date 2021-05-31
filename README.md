@@ -81,7 +81,7 @@ The visualizations below attempt to demonstrate the effect backlogging may be ha
 
 <img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210531.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
 
-Here results are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago.
+Here results are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago. Based on the backlogging pattern observed thus far, we considered dates >9 days in the past relatively ‘locked in’ (unlikely to change substantially).
 
 
 ### <a name="cases"></a>Cases by Date Added
@@ -102,14 +102,14 @@ Here results are shown as 7-day averages (red line) using non-backlogged totals 
 
 <img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210531.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
 
-On the day shown (May 31, 2021) the backlog was ~30k tests. To that point, 21.5% of tests had been assigned to the previous day; 18.0% to the day before that; and so on. This allows a projection of how the current backlog will be distributed (next section).
+On the day shown (May 31, 2021) the backlog was ~28k tests. To that point, 23.1% of tests had been assigned to the previous day; 17.7% to the day before that; and so on. This allowed a projection of how the current backlog would be distributed (next section).
 
 
 ### <a name="projected"></a>Projected Totals After Revision
 
 <img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210531.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
 
-For this date (May 31, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate is that 1.8% of the ~30k backlog will test positive and be distributed to previous dates in the same manner (distribution) observed so far. Based on this reasoning, Albert Lin 林書弘 and I made the projection above.
+For this date (May 31, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate was that 1.8% of the ~28k backlog would test positive and be distributed to previous dates in the same manner (distribution) observed to that point in time. Based on this reasoning, Albert Lin 林書弘 and I made the projection above.
 
 
 ## <a name="notes"></a>Notes and Clarifications
