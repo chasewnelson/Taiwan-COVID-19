@@ -43,7 +43,7 @@ head(case_data$Date_of_Reporting)
 
 # format case counts
 (case_data$New_Local_Cases <- as.integer(case_data$New_Local_Cases))
-(case_data$New_Local_Cases_Revised <- as.integer(case_data$New_Local_Cases_Revised)) # TODAY'S 6/1
+(case_data$New_Local_Cases_Revised <- as.integer(case_data$New_Local_Cases_Revised)) # TODAY'S
 (case_data$New_Local_Cases_Original <- as.integer(case_data$New_Local_Cases_Original))
 
 ########## ADD TO THIS EVERY DAY ##########
@@ -57,7 +57,6 @@ head(case_data$Date_of_Reporting)
 (case_data$New_Local_Cases_20210528 <- as.integer(case_data$New_Local_Cases_20210528))
 (case_data$New_Local_Cases_20210529 <- as.integer(case_data$New_Local_Cases_20210529))
 (case_data$New_Local_Cases_20210530 <- as.integer(case_data$New_Local_Cases_20210530))
-(case_data$New_Local_Cases_20210531 <- as.integer(case_data$New_Local_Cases_20210531))
 ########## ADD TO THIS EVERY DAY ##########
 
 # find minimum and maximum dates
@@ -641,22 +640,14 @@ dev.off()
    geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 550, linetype = "dashed", color = brewer.pal(9, "Set1")[2], size = 0.3) + # , size = 0.4) + #, size = 0.4) +
    geom_text(x = LEVEL3_DAY_COUNTRY, y = 550, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Set1")[2], hjust = 0.5, vjust = -0.25, size = 2.5) + #, size = 2) + #, size = 2.75) +
    
-   # COLORS 1: lighter bars - Show daily reported with bars (& text?)
-   geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = brewer.pal(9, 'Greys')[3], stat = "identity", color = "NA", alpha = 0.75) + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8]
-   geom_text(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
    
-   # COLORS 2: darker bars - Show daily reported with bars (& text?)
-   #geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = brewer.pal(9, 'Greys')[5], stat = "identity", color = "NA", alpha = 0.75) + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8]
-   #geom_text(data = filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED, New_Local_Cases > 100), 
-   #          mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = "white", hjust = 0.5, vjust = 1.5, size = 1.5) +
+   # Show daily reported with bars
+   geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = brewer.pal(9, 'Greys')[3], stat = "identity", color = "NA", alpha = 0.75) + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8]
    
    # Show 7-day window with line and error
    geom_line(color = brewer.pal(9, 'Reds')[8]) + # brewer.pal(9, 'Reds')[8]
    geom_ribbon(mapping = aes(ymin = sw_new_local_cases_mean - sw_new_local_cases_SE, ymax = sw_new_local_cases_mean + sw_new_local_cases_SE), 
                alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Reds')[8]) + # brewer.pal(9, 'Set1')[1]) +
-   geom_point(data = filter(case_data, sw_end_date == timenow), color = brewer.pal(9, 'Reds')[8]) + 
-   geom_text(data = filter(case_data, sw_end_date == timenow), 
-             mapping = aes(label = round(x = sw_new_local_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.25, size = 3.4) + # , hjust = -1
    
    ggtitle(label = "2021 Taiwan Local COVID-19 Cases Reported (7-Day Average)", subtitle = todaystring) + #, " / First-Day (Non-Backlogged) Values")) +
    
@@ -675,12 +666,12 @@ dev.off()
          strip.background = element_blank()) +
    xlab("") + ylab("Reported cases") +
    scale_x_date(labels = date_format("%b %d"),
-                expand = expand_scale(mult = c(0, 0.04)),
+                expand = expand_scale(mult = c(0, 0)),
                 limits = c(MIN_DATE_DISPLAYED - 1, timenow + 1), #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
                 breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
    #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
    #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-   scale_y_continuous(expand = expand_scale(mult = c(0, 0.05)))) #
+   scale_y_continuous(expand = expand_scale(mult = c(0, 0)))) #
 #      sec.axis = sec_axis(~.*(max(case_data$sw_prop_tests_positive_CIhigh, na.rm = TRUE) / max(case_data$New_Local_Cases_Revised_CUMSUM, na.rm = TRUE)),
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 
@@ -729,16 +720,13 @@ dev.off()
  #start darkerx4, step by 2: 97440C BD550F E26612 EE7E32 F19455 F4AB7B F7C3A1 FADBC6-- for 5/28
  #start darkerx4, step by 3: BD550F ED701D F19455 F6B78E FADBC6
  
- # Show REVISED (TODAY, 6/1)
- geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#261103', stat = "identity", color = "NA") + # 
+ # Show REVISED (TODAY, 5/31)
+ geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#4B2206', stat = "identity", color = "NA") + # 
    
    ### MOVE DOWN AND ADD HERE ###
-   # Show REVISED (5/31)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210531), fill = '#4B2206', stat = "identity", color = "NA") + # 
+   # Show REVISED (5/30)
+   geom_bar(mapping = aes(y = New_Local_Cases_20210530), fill = '#713309', stat = "identity", color = "NA") + # 
    ################
-   
- #Show REVISED (5/30)
- geom_bar(mapping = aes(y = New_Local_Cases_20210530), fill = '#713309', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/29)
  geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = '#97440C', stat = "identity", color = "NA") + # 
@@ -1290,8 +1278,6 @@ for(this_days_delayed in names(days_late_sums)) {
 
 # calculate mean number outstanding expected to be reassigned to each day back
 (NUM_OUTSTANDING <- case_data_projecting[case_data_projecting$date == timenow, ]$not_yet_interpreted_TotalInspection_MIN_Completed)
-# compare to https://sites.google.com/cdc.gov.tw/2019ncov/taiwan
-# 2021/06/01: 522816-488696-8511=25609 vs. 25.1
 (CURR_CUM_PROP_POS <- case_data_projecting[case_data_projecting$date == timenow, ]$test_total_positive_rate_Confirmed_DIV_Completed)
 (NUM_OUTSTANDING_PREDICT_POS <- NUM_OUTSTANDING * CURR_CUM_PROP_POS)
 (days_late_PREDICTED_ADDITIONS <- round(days_late_proportions * NUM_OUTSTANDING_PREDICT_POS))
@@ -1389,9 +1375,7 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
     
     # PREDICTED values
     geom_bar(stat = "identity", fill = "#F7C3A1", position = position_dodge(width = 0)) + # , width = 10
-    geom_text(mapping = aes(label = Num_Local_Cases_Projected), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   
+    
     # CURRENT REVISED values
     geom_bar(mapping = aes(y = New_Local_Cases_Revised), stat = "identity", fill = "#EE7E32", position = position_dodge(width = 0)) + # , width = 10
     
@@ -1399,15 +1383,11 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
     geom_bar(mapping = aes(y = New_Local_Cases_Original), stat = "identity", fill = "#5B9CD6", position = position_dodge(width = 0)) + # , width = 10
     
     # Show 7-day window with line and error (from plot 5)
-    geom_line(mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean), color = brewer.pal(9, 'Greys')[7]) +
+    geom_line(mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean), color = brewer.pal(9, 'Greys')[8]) +
    #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_PREDICTED_cases_mean - sw_PREDICTED_cases_SE, ymax = sw_PREDICTED_cases_mean + sw_PREDICTED_cases_SE),  
    #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_PREDICTED_cases_mean - sw_PREDICTED_cases_sd, ymax = sw_PREDICTED_cases_mean + sw_PREDICTED_cases_sd), 
    #             alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Greys')[8]) + 
-   geom_point(data = filter(case_data_projecting, sw_end_date == timenow),
-              mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean), color = brewer.pal(9, 'Greys')[7]) + 
-   geom_text(data = filter(case_data_projecting, sw_end_date == timenow), 
-             mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean, label = round(x = sw_PREDICTED_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.25, size = 3.4) + # , hjust = -1
-   
+    
    # LEVEL 3 ALERT - Taipei
    geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 525, linetype = "dashed", color = brewer.pal(9, "Greens")[8], size = 0.2) + #, size = 0.4) +
    geom_text(x = LEVEL3_DAY, y = 525, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Greens")[8], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
@@ -1418,7 +1398,7 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
    
 #    # Date
     geom_rect(xmin = as.Date("2021-05-02"), xmax = as.Date("2021-05-10"), ymin = 425, ymax = 625, fill = brewer.pal(9, "YlGn")[3]) + # yellow
-    geom_text(x = as.Date("2021-05-6"), y = 525, label = "Projected\nTotals", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
+    geom_text(x = as.Date("2021-05-6"), y = 525, label = "Projected\nTotal", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
 
     # Attribution
     #geom_text(x = as.Date("2021-05-02"), y = 335, color = brewer.pal(9, "Greys")[4], hjust = 0, vjust = 0.5, size = 1.6, 
@@ -1455,9 +1435,8 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
           axis.title.y = element_text(size = 9),
           strip.background = element_blank()) +
     xlab("") + ylab("Daily cases") +
-   #            breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + 
     scale_x_date(labels = date_format("%b %d"),
-                 expand = expand_scale(mult = c(0, 0.04)),
+                 expand = expand_scale(mult = c(0, 0)),
                  limits = c(date_chart_start - 1, date_range_end + 1)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
     #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
     #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
