@@ -66,50 +66,50 @@ Data were downloaded or manually recorded from the aforemenetioned sources. All 
 
 ## <a name="results"></a>Results
 
-I here provide demonstrations of the results produced for the date of June 1, 2021 (20210601). The charts will not be regularly updated; instead, updates will be posted to <a target="_blank" href="https://twitter.com/chasewnelson">Twitter</a> and <a target="_blank" href="https://www.facebook.com/chasewnelson">Facebook</a>. 
+I here provide demonstrations of the results produced for the date of June 3, 2021 (20210603). The charts will not be regularly updated; instead, updates will be posted to <a target="_blank" href="https://twitter.com/chasewnelson">Twitter</a> and <a target="_blank" href="https://www.facebook.com/chasewnelson">Facebook</a>. 
 
 ### <a name="backlogging"></a>Backlogging
 
-Because of an initially limited testing capacity, tests have been delayed and results routinely assigned to previous days, a method referred to as 'backlogging'. Backlogging achieves increasingly accurate counts for individual days. However, it also introduces difficulties for comparing *between* different days. Specifically, while results are still unfinished, it can create illusion of a downward trend (drop in case numbers) as an artifact, because recent days will be disproportionately underestimated. This has been brilliantly explained by [Linc_tw](https://twitter.com/Linc_tw/status/1397207338059276297).
+Because of an initially limited testing capacity, tests have been delayed and results routinely assigned to previous days, a method referred to as 'backlogging'. Backlogging achieves increasingly accurate counts for individual days. However, it also introduces difficulties for comparing *between* different days. Specifically, while results are still unfinished, it can create the illusion of a downward trend (drop in case numbers) as an artifact, because recent days will be disproportionately underestimated. This has been brilliantly explained by [Linc_tw](https://twitter.com/Linc_tw/status/1397207338059276297).
 
 The visualizations below demonstrate the effect backlogging may be having on perceived trends, and to clarify the meaning of the revised data being reported. Finally, we provide a projection of finalized counts as a function of the current backlog and its known time distribution.
 
 
 ### <a name="time"></a>Time-Lapse of Cases
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210601.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210603.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210601.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210603.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
 
 Here results are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago. Based on the backlogging pattern observed thus far, we considered dates >9 days in the past relatively ‘locked in’ (unlikely to change substantially).
 
 
 ### <a name="cases"></a>Cases by Date Added
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210601.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210603.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
 
 Here results are instead depicted by **date added** (shade of orange) during backlogging.
 
 
 ### <a name="seven"></a>Seven-Day Average of Total Reported
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210601.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210603.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
 
 Here results are shown as 7-day averages (red line) using non-backlogged TOTALS REPORTED each day (gray bars). Each day is the mean of itself and the previous 6 days. This provides a decent measure of trend when outstanding tests remain unfinished and the extent of possible revisions to previous dates is uncertain.
 
 
 ### <a name="backlog"></a>Backlog Time Distribution
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210601.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210603.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
 
-On the day shown (June 1, 2021) the backlog was ~25k tests. To that point, 24.2% of tests had been assigned to the previous day; 17.7% to the day before that; and so on. This allowed a projection of how the current backlog would be distributed (next section).
+On the day shown (June 3, 2021) the backlog was ~12k tests. To that point, 24% of tests had been assigned to the previous day; 17% to the day before that; and so on. This allowed a projection of how the current backlog would be distributed (next section).
 
 
 ### <a name="projected"></a>Projected Totals After Revision
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210601.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210603.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
 
-For this date (June 1, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate was that 1.8% of the ~25k backlog would test positive and be distributed to previous dates in the same manner (distribution) observed to that point in time. Based on this reasoning, Albert Lin 林書弘 and I made the projection above. Conceptually, it simply takes the projected backlog numbers implied by the backlog time distribution (above) and places it on top of the current revised counts.
+For this date (June 3, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate was that 1.8% of the ~12k backlog would test positive and be distributed to previous dates in the same manner (distribution) observed to that point in time. Based on this reasoning, Albert Lin 林書弘 and I made the projection above, which is an estimate of the final counts if the full current backlog were completed the next day. Conceptually, it simply takes the projected backlog numbers implied by the backlog time distribution (above) and places it on top of the current revised counts.
 
 
 ## <a name="notes"></a>Notes and Clarifications

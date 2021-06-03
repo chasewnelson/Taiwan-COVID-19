@@ -58,8 +58,6 @@ head(case_data$Date_of_Reporting)
 (case_data$New_Local_Cases_20210529 <- as.integer(case_data$New_Local_Cases_20210529))
 (case_data$New_Local_Cases_20210530 <- as.integer(case_data$New_Local_Cases_20210530))
 (case_data$New_Local_Cases_20210531 <- as.integer(case_data$New_Local_Cases_20210531))
-(case_data$New_Local_Cases_20210601 <- as.integer(case_data$New_Local_Cases_20210601))
-(case_data$New_Local_Cases_20210602 <- as.integer(case_data$New_Local_Cases_20210602))
 ########## ADD TO THIS EVERY DAY ##########
 
 # find minimum and maximum dates
@@ -322,7 +320,7 @@ PROP_DISPLAY_FACTOR <- max(case_data$New_Local_Cases, na.rm = TRUE) / max(case_d
 # ONE will be missing: the RED LINE TOTAL
 
 # SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/propPos_PLOT_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/propPos_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_propPos_PLOT
 dev.off()
 
@@ -380,13 +378,12 @@ TESTS_DISPLAY_FACTOR <- max(case_data$sw_new_local_cases_sum, na.rm = TRUE) / ma
                  limits = c(MIN_DATE_DISPLAYED - 1, timenow + 1), #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
                  breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
     scale_y_continuous(expand = expand_scale(mult = c(0, 0)))) #
-# remove one row ok because blue line stops one row early
 #      sec.axis = sec_axis(~.*(max(case_data$sw_new_tests_sum, na.rm = TRUE) / max(case_data$sw_new_local_cases_sum, na.rm = TRUE)),
 #                                           name = "Tests performed (last 7 days)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 #View(filter(case_data, sw_end_date >= MIN_DATE_DISPLAYED))
 
 # SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/testsPerformed_PLOT_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/testsPerformed_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_TestsPerformed_PLOT
 dev.off()
 
@@ -532,7 +529,7 @@ case_data[case_data$Date_of_Reporting >= MIN_DATE_DISPLAYED, ]$New_Local_Cases_R
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 
 # SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 #png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_cumSum_PLOT_wLINE_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_cumSum_PLOT
 dev.off()
@@ -624,7 +621,7 @@ filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED)$New_Local_Cases / fil
 
 # SAVE
 #png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/cumSumRevisedLINE_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cumSumRevisedLINE_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_cumSumRevised_PLOT
 dev.off()
 
@@ -637,16 +634,16 @@ dev.off()
                                                 mapping = aes(x = sw_end_date, y = sw_new_local_cases_mean)) + # color = significant
    
    # LEVEL 3 ALERT Taipei
-   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 400, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) + # brewer.pal(9, "Set1")[2]
-   geom_text(x = LEVEL3_DAY, y = 400, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2.25) + #, size = 2.75) +
+   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 400, linetype = "dashed", color = brewer.pal(9, "Set1")[2], size = 0.3) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY, y = 400, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Set1")[2], hjust = 0.5, vjust = -0.25, size = 2.5) + #, size = 2.75) +
    
    # LEVEL 3 ALERT COUNTRYWIDE
-   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 550, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + # , size = 0.4) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY_COUNTRY, y = 550, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2.25) + #, size = 2) + #, size = 2.75) +
+   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 550, linetype = "dashed", color = brewer.pal(9, "Set1")[2], size = 0.3) + # , size = 0.4) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY_COUNTRY, y = 550, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Set1")[2], hjust = 0.5, vjust = -0.25, size = 2.5) + #, size = 2) + #, size = 2.75) +
    
    # COLORS 1: lighter bars - Show daily reported with bars (& text?)
-   geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = "#E0E0E0", stat = "identity", color = "NA") + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8] #, alpha = 0.75  brewer.pal(9, 'Greys')[3]
-   geom_text(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.375, size = 1.5) +
+   geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = brewer.pal(9, 'Greys')[3], stat = "identity", color = "NA", alpha = 0.75) + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8]
+   geom_text(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
    
    # COLORS 2: darker bars - Show daily reported with bars (& text?)
    #geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = brewer.pal(9, 'Greys')[5], stat = "identity", color = "NA", alpha = 0.75) + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8]
@@ -659,38 +656,22 @@ dev.off()
                alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Reds')[8]) + # brewer.pal(9, 'Set1')[1]) +
    geom_point(data = filter(case_data, sw_end_date == timenow), color = brewer.pal(9, 'Reds')[8]) + 
    geom_text(data = filter(case_data, sw_end_date == timenow), 
-             mapping = aes(label = round(x = sw_new_local_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.3, size = 3.4) + # , hjust = -1
+             mapping = aes(label = round(x = sw_new_local_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.25, size = 3.4) + # , hjust = -1
    
-   ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   7-day average   |   ", todaystring)) + #, " / First-Day (Non-Backlogged) Values")) +
+   ggtitle(label = "2021 Taiwan Local COVID-19 Cases Reported (7-Day Average)", subtitle = todaystring) + #, " / First-Day (Non-Backlogged) Values")) +
    
    #geom_abline(slope = 0, intercept = 1, linetype = "dashed", color = "grey") +
-   #theme_classic() +
-   #theme_bw() +
-   
-   # Custom axis labels
-   geom_text(x = -Inf, y = 600, label = "600 daily cases reported", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   
-   geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-   theme(#panel.grid = element_blank(),
-     panel.background = element_blank(),
-     panel.grid.minor = element_blank(),
-     panel.grid.major.x = element_blank(),
-     panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-     axis.ticks.y = element_blank(),
-     #axis.line = element_blank(),
+   theme_classic() +
+   theme(panel.grid = element_blank(),
          plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
          legend.position = 'none',
          legend.title = element_blank(),
-         plot.title = element_text(size = 10, face = "bold"), #, size = 12),hjust = 0.5, 
+         plot.title = element_text(hjust = 0.5, size = 11), #, size = 12),
          plot.subtitle = element_text(hjust = 0.5, size = 9), #, size = 10),
          #axis.text.x = element_text(size = 7),
          #axis.text.x = element_blank(),
-     axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6]),
-         axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-     axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-         axis.title.y = element_blank(), # element_text(size = 9),
+         axis.text.y = element_text(size = 9),
+         axis.title.y = element_text(size = 9),
          strip.background = element_blank()) +
    xlab("") + ylab("Reported cases") +
    scale_x_date(labels = date_format("%b %d"),
@@ -699,12 +680,12 @@ dev.off()
                 breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
    #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
    #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-   scale_y_continuous(breaks = c(200, 400, 600), expand = expand_scale(mult = c(0, 0.05)))) #
+   scale_y_continuous(expand = expand_scale(mult = c(0, 0.05)))) #
 #      sec.axis = sec_axis(~.*(max(case_data$sw_prop_tests_positive_CIhigh, na.rm = TRUE) / max(case_data$New_Local_Cases_Revised_CUMSUM, na.rm = TRUE)),
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 
 # SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_reported_7dayWindow_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_reported_7dayWindow_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_originalTotalsWindow_PLOT
 dev.off()
 
@@ -748,46 +729,40 @@ dev.off()
  #start darkerx4, step by 2: 97440C BD550F E26612 EE7E32 F19455 F4AB7B F7C3A1 FADBC6-- for 5/28
  #start darkerx4, step by 3: BD550F ED701D F19455 F6B78E FADBC6
  
- # Show REVISED (TODAY, 6/3)
- geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = 'black', stat = "identity", color = "NA") + # 
+ # Show REVISED (TODAY, 6/1)
+ geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#261103', stat = "identity", color = "NA") + # 
    
    ### MOVE DOWN AND ADD HERE ###
-   # Show REVISED (6/2)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210602), fill = '#261103', stat = "identity", color = "NA") + # 
+   # Show REVISED (5/31)
+   geom_bar(mapping = aes(y = New_Local_Cases_20210531), fill = '#4B2206', stat = "identity", color = "NA") + # 
    ################
    
- # Show REVISED (6/1)
- geom_bar(mapping = aes(y = New_Local_Cases_20210601), fill = '#4B2206', stat = "identity", color = "NA") + # 
-   
- # Show REVISED (5/31)
- geom_bar(mapping = aes(y = New_Local_Cases_20210531), fill = '#713309', stat = "identity", color = "NA") + # 
-   
  #Show REVISED (5/30)
- geom_bar(mapping = aes(y = New_Local_Cases_20210530), fill = '#97440C', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210530), fill = '#713309', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/29)
- geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = '#BD550F', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = '#97440C', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/28)
- geom_bar(mapping = aes(y = New_Local_Cases_20210528), fill = '#E26612', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210528), fill = '#BD550F', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/27)
- geom_bar(mapping = aes(y = New_Local_Cases_20210527), fill = '#EE7E32', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210527), fill = '#E26612', stat = "identity", color = "NA") + # 
    
    # Show REVISED (5/26)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210526), fill = '#F19455', stat = "identity", color = "NA") + # 
+   geom_bar(mapping = aes(y = New_Local_Cases_20210526), fill = '#EE7E32', stat = "identity", color = "NA") + # 
    
    # Show REVISED (5/25)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210525), fill = '#F4AB7B', stat = "identity", color = "NA") +
+   geom_bar(mapping = aes(y = New_Local_Cases_20210525), fill = '#F19455', stat = "identity", color = "NA") +
    
    # Show REVISED (5/24)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210524), fill = '#F7C3A1', stat = "identity", color = "NA") +
+   geom_bar(mapping = aes(y = New_Local_Cases_20210524), fill = '#F4AB7B', stat = "identity", color = "NA") +
    
    # Show REVISED (5/23)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210523), fill = '#FADBC6', stat = "identity", color = "NA") +
+   geom_bar(mapping = aes(y = New_Local_Cases_20210523), fill = '#F7C3A1', stat = "identity", color = "NA") +
    
    # Show REVISED (5/22)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210522), fill = '#FDF3EC', stat = "identity", color = "NA") +
+   geom_bar(mapping = aes(y = New_Local_Cases_20210522), fill = '#FADBC6', stat = "identity", color = "NA") +
    
    # Show ORIGINAL
    geom_bar(stat = 'identity', fill = "#5B9CD6", color = "NA") +
@@ -801,36 +776,21 @@ dev.off()
    #ggtitle("Local Cases in Taiwan Since April 23") +
    #geom_text(mapping = aes(x = mean(range(filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED)$Date_of_Reporting)), y = Inf),
    #          label = "Taiwan Local Cases\n(May 1-25)", vjust = 1.25, size = 4.25) +
-   ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   ", todaystring)) + # vjust = 1.25, , size = 4.25
+   ggtitle(label = "2021 Taiwan Local COVID-19 Cases", subtitle = todaystring) + # vjust = 1.25, , size = 4.25
    
    #geom_abline(slope = 0, intercept = 1, linetype = "dashed", color = "grey") +
-   #theme_classic() +
-   
-   # Custom axis labels
-   geom_text(x = -Inf, y = 500, label = "500 daily cases assigned", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 300, label = "300", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 100, label = "100", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   
-   geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-   theme(#panel.grid = element_blank(),
-     panel.background = element_blank(),
-     panel.grid.minor = element_blank(),
-     panel.grid.major.x = element_blank(),
-     panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-     axis.ticks.y = element_blank(),
-     #axis.line = element_blank(),
+   theme_classic() +
+   theme(panel.grid = element_blank(),
          plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
-         plot.title = element_text(face = "bold", size = 10), # hjust = 0.5, 
-         #plot.subtitle = element_text(hjust = 0.5),
+         plot.title = element_text(hjust = 0.5),
+         plot.subtitle = element_text(hjust = 0.5),
          legend.position = 'none',
          legend.title = element_blank(),
-     axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6]),
-     axis.text.y =element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-     axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-     axis.title.y = element_blank(), #element_text(size = 9),
-     strip.background = element_blank()) +
+         #axis.text.x = element_text(size = 7),
+         #axis.text.x = element_blank(),
+         axis.text.y = element_text(size = 9),
+         axis.title.y = element_text(size = 9),
+         strip.background = element_blank()) +
    xlab("") + ylab("Daily cases") +
    scale_x_date(labels = date_format("%b %d"),
                 expand = expand_scale(mult = c(0, 0)),
@@ -838,7 +798,7 @@ dev.off()
                 breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
    #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
    #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-   scale_y_continuous(breaks = c(seq(100, 500, 100)), expand = expand_scale(mult = c(0, 0.05)))) #
+   scale_y_continuous(expand = expand_scale(mult = c(0, 0.05)))) #
 #      sec.axis = sec_axis(~.*(max(case_data$sw_prop_tests_positive_CIhigh, na.rm = TRUE) / max(case_data$New_Local_Cases_Revised_CUMSUM, na.rm = TRUE)),
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 # MISSING VALUES OK -- days from which none assigned
@@ -846,7 +806,7 @@ dev.off()
 
 # SAVE
 #png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_by_date_added_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_by_date_added_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 localCases_dateRevised_PLOT
 dev.off()
 
@@ -864,8 +824,8 @@ timenow_col <- paste0("New_Local_Cases_", timenow)
 timenow_col <- str_replace_all(string = timenow_col, pattern = '-', replacement = '')
 case_data[, timenow_col] <- case_data$New_Local_Cases_Revised
 
-# initialize columns up to 15 NOW 17 days late
-MAX_DAYS_LATE <- 17
+# initialize columns up to 15 days late
+MAX_DAYS_LATE <- 15
 num_delayed_column_names <- character()
 sum_after_delay_column_names <- character()
 for(i in 0:MAX_DAYS_LATE) {
@@ -993,7 +953,7 @@ write_tsv(case_data,
 
 # filter out if the number of days actually wasn't observed
 case_data_forDelayLONG <- filter(case_data_forDelayLONG, days_delayed %in% days_late_observed) # 5,478 x 4
-unique(case_data_forDelayLONG$days_delayed) # [1]  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17
+unique(case_data_forDelayLONG$days_delayed) # [1]  0  1  2  3  4  5  6  7  8  9 10 11 12 13 15
 
 case_data_forDelayLONG$days_delayed <- factor(x = case_data_forDelayLONG$days_delayed, 
                                               levels = days_late_observed,
@@ -1123,9 +1083,9 @@ while (this_curr_date <= date_range_end) {
   
   #FACTOR for only 11 categories, with days 10-12 pooled
   this_curr_date_data$days_delayed <- as.character(this_curr_date_data$days_delayed)
-  this_curr_date_data[this_curr_date_data$days_delayed %in% c('10', '11', '12', '13', '14', '15', '16', '17'), ]$days_delayed <- "10-17"
+  this_curr_date_data[this_curr_date_data$days_delayed %in% c('10', '11', '12', '13', '14', '15'), ]$days_delayed <- "10-15"
   this_curr_date_data$days_delayed <- factor(x = this_curr_date_data$days_delayed,
-                                             levels = c("On time", 1:9, "10-17"))
+                                             levels = c("On time", 1:9, "10-15"))
   
   ### PLOT ###
   (localCases_daysDelayed_TIMELAPSE_PLOT <- ggplot(data = this_curr_date_data, 
@@ -1143,11 +1103,11 @@ while (this_curr_date <= date_range_end) {
       #geom_text(aes(label = sum_after_delay), vjust = -0.2, size = rel(2)) +
       
       # Date
-      geom_rect(xmin = as.Date("2021-05-04"), xmax = as.Date("2021-05-12"), ymin = 325, ymax = 425, fill = "#FFE033") +
-      geom_text(x = as.Date("2021-05-08"), y = 375, label = this_curr_todaystring, fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
+      geom_rect(xmin = as.Date("2021-05-07"), xmax = as.Date("2021-05-13"), ymin = 350, ymax = 450, fill = "#FFE033") +
+      geom_text(x = as.Date("2021-05-10"), y = 400, label = this_curr_todaystring, fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
       
       # Attribution
-      geom_text(x = as.Date("2021-05-04"), y = 300, color = brewer.pal(9, "Greys")[4], hjust = 0, vjust = 0.5, size = 1.4, # fontface = "italic", family = 'serif',
+      geom_text(x = as.Date("2021-05-07"), y = 325, color = brewer.pal(9, "Greys")[4], hjust = 0, vjust = 0.5, size = 1.6, 
                 label = "Data: Taiwan CECC, MOHW\nAuthors: Chase W. Nelson & Mitch Lin") +
       
       # Counter for number added
@@ -1156,9 +1116,9 @@ while (this_curr_date <= date_range_end) {
       #geom_text(x = as.Date("2021-05-10"), y = 200, label = "150", fontface = "bold", color = "#5B9CD6", hjust = -0.2, vjust = 0.5, size = 5) + #, size = 2.75) +
       #geom_text(x = as.Date("2021-05-10"), y = 200, label = "+", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5) + #, size = 2.75) +
       #geom_text(x = as.Date("2021-05-10"), y = 100, label = "=250", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
-      geom_text(x = as.Date("2021-05-04"), y = 250-50, label = paste0("Total: ", total_count), fontface = "bold", color = brewer.pal(9, "Greys")[6], hjust = 0, vjust = 0.5, size = 4.75) + #, size = 2.75) +
-      geom_text(x = as.Date("2021-05-04"), y = 205-50, label = paste0("Backlogged: ", backlog_count), fontface = "bold", color = brewer.pal(9, "Reds")[4], hjust = 0, vjust = 0.5, size = 2.6) + #, size = 2.75) +
-      geom_text(x = as.Date("2021-05-04"), y = 175-50, label = paste0("Today: ", today_count), fontface = "bold", color = brewer.pal(9, "Blues")[5], hjust = 0, vjust = 0.5, size = 2.6) + # "#5B9CD6"
+      geom_text(x = as.Date("2021-05-07"), y = 250-50, label = paste0("Total: ", total_count), fontface = "bold", color = brewer.pal(9, "Greys")[6], hjust = 0, vjust = 0.5, size = 4.75) + #, size = 2.75) +
+      geom_text(x = as.Date("2021-05-07"), y = 205-50, label = paste0("Backlogged: ", backlog_count), fontface = "bold", color = brewer.pal(9, "Reds")[4], hjust = 0, vjust = 0.5, size = 2.6) + #, size = 2.75) +
+      geom_text(x = as.Date("2021-05-07"), y = 175-50, label = paste0("Today: ", today_count), fontface = "bold", color = brewer.pal(9, "Blues")[5], hjust = 0, vjust = 0.5, size = 2.6) + # "#5B9CD6"
       
       # LOCKED dates
       #geom_image(mapping = aes(image = "~/Desktop/Taiwan_COVID_data/LOCK.svg"), size = 1) +
@@ -1188,39 +1148,22 @@ while (this_curr_date <= date_range_end) {
       #geom_line(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE, size = 1.0) +
       #geom_point(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE) +
       
-      ggtitle(label = "2021 Taiwan local COVID-19 cases") + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
+      ggtitle(label = "2021 Taiwan Local COVID-19 Cases") + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
       
-      #theme_classic() +
-      # Custom axis labels
-      geom_text(x = -Inf, y = 500, label = "500 daily cases assigned", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-      geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-      geom_text(x = -Inf, y = 300, label = "300", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-      geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-      geom_text(x = -Inf, y = 100, label = "100", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-      
-      geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-      theme(#panel.grid = element_blank(),
-        panel.background = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank(),
-        panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-        axis.ticks.y = element_blank(),
-        #axis.line = element_blank(),
-            plot.margin = unit(x = c(1, 1, 1, 1), units = "line"),
-            plot.title = element_text(face = "bold", size = 10), # hjust = 0.5, 
-            #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-            legend.position = 'right',# c(0.125, 0.525), # 'none',
-        legend.margin = margin(l = -0.25, unit = 'line'),
-            legend.key.size = unit(x = 0.7, units = 'line'), 
+      theme_classic() +
+      theme(panel.grid = element_blank(),
+            plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
+            plot.title = element_text(hjust = 0.5),
+            plot.subtitle = element_text(hjust = 0.5, face = "bold"),
+            legend.position = c(0.125, 0.525), # 'none',
+            legend.key.size = unit(x = 0.75, units = 'line'), 
             legend.title = element_text(size = 8), #legend.title = element_blank(),
-            legend.text = element_text(size = 6), #legend.title = element_blank(),
+            legend.text = element_text(size = 7), #legend.title = element_blank(),
             #axis.text.x = element_text(size = 7),
             #axis.text.x = element_blank(),
-        axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6]),
-        axis.text.y = element_blank(), #element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-        axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-        axis.title.y = element_blank(), #element_text(size = 9),
-        strip.background = element_blank()) +
+            axis.text.y = element_text(size = 9),
+            axis.title.y = element_text(size = 9),
+            strip.background = element_blank()) +
       xlab("") + ylab("Daily cases") +
       scale_x_date(labels = date_format("%b %d"),
                    expand = expand_scale(mult = c(0, 0)),
@@ -1229,12 +1172,12 @@ while (this_curr_date <= date_range_end) {
       #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
       #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
       #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-      scale_y_continuous(limits = c(0, 550), breaks = seq(100, 500, 100), expand = expand_scale(mult = c(0, 0))) +
+      scale_y_continuous(expand = expand_scale(mult = c(0, 0)), limits = c(0, 550)) +
       scale_fill_manual(values = c("#5B9CD6", brewer.pal(9, "Purples")[3], brewer.pal(9, "RdPu")[2:3], brewer.pal(9, "Reds")[3:9]), 
                         name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
   
   # SAVE
-  png(filename = this_curr_date_filename, width = 5.5, height = 3.2, units = 'in', res = 500)
+  png(filename = this_curr_date_filename, width = 5.5, height = 3.3, units = 'in', res = 500)
   print(localCases_daysDelayed_TIMELAPSE_PLOT)
   dev.off()
   
@@ -1249,7 +1192,7 @@ while (this_curr_date <= date_range_end) {
 ####
 ## SAVE LATEST TODAY'S
 this_curr_date_filename <- paste0("~/Desktop/Taiwan_COVID_data/cases_by_days_late_", timenow, ".png")
-png(filename = this_curr_date_filename, width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = this_curr_date_filename, width = 5.5, height = 3.3, units = 'in', res = 500)
 print(localCases_daysDelayed_TIMELAPSE_PLOT)
 dev.off()
 ####
@@ -1346,14 +1289,9 @@ for(this_days_delayed in names(days_late_sums)) {
 (days_late_proportions <- days_late_sums / sum(days_late_sums))
 
 # calculate mean number outstanding expected to be reassigned to each day back
-(NUM_OUTSTANDING1 <- case_data_projecting[case_data_projecting$date == timenow, ]$not_yet_interpreted_TotalInspection_MIN_Completed)
+(NUM_OUTSTANDING <- case_data_projecting[case_data_projecting$date == timenow, ]$not_yet_interpreted_TotalInspection_MIN_Completed)
 # compare to https://sites.google.com/cdc.gov.tw/2019ncov/taiwan
 # 2021/06/01: 522816-488696-8511=25609 vs. 25.1
-# 2021/06/02: 551478-524385-8842=18,251 vs. 0
-#2021/06/03: 578935-556055-9974=12906 vs. 
-#(NUM_OUTSTANDING2 <- 18251) # go with the cdc website instead 6/2
-(NUM_OUTSTANDING2 <- 12906) # go with the cdc website instead 6.3
-(NUM_OUTSTANDING <- round(mean(c(NUM_OUTSTANDING1, NUM_OUTSTANDING2))))
 (CURR_CUM_PROP_POS <- case_data_projecting[case_data_projecting$date == timenow, ]$test_total_positive_rate_Confirmed_DIV_Completed)
 (NUM_OUTSTANDING_PREDICT_POS <- NUM_OUTSTANDING * CURR_CUM_PROP_POS)
 (days_late_PREDICTED_ADDITIONS <- round(days_late_proportions * NUM_OUTSTANDING_PREDICT_POS))
@@ -1363,15 +1301,15 @@ case_data_projecting$Num_Local_Cases_Projected <- case_data_projecting$New_Local
 
 for(this_days_late in 1:MAX_DAYS_LATE) {
   #this_days_late <- 1
-  this_date <- timenow - this_days_late + 1 # new, better method
+  this_date <- timenow - this_days_late
   this_PREDICTED_ADDITION <- as.integer(days_late_PREDICTED_ADDITIONS[this_days_late])
   case_data_projecting[case_data_projecting$date == this_date, ]$Num_Local_Cases_Projected <- 
     case_data_projecting[case_data_projecting$date == this_date, ]$Num_Local_Cases_Projected + this_PREDICTED_ADDITION
 }
 
-# FINALLY, set current day's prediction to previous day's prediction so as not to bias trend - better method
-#case_data_projecting[case_data_projecting$date == timenow, ]$Num_Local_Cases_Projected <- 
-#  case_data_projecting[case_data_projecting$date == timenow - 1, ]$Num_Local_Cases_Projected
+# FINALLY, set current day's prediction to previous day's prediction so as not to bias trend
+case_data_projecting[case_data_projecting$date == timenow, ]$Num_Local_Cases_Projected <- 
+  case_data_projecting[case_data_projecting$date == timenow - 1, ]$Num_Local_Cases_Projected
 
 #View(case_data_projecting)
 
@@ -1443,24 +1381,16 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
 
 # Notes
 # Taiwan orange: #EE7E32
-View(case_data_projecting)
+#View(case_data_projecting)
 
 ### PLOT PROJECTED ###
 (localCases_PROJECTED_PLOT <- ggplot(data = case_data_projecting, 
                                      mapping = aes(x = date, y = Num_Local_Cases_Projected)) +
     
-    # LEVEL 3 ALERT - Taipei
-    geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 525, linetype = "dashed", color = brewer.pal(9, "Greens")[5], size = 0.2) + #, size = 0.4) +
-    geom_text(x = LEVEL3_DAY, y = 525, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Greens")[8], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-    
-    # LEVEL 3 ALERT - COUNTRY
-    geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 600, linetype = "dashed", color = brewer.pal(9, "Greens")[5], size = 0.2) + #, size = 0.4) +
-    geom_text(x = LEVEL3_DAY_COUNTRY, y = 600, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Greens")[8], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-    
-    # PREDICTED values <--- CHANGETHIS ***************
+    # PREDICTED values
     geom_bar(stat = "identity", fill = "#F7C3A1", position = position_dodge(width = 0)) + # , width = 10
-    geom_text(data = filter(case_data_projecting, date != timenow), mapping = aes(label = Num_Local_Cases_Projected), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-    geom_text(data = filter(case_data_projecting, date == timenow), mapping = aes(label = Num_Local_Cases_Projected), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -1.4, size = 1.5) + 
+    geom_text(mapping = aes(label = Num_Local_Cases_Projected), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
+   
    
     # CURRENT REVISED values
     geom_bar(mapping = aes(y = New_Local_Cases_Revised), stat = "identity", fill = "#EE7E32", position = position_dodge(width = 0)) + # , width = 10
@@ -1469,19 +1399,26 @@ View(case_data_projecting)
     geom_bar(mapping = aes(y = New_Local_Cases_Original), stat = "identity", fill = "#5B9CD6", position = position_dodge(width = 0)) + # , width = 10
     
     # Show 7-day window with line and error (from plot 5)
-    geom_line(mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean), color = brewer.pal(9, 'Greys')[6]) +
+    geom_line(mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean), color = brewer.pal(9, 'Greys')[7]) +
    #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_PREDICTED_cases_mean - sw_PREDICTED_cases_SE, ymax = sw_PREDICTED_cases_mean + sw_PREDICTED_cases_SE),  
    #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_PREDICTED_cases_mean - sw_PREDICTED_cases_sd, ymax = sw_PREDICTED_cases_mean + sw_PREDICTED_cases_sd), 
    #             alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Greys')[8]) + 
+   geom_point(data = filter(case_data_projecting, sw_end_date == timenow),
+              mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean), color = brewer.pal(9, 'Greys')[7]) + 
    geom_text(data = filter(case_data_projecting, sw_end_date == timenow), 
-             mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean, label = round(x = sw_PREDICTED_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.3, size = 3.4) + # , hjust = -1
-    geom_point(data = filter(case_data_projecting, sw_end_date == timenow),
-               mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean), color = "black") + # brewer.pal(9, 'Greys')[7]
+             mapping = aes(x = sw_end_date, y = sw_PREDICTED_cases_mean, label = round(x = sw_PREDICTED_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.25, size = 3.4) + # , hjust = -1
    
+   # LEVEL 3 ALERT - Taipei
+   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 525, linetype = "dashed", color = brewer.pal(9, "Greens")[8], size = 0.2) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY, y = 525, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Greens")[8], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
    
-#    # PROJECTED
-    #geom_rect(xmin = as.Date("2021-05-02"), xmax = as.Date("2021-05-10"), ymin = 425, ymax = 625, fill = brewer.pal(9, "YlGn")[3]) + # yellow
-    #geom_text(x = as.Date("2021-05-6"), y = 525, label = "Projected\nTotals", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
+   # LEVEL 3 ALERT - COUNTRY
+   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 585, linetype = "dashed", color = brewer.pal(9, "Greens")[8], size = 0.2) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY_COUNTRY, y = 585, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Greens")[8], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
+   
+#    # Date
+    geom_rect(xmin = as.Date("2021-05-02"), xmax = as.Date("2021-05-10"), ymin = 425, ymax = 625, fill = brewer.pal(9, "YlGn")[3]) + # yellow
+    geom_text(x = as.Date("2021-05-6"), y = 525, label = "Projected\nTotals", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
 
     # Attribution
     #geom_text(x = as.Date("2021-05-02"), y = 335, color = brewer.pal(9, "Greys")[4], hjust = 0, vjust = 0.5, size = 1.6, 
@@ -1501,37 +1438,23 @@ View(case_data_projecting)
 #    #geom_line(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE, size = 1.0) +
 #    #geom_point(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE) +
 
-    ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   ", this_curr_todaystring)) + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
+    ggtitle(label = "2021 Taiwan Local COVID-19 Cases") + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
     
-    #theme_classic() +
-    
-    # Custom axis labels
-    geom_text(x = -Inf, y = 600, label = "600 daily cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    
-    
-    geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-    theme(#panel.grid = element_blank(),
-      panel.background = element_blank(),
-      panel.grid.minor = element_blank(),
-      panel.grid.major.x = element_blank(),
-      panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-      axis.ticks.y = element_blank(),
-      #axis.line = element_blank(),
+    theme_classic() +
+    theme(panel.grid = element_blank(),
           plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
-          plot.title = element_text(face = "bold", size = 10), # family = "sans", hjust = 0.5, 
-          #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-          legend.position = 'none', # c(0.125, 0.525), # 'none',
-          #legend.key.size = unit(x = 0.75, units = 'line'), 
-          #legend.title = element_text(size = 8), #legend.title = element_blank(),
-          #legend.text = element_text(size = 7), #legend.title = element_blank(),
-          #axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6]),
-      axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-      axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-      axis.title.y = element_blank(), #element_text(size = 9),
-      strip.background = element_blank()) +
-    xlab("") + #ylab("Daily cases") +
+          plot.title = element_text(hjust = 0.5),
+          plot.subtitle = element_text(hjust = 0.5, face = "bold"),
+          legend.position = c(0.125, 0.525), # 'none',
+          legend.key.size = unit(x = 0.75, units = 'line'), 
+          legend.title = element_text(size = 8), #legend.title = element_blank(),
+          legend.text = element_text(size = 7), #legend.title = element_blank(),
+          #axis.text.x = element_text(size = 7),
+          #axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 9),
+          axis.title.y = element_text(size = 9),
+          strip.background = element_blank()) +
+    xlab("") + ylab("Daily cases") +
    #            breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + 
     scale_x_date(labels = date_format("%b %d"),
                  expand = expand_scale(mult = c(0, 0.04)),
@@ -1539,12 +1462,12 @@ View(case_data_projecting)
     #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
     #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
     #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-    scale_y_continuous(limits = c(0, 650), breaks = c(200, 400, 600), expand = expand_scale(mult = c(0, 0.05))))# + , limits = c(0, 600)
+    scale_y_continuous(limits = c(0, 650), expand = expand_scale(mult = c(0, 0.05))))# + , limits = c(0, 600)
     #scale_fill_manual(values = c("#5B9CD6", brewer.pal(9, "Purples")[3], brewer.pal(9, "RdPu")[2:3], brewer.pal(9, "Reds")[3:9]), 
     #                  name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
 
 # SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/projected_total_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/projected_total_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
 print(localCases_PROJECTED_PLOT)
 dev.off()
 
@@ -1565,7 +1488,7 @@ dev.off()
     
     # PREDICTED values
     geom_bar(stat = "identity", fill = "#F7C3A1", position = position_dodge(width = 0)) + ##F4AB7B, width = 10, #F7C3A1 / #EE7E32 / F3A068 / F4AB7B
-    geom_text(aes(label = days_late_Percent), vjust = -0.4, size = rel(2.15)) +
+    geom_text(aes(label = days_late_Percent), vjust = -0.2, size = rel(2.5)) +
 #    #    # Date
 #    geom_rect(xmin = as.Date("2021-05-02"), xmax = as.Date("2021-05-12"), ymin = 375, ymax = 575, fill = "#FFE033") +
 #    geom_text(x = as.Date("2021-05-7"), y = 475, label = "Predicted\nFinal Revision", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
@@ -1576,24 +1499,10 @@ dev.off()
     
   #ggtitle(label = "2021 Taiwan Local COVID-19 Cases") + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
     
-    #theme_classic() +
-  
-  # Custom axis labels
-  #geom_text(x = -Inf, y = 75, label = "75 projected positive cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 50, label = "50 projected positive cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 25, label = "25", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    
-    
-  geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-    theme(#panel.grid = element_blank(),
-      panel.background = element_blank(),
-      panel.grid.minor = element_blank(),
-      panel.grid.major.x = element_blank(),
-      panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-      axis.ticks.y = element_blank(),
-      #axis.line = element_blank(),#panel.grid.minor = element_blank(),
+    theme_classic() +
+    theme(#panel.grid.minor = element_blank(),
           #panel.grid.major.x = element_blank(),
-          #panel.grid.major.y = element_line(color = "lightgray"),
+          panel.grid.major.y = element_line(color = "lightgray"),
           plot.margin = unit(x = c(1, 1, 1, 1), units = "line"),
           plot.title = element_text(hjust = 0.5),
           plot.subtitle = element_text(hjust = 0.5, face = "bold"),
@@ -1606,19 +1515,15 @@ dev.off()
           #axis.text.y = element_blank(), # element_text(size = 9),
           #axis.title.y = element_blank(), # element_text(size = 9),
           #axis.line.y = element_blank(), # 
-          #axis.ticks.y = element_blank(), 
-      axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6]),
-      axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-      axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-      axis.title.y = element_blank(), # element_text(size = 9),
-      strip.background = element_blank()) +
-    xlab("Days ago") + #ylab("Projected positive cases") +
+          #axis.ticks.y = element_blank(), # 
+          strip.background = element_blank()) +
+    xlab("Days ago") + ylab("Projected positive cases") +
     scale_x_reverse(limits = c(15.5, 0.5), breaks = 15:1) + 
     #scale_x_date(labels = date_format("%b %d"),
     #             expand = expand_scale(mult = c(0, 0)),
     #             limits = c(date_chart_start - 1, date_range_end + 1)) + 
     #scale_y_continuous(expand = expand_scale(mult = c(0, 0.05)), labels = percent_format()))
-    scale_y_continuous(limits = c(0, 60), breaks = c(25, 50), expand = expand_scale(mult = c(0, 0.05))))
+    scale_y_continuous(limits = c(0, 120), expand = expand_scale(mult = c(0, 0.05))))
 
 
 png(filename = paste0("~/Desktop/Taiwan_COVID_data/backlog_time_distribution_", timenow, ".png"), width = 5.5, height = 2.75, units = 'in', res = 500)
