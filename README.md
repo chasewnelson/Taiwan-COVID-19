@@ -1,4 +1,4 @@
-<img src="https://github.com/chasewnelson/SARS-CoV-2-ORF3d/blob/master/images/cover_image.png?raw=true" title="Overlapping gene products" alt="Overlapping gene products" align="left" size="small">
+<img src="https://github.com/chasewnelson/SARS-CoV-2-ORF3d/blob/master/images/cover_image.png?raw=true" title="SARS-CoV-2 alignment montage" alt="SARS-CoV-2 alignment montage" align="left" size="small">
 
 # Taiwan COVID-19 Analyses (2021)
 Data, methods, and results of analyses tracking the 2021 COVID-19 outbreak in Taiwan.
@@ -31,7 +31,7 @@ This repository collects the data shown each day and the analysis methods used. 
 * The `visualizations` folder contains visualizations by date
 * The R script `Taiwan_COVID19_data.R` contains the code used to produce numerical results and visualizations
 
-I focus on a few key metrics, and make no attempt to be thorough. For example, I do not currently track deaths. My purpose is not to provide a complete picture, but rather new ways of understanding the case counts as they are revised, and what they might tell us about the trajectory of the outbreak. All opinions are my own.
+I focus on a few key metrics, and make no attempt to be thorough. For example, I do not currently track deaths or *R*<sub>t</sub>, which are [metrics that lag far behind cases](https://www.nature.com/articles/d41586-020-02009-w/). My purpose is not to provide a complete picture, but rather clear ways of understanding the case counts as they are revised, and what they might tell us about the trajectory of the outbreak. All opinions are my own.
 
 
 ## <a name="data-sources"></a>Data Sources
@@ -61,12 +61,12 @@ Raw data were retrieved from the following sources:
 
 ## <a name="methods"></a>Methods
 
-Data were downloaded or manually recorded from the aforemenetioned sources. All statistical analyses were performed in Microsoft Excel and R version 3.5.2 (2018-12-20) "Eggshell Igloo" (<a target="_blank" href="https://www.R-project.org/">R Development Core Team</a>). Specifically, the R script `Taiwan_COVID19_data.R` was used to analyze data and produce raw visualizations, which were then modified in Microsoft PowerPoint. Note that the R script is meant to be run manually, line-by-line in an interactive program such as RStudio. This forces the user (e.g., me!) to inspect the results as they are analyzed, check for errors, and make any changes necessary due to peculiarities in each day's new results.
+Data were downloaded or manually recorded from the aforemenetioned sources. All statistical analyses were performed in Microsoft Excel and R version 3.5.2 (2018-12-20) "Eggshell Igloo" (<a target="_blank" href="https://www.R-project.org/">R Development Core Team</a>). Specifically, the R script `Taiwan_COVID19_data.R` was used to analyze data and produce raw visualizations, which were then modified in Microsoft PowerPoint. GIFs were created using [GIFMaker.me](https://gifmaker.me/). Note that the R script is meant to be run manually, line-by-line in an interactive program such as RStudio. This forces the user (e.g., me!) to inspect the results as they are analyzed, check for errors, and make any changes necessary due to peculiarities in each day's new results.
 
 
 ## <a name="results"></a>Results
 
-I here provide demonstrations of the results produced for the date of June 3, 2021 (20210603). The charts will not be regularly updated; instead, updates will be posted to <a target="_blank" href="https://twitter.com/chasewnelson">Twitter</a> and <a target="_blank" href="https://www.facebook.com/chasewnelson">Facebook</a>. 
+I here provide demonstrations of the results produced for the date of June 5, 2021 (20210605). The charts will not be regularly updated; instead, updates will be posted to <a target="_blank" href="https://twitter.com/chasewnelson">Twitter</a> and <a target="_blank" href="https://www.facebook.com/chasewnelson">Facebook</a>. 
 
 ### <a name="backlogging"></a>Backlogging
 
@@ -77,39 +77,39 @@ The visualizations below demonstrate the effect backlogging may be having on per
 
 ### <a name="time"></a>Time-Lapse of Cases
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210603.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
+Results below are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago. Based on the backlogging pattern observed thus far, we considered dates >9 days in the past relatively ‘locked in’ (unlikely to change substantially).
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210603.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210605.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
 
-Here results are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago. Based on the backlogging pattern observed thus far, we considered dates >9 days in the past relatively ‘locked in’ (unlikely to change substantially).
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210605.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
 
 
 ### <a name="cases"></a>Cases by Date Added
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210603.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
+Results below are instead depicted by **date added** (shade of orange) during backlogging. This is helpful because the original same-day values (blue bars, following the MOHW color scheme), a better metric of trend than the revised values, can be clearly seen.
 
-Here results are instead depicted by **date added** (shade of orange) during backlogging.
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210605.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
 
 
 ### <a name="seven"></a>Seven-Day Average of Total Reported
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210603.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
+Results below are shown as 7-day averages (red line) using non-backlogged TOTALS REPORTED each day (gray bars). Each day is the mean of itself and the previous 6 days. This provides a decent measure of trend when outstanding tests remain unfinished and the extent of possible revisions to previous dates is uncertain.
 
-Here results are shown as 7-day averages (red line) using non-backlogged TOTALS REPORTED each day (gray bars). Each day is the mean of itself and the previous 6 days. This provides a decent measure of trend when outstanding tests remain unfinished and the extent of possible revisions to previous dates is uncertain.
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210605.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
 
 
 ### <a name="backlog"></a>Backlog Time Distribution
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210603.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
+On the day shown (June 5, 2021) the backlog was ~10k tests. To that point, 24% of tests had been assigned to the previous day; 19% to the day before that; and so on. This allowed a projection of how the current backlog would be distributed (next section).
 
-On the day shown (June 3, 2021) the backlog was ~12k tests. To that point, 24% of tests had been assigned to the previous day; 17% to the day before that; and so on. This allowed a projection of how the current backlog would be distributed (next section).
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210605.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
 
 
 ### <a name="projected"></a>Projected Totals After Revision
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210603.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
+For this date (June 5, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate was that 1.8% of the ~10k backlog would test positive and be distributed to previous dates in the same manner (distribution) observed up to that point in time. Based on this reasoning, Albert Lin 林書弘 and I made the projection below, which is an estimate of the final counts if the full current backlog were completed the next day. Conceptually, it simply takes the projected backlog numbers implied by the [backlog time distribution](#backlog) (above) and places it on top of the current revised counts.
 
-For this date (June 3, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate was that 1.8% of the ~12k backlog would test positive and be distributed to previous dates in the same manner (distribution) observed to that point in time. Based on this reasoning, Albert Lin 林書弘 and I made the projection above, which is an estimate of the final counts if the full current backlog were completed the next day. Conceptually, it simply takes the projected backlog numbers implied by the backlog time distribution (above) and places it on top of the current revised counts.
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210605.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
 
 
 ## <a name="notes"></a>Notes and Clarifications
@@ -119,7 +119,7 @@ For this date (June 3, 2021), 1.8% of recent targeted tests (likely cases) had b
 
 ## <a name="acknowledgments"></a>Acknowledgments
 
-Mitch (Ming-Hsueh) Lin 林明學 was critical for conceiving visualizations. Albert Lin 林書弘, Mitch (Ming-Hsueh) Lin 林明學, and Alexis (surname unknown) provided critical insights and feedback. The Taiwan CDC and MOHW, as well as the open source data sharing community in Taiwan (including Samuel Liu and g0v) were essential for openly sharing and compiling data. Finally, a big thanks to the government, medical, and science workers who have made Taiwan — still — the Safest Place On Earth. We're lucky to live in this country. It should be <a target="_blank" href="https://www.nature.com/articles/d41586-020-00693-2">part of the World Health Organization (WHO)</a>.
+Mitch (Ming-Hsueh) Lin 林明學 was critical for conceiving visualizations. Albert Lin 林書弘, Mitch (Ming-Hsueh) Lin 林明學, and Alexis (surname unknown) provided critical insights and feedback. The Taiwan CDC and MOHW, as well as the open source data sharing community in Taiwan (including Samuel Liu and g0v) were essential for openly sharing and compiling data. Finally, a big thanks to the government, medical, and science workers who have made Taiwan — still — the Safest Place On Earth. We're lucky to live in this country. <a target="_blank" href="https://www.nature.com/articles/d41586-020-00693-2">It should be part of the World Health Organization (WHO)</a>.
 
 
 ## <a name="contact"></a>Contact and troubleshooting
