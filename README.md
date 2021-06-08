@@ -38,11 +38,13 @@ I focus on a few key metrics, and make no attempt to be thorough. For example, I
 
 Raw data were retrieved from the following sources:
 
-1. Taiwan CDC website: 
+1. Taiwan CDC 
 
 `https://data.cdc.gov.tw/dataset/daily-cases-suspected-sars-cov-2-infection_tested`
 `https://data.cdc.gov.tw/en/dataset/covid19_tw__stats`
 `https://data.gov.tw/dataset/120451`
+`https://data.cdc.gov.tw/dataset/daily-cases-suspected-sars-cov-2-infection_tested`
+`https://data.cdc.gov.tw/en/dataset/agsdctable-day-19cov`
 
 2. Taiwan Ministry of Health and Welfare (MOHW)
 
@@ -53,10 +55,13 @@ Raw data were retrieved from the following sources:
 
 `https://web.cw.com.tw/covid-live-updates-2021-en/index.html`
 
-4. Open Data Public Collaborations
+4. Open Data Public Collaborations (g0v, etc.)
 
 `https://docs.google.com/spreadsheets/d/1qh20J-5rGVIEjLcGKJnfj7huAp-nCxsd-fJdmh3yZKY/htmlview#`
 `https://docs.google.com/spreadsheets/d/12tQKCRuaiBZfc9yDd6tmlOdsm62ke_4AcKmNJ6q4gdU/htmlview#`
+
+4. NHCH (death data)
+`https://covid-19.nchc.org.tw/deathstatistics.php?dt_name=1&downloadall=yes`
 
 
 ## <a name="methods"></a>Methods

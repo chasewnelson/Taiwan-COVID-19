@@ -17,8 +17,6 @@ library(tidyverse)
 library(scales)
 library(RColorBrewer)
 library(ggimage)
-library(jsonlite)
-library(patchwork)
 #library(lubridate)
 #library(ggimage)
 #library(rsvg)
@@ -83,8 +81,6 @@ head(case_data$Date_of_Reporting)
 (case_data$New_Local_Cases_20210602 <- as.integer(case_data$New_Local_Cases_20210602))
 (case_data$New_Local_Cases_20210603 <- as.integer(case_data$New_Local_Cases_20210603))
 (case_data$New_Local_Cases_20210604 <- as.integer(case_data$New_Local_Cases_20210604))
-(case_data$New_Local_Cases_20210605 <- as.integer(case_data$New_Local_Cases_20210605))
-(case_data$New_Local_Cases_20210606 <- as.integer(case_data$New_Local_Cases_20210606))
 ########## ADD TO THIS EVERY DAY ##########
 
 # find minimum and maximum dates
@@ -747,30 +743,26 @@ dev.off()
                                                 mapping = aes(x = sw_end_date, y = sw_new_local_cases_mean)) + # color = significant
     
    # LEVEL 3 ALERT Taipei
-   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 555, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) + # brewer.pal(9, "Set1")[2]
-   geom_text(x = LEVEL3_DAY, y = 555, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
+   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 400, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) + # brewer.pal(9, "Set1")[2]
+   geom_text(x = LEVEL3_DAY, y = 400, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2.25) + #, size = 2.75) +
    
    # LEVEL 3 ALERT COUNTRYWIDE
-   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 630, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + # , size = 0.4) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY_COUNTRY, y = 630, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2) + #, size = 2.75) +
+   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 550, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + # , size = 0.4) + #, size = 0.4) +
+   geom_text(x = LEVEL3_DAY_COUNTRY, y = 550, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2.25) + #, size = 2) + #, size = 2.75) +
    
-    # RED COLORS: lighter bars - Show daily reported with bars (& text?)
-    geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = "#F8C9CB", stat = "identity", color = "NA") + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8] #, alpha = 0.75  brewer.pal(9, 'Greys')[3]
-    geom_text(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.375, size = 1.5) +
-    
-   ## GRAY COLORS 1: lighter bars - Show daily reported with bars (& text?)
-   #geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = "#E0E0E0", stat = "identity", color = "NA") + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8] #, alpha = 0.75  brewer.pal(9, 'Greys')[3]
-   #geom_text(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.375, size = 1.5) +
+   # COLORS 1: lighter bars - Show daily reported with bars (& text?)
+   geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = "#E0E0E0", stat = "identity", color = "NA") + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8] #, alpha = 0.75  brewer.pal(9, 'Greys')[3]
+   geom_text(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.375, size = 1.5) +
    
-   # GRAY COLORS 2: darker bars - Show daily reported with bars (& text?)
+   # COLORS 2: darker bars - Show daily reported with bars (& text?)
    #geom_bar(mapping = aes(x = Date_of_Reporting, y = New_Local_Cases), fill = brewer.pal(9, 'Greys')[5], stat = "identity", color = "NA", alpha = 0.75) + # brewer.pal(9, 'Set1')[1]) + brewer.pal(9, 'Reds')[8]
    #geom_text(data = filter(case_data, Date_of_Reporting >= MIN_DATE_DISPLAYED, New_Local_Cases > 100), 
    #          mapping = aes(x = Date_of_Reporting, y = New_Local_Cases, label = New_Local_Cases), color = "white", hjust = 0.5, vjust = 1.5, size = 1.5) +
    
    # Show 7-day window with line and error
-   geom_line(color = brewer.pal(9, 'Reds')[7]) + # brewer.pal(9, 'Reds')[7]) + # brewer.pal(9, 'Reds')[8]
-   #geom_ribbon(mapping = aes(ymin = sw_new_local_cases_mean - sw_new_local_cases_SE, ymax = sw_new_local_cases_mean + sw_new_local_cases_SE), 
-   #            alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Reds')[8]) + # brewer.pal(9, 'Set1')[1]) +
+   geom_line(color = brewer.pal(9, 'Reds')[8]) + # brewer.pal(9, 'Reds')[8]
+   geom_ribbon(mapping = aes(ymin = sw_new_local_cases_mean - sw_new_local_cases_SE, ymax = sw_new_local_cases_mean + sw_new_local_cases_SE), 
+               alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Reds')[8]) + # brewer.pal(9, 'Set1')[1]) +
    
    # Show TODAY'S WINDOW VALUE
    geom_point(data = filter(case_data, sw_end_date == timenow), color = brewer.pal(9, 'Reds')[8]) + 
@@ -790,14 +782,14 @@ dev.off()
               hjust = 0.35, vjust = -1, size = 1.5) +
     
    # TITLE
-   ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   Reported   |   ", todaystring)) + #, " / First-Day (Non-Backlogged) Values")) +
+   ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   7-day average   |   ", todaystring)) + #, " / First-Day (Non-Backlogged) Values")) +
    
    #geom_abline(slope = 0, intercept = 1, linetype = "dashed", color = "grey") +
    #theme_classic() +
    #theme_bw() +
    
    # Custom axis labels
-   geom_text(x = -Inf, y = 600, label = "600 daily cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
+   geom_text(x = -Inf, y = 600, label = "600 daily cases reported", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
    geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
    geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
    
@@ -828,8 +820,7 @@ dev.off()
                 breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
    #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
    #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-   scale_y_continuous(limits = c(0, 730),
-                      breaks = c(200, 400, 600), expand = expand_scale(mult = c(0, 0.05)))) #
+   scale_y_continuous(breaks = c(200, 400, 600), expand = expand_scale(mult = c(0, 0.05)))) #
 #      sec.axis = sec_axis(~.*(max(case_data$sw_prop_tests_positive_CIhigh, na.rm = TRUE) / max(case_data$New_Local_Cases_Revised_CUMSUM, na.rm = TRUE)),
 #                          name = "Prop positive (7-day window)"), expand = expand_scale(mult = c(0, .05)))) # + # expand = c(0, 0)
 
@@ -891,56 +882,49 @@ dev.off()
  #start darkerx4, step by 2: 97440C BD550F E26612 EE7E32 F19455 F4AB7B F7C3A1 FADBC6-- for 5/28
  #start darkerx4, step by 3: BD550F ED701D F19455 F6B78E FADBC6
  
- # FINAL NUMBER OF COLORS:
- # blue + 9 oranges: 
- # brewer.pal(9, "Greys")[2], FCE7D9 F7C3A1 F3A068 EE7E32 D05D11 97440C 5E2A08 261103
- 
- # Show REVISED (TODAY, 6/6)
- geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = '#261103', stat = "identity", color = "NA") + # 
+ # Show REVISED (TODAY, 6/5)
+ geom_bar(mapping = aes(y = New_Local_Cases_Revised), fill = 'black', stat = "identity", color = "NA") + # 
    
    ### MOVE DOWN AND ADD HERE ###
-   # Show REVISED (6/5)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210605), fill = '#5E2A08', stat = "identity", color = "NA") + # 
+   # Show REVISED (6/4)
+   geom_bar(mapping = aes(y = New_Local_Cases_20210604), fill = '#4B2206', stat = "identity", color = "NA") + # 
    ################
    
- # Show REVISED (6/4)
- geom_bar(mapping = aes(y = New_Local_Cases_20210604), fill = '#97440C', stat = "identity", color = "NA") + # 
-   
  # Show REVISED (6/3)
- geom_bar(mapping = aes(y = New_Local_Cases_20210603), fill = '#D05D11', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210603), fill = '#713309', stat = "identity", color = "NA") + # 
    
  # Show REVISED (6/2)
- geom_bar(mapping = aes(y = New_Local_Cases_20210602), fill = '#EE7E32', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210602), fill = '#97440C', stat = "identity", color = "NA") + # 
    
  # Show REVISED (6/1)
- geom_bar(mapping = aes(y = New_Local_Cases_20210601), fill = '#F3A068', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210601), fill = '#BD550F', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/31)
- geom_bar(mapping = aes(y = New_Local_Cases_20210531), fill = '#F7C3A1', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210531), fill = '#E26612', stat = "identity", color = "NA") + # 
    
  #Show REVISED (5/30)
- geom_bar(mapping = aes(y = New_Local_Cases_20210530), fill = '#FCE7D9', stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210530), fill = '#ED701D', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/29)
- geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210529), fill = '#EE7E32', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/28)
- geom_bar(mapping = aes(y = New_Local_Cases_20210528), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210528), fill = '#F08842', stat = "identity", color = "NA") + # 
    
  # Show REVISED (5/27)
- geom_bar(mapping = aes(y = New_Local_Cases_20210527), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") + # 
+ geom_bar(mapping = aes(y = New_Local_Cases_20210527), fill = '#F19455', stat = "identity", color = "NA") + # 
    
    # Show REVISED (5/26)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210526), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") + # 
+   geom_bar(mapping = aes(y = New_Local_Cases_20210526), fill = '#F3A068', stat = "identity", color = "NA") + # 
    
    # Show REVISED (5/25)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210525), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") +
+   geom_bar(mapping = aes(y = New_Local_Cases_20210525), fill = '#F6B78E', stat = "identity", color = "NA") +
    
    # Show REVISED (5/24)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210524), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") +
+   geom_bar(mapping = aes(y = New_Local_Cases_20210524), fill = '#F9CFB4', stat = "identity", color = "NA") +
    
    # Show REVISED (5/23)
-   geom_bar(mapping = aes(y = New_Local_Cases_20210523), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") +
+   geom_bar(mapping = aes(y = New_Local_Cases_20210523), fill = '#FCE7D9', stat = "identity", color = "NA") +
    
    # Show REVISED (5/22)
    geom_bar(mapping = aes(y = New_Local_Cases_20210522), fill = brewer.pal(9, "Greys")[2], stat = "identity", color = "NA") +
@@ -1002,9 +986,9 @@ dev.off()
 
 # SAVE
 #png(filename = paste0("~/Desktop/Taiwan_COVID_data/localCases_cumSumRevised_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
-#png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_by_date_added_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-#localCases_dateRevised_PLOT
-#dev.off()
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_by_date_added_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+localCases_dateRevised_PLOT
+dev.off()
 
 
 
@@ -1308,7 +1292,7 @@ while (this_curr_date <= date_range_end) {
       
       # Date
       geom_rect(xmin = as.Date("2021-05-04"), xmax = as.Date("2021-05-12"), ymin = 325, ymax = 425, fill = "#FFE033") +
-      geom_text(x = as.Date("2021-05-08"), y = 375, label = "FINAL", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
+      geom_text(x = as.Date("2021-05-08"), y = 375, label = this_curr_todaystring, fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
       
       # Attribution
       geom_text(x = as.Date("2021-05-04"), y = 300, color = brewer.pal(9, "Greys")[4], hjust = 0, vjust = 0.5, size = 1.4, # fontface = "italic", family = 'serif',
@@ -1379,7 +1363,7 @@ while (this_curr_date <= date_range_end) {
         axis.ticks.y = element_blank(),
         #axis.line = element_blank(),
             plot.margin = unit(x = c(1, 1, 1, 1), units = "line"),
-            plot.title = element_text(face = "bold", size = 12), # hjust = 0.5, 
+            plot.title = element_text(face = "bold", size = 11), # hjust = 0.5, 
             #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
             legend.position = 'right',# c(0.125, 0.525), # 'none',
         legend.margin = margin(l = -0.25, unit = 'line'),
@@ -1407,7 +1391,6 @@ while (this_curr_date <= date_range_end) {
   
   # SAVE
   png(filename = this_curr_date_filename, width = 5.5, height = 3.2, units = 'in', res = 500)
-  #png(filename = paste0(this_curr_date_filename, "_FINAL.png"), width = 5.5, height = 3.2, units = 'in', res = 500)
   print(localCases_daysDelayed_TIMELAPSE_PLOT)
   dev.off()
   
@@ -1426,8 +1409,6 @@ while (this_curr_date <= date_range_end) {
 #print(localCases_daysDelayed_TIMELAPSE_PLOT)
 #dev.off()
 #####
-
-this_curr_todaystring <- as.character(format(x = timenow, format = "%b %d"))
 
 
 # SAVE SOURCE
@@ -1509,23 +1490,10 @@ for(this_days_delayed in names(days_late_sums)) {
 #(NUM_OUTSTANDING2 <- 18251) # go with the cdc website instead 6/2
 #(NUM_OUTSTANDING2 <- 12906) # go with the cdc website instead 6.3
 #(NUM_OUTSTANDING2 <- 11203) # go with the cdc website instead 6.3 # 606921-585272-10446=11203
-#(NUM_OUTSTANDING2 <- 11312) # 6/5: 636500-614742-10446=11312
-#(NUM_OUTSTANDING2 <- 11050) # 6/6: 656768-634762-10956=11050
-#(NUM_OUTSTANDING2 <- 10828) # 6/7: 671160-648841-11491
-(NUM_OUTSTANDING2 <- 11046) # 6/8: 698373-675836-11491
-
-# mean
+(NUM_OUTSTANDING2 <- 11312) # 6/5: 636500-614742-10446=11312
 (NUM_OUTSTANDING <- round(mean(c(NUM_OUTSTANDING1, NUM_OUTSTANDING2))))
-
 # 6/5: 10378
-# 6/6: 10.2k
-#6/7: 9542
-# 6/8: 9658
 (CURR_CUM_PROP_POS <- case_data_projecting[case_data_projecting$date == timenow, ]$test_total_positive_rate_Confirmed_DIV_Completed)
-
-(CURR_DAY_PROP_POS <- case_data_projecting[case_data_projecting$date == timenow, ]$same_day_test_positive_rate_DiagnosedOnDay_DIV_TestVolumeOnDay)
-(CURR_DAY_PROP_POS <- case_data_projecting[case_data_projecting$date == timenow, ]$total_interpretation_on_day_Confirmed_PLUS_Excluded)
-
 (NUM_OUTSTANDING_PREDICT_POS <- NUM_OUTSTANDING * CURR_CUM_PROP_POS)
 (days_late_PREDICTED_ADDITIONS <- round(days_late_proportions * NUM_OUTSTANDING_PREDICT_POS))
 
@@ -1567,12 +1535,6 @@ case_data_projecting$sw_PREDICTED_cases_mean <- NA
 case_data_projecting$sw_PREDICTED_cases_sd <- NA
 case_data_projecting$sw_PREDICTED_cases_SE <- NA
 
-# NEW: REVISED!
-case_data_projecting$sw_REVISED_cases_sum <- NA
-case_data_projecting$sw_REVISED_cases_mean <- NA
-case_data_projecting$sw_REVISED_cases_sd <- NA
-case_data_projecting$sw_REVISED_cases_SE <- NA
-
 # perform sliding window
 for(i in 1:(nrow(case_data_projecting) - WINDOW_SIZE + 1)) { # each window of time starting at day 1
   #i <- 1
@@ -1584,25 +1546,16 @@ for(i in 1:(nrow(case_data_projecting) - WINDOW_SIZE + 1)) { # each window of ti
   #highest_day <- max(window_case_data_projecting$day)
   highest_day <- lowest_day + WINDOW_SIZE - 1
   new_PREDICTED_cases_data_count <- sum(! is.na(window_case_data_projecting$Num_Local_Cases_Projected))
-  new_REVISED_cases_data_count <- sum(! is.na(window_case_data_projecting$New_Local_Cases_Revised))
+  
   #View(window_case_data)
   
   if(new_PREDICTED_cases_data_count >= MIN_DATA_COUNT) { #  && new_tests_data_count >= MIN_DATA_COUNT
     # Add results to table
-    
-    # PROJECTED
     sw_new_PREDICTED_cases_sum <- sum(window_case_data_projecting$Num_Local_Cases_Projected, na.rm = TRUE)
     sw_new_PREDICTED_cases_mean <- sw_new_PREDICTED_cases_sum / new_PREDICTED_cases_data_count
     sw_new_PREDICTED_cases_sd <- sd(window_case_data_projecting$Num_Local_Cases_Projected, na.rm = TRUE)
     sw_new_PREDICTED_cases_SE <- sw_new_PREDICTED_cases_sd / sqrt(new_PREDICTED_cases_data_count)
     
-    # REVISED
-    sw_new_REVISED_cases_sum <- sum(window_case_data_projecting$New_Local_Cases_Revised, na.rm = TRUE)
-    sw_new_REVISED_cases_mean <- sw_new_REVISED_cases_sum / new_REVISED_cases_data_count
-    sw_new_REVISED_cases_sd <- sd(window_case_data_projecting$New_Local_Cases_Revised, na.rm = TRUE)
-    sw_new_REVISED_cases_SE <- sw_new_REVISED_cases_sd / sqrt(new_REVISED_cases_data_count)
-    
-    # PROJECTED
     case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_start <- lowest_day
     case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_center <- (lowest_day + highest_day) / 2
     case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_end <- highest_day
@@ -1612,12 +1565,6 @@ for(i in 1:(nrow(case_data_projecting) - WINDOW_SIZE + 1)) { # each window of ti
     case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_PREDICTED_cases_mean <- sw_new_PREDICTED_cases_mean
     case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_PREDICTED_cases_sd <- sw_new_PREDICTED_cases_sd
     case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_PREDICTED_cases_SE <- sw_new_PREDICTED_cases_SE
-    
-    # REVISED
-    case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_REVISED_cases_sum <- sw_new_REVISED_cases_sum
-    case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_REVISED_cases_mean <- sw_new_REVISED_cases_mean
-    case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_REVISED_cases_sd <- sw_new_REVISED_cases_sd
-    case_data_projecting[case_data_projecting$day == lowest_day, ]$sw_REVISED_cases_SE <- sw_new_REVISED_cases_SE
     
   } # else leave it as NA
 } # end last window
@@ -1637,146 +1584,6 @@ case_data_projecting$sw_end_date <- as.Date((time0_PREDICTED - 1) + case_data_pr
 # Taiwan orange: #EE7E32
 View(case_data_projecting)
 
-
-
-###############################################################################
-### PLOT REVISED ###
-(localCases_REVISED_PLOT <- ggplot(data = case_data_projecting, 
-                                     mapping = aes(x = date, y = New_Local_Cases_Revised)) +
-    
-    # LEVEL 3 ALERT - Taipei
-    #geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 555, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) +
-    #geom_text(x = LEVEL3_DAY, y = 555, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 555, linetype = "dashed", color = brewer.pal(9, "Reds")[6], size = 0.2) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY, y = 555, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Reds")[7], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   
-    # LEVEL 3 ALERT - COUNTRY
-    #geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 630, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) +
-    #geom_text(x = LEVEL3_DAY_COUNTRY, y = 630, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 630, linetype = "dashed", color = brewer.pal(9, "Reds")[6], size = 0.2) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY_COUNTRY, y = 630, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Reds")[7], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   
-   
-   ### COLOR SCHEME CECC
-   geom_bar(stat = "identity", fill = "#EE7E32", position = position_dodge(width = 0)) + # , width = 10
-   geom_text(data = case_data_projecting, mapping = aes(label = New_Local_Cases_Revised), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   # ORIGINAL values
-   geom_bar(mapping = aes(y = New_Local_Cases_Original), stat = "identity", fill = "#5B9CD6", position = position_dodge(width = 0)) + # , width = 10
-   
-   
-   ### COLOR SCHEME NEW
-    # REVISED values <--- CHANGETHIS ***************
-    #geom_bar(stat = "identity", fill = "#F9CFB4", position = position_dodge(width = 0)) + # , width = 10
-    #geom_text(data = case_data_projecting, mapping = aes(label = New_Local_Cases_Revised), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-    #geom_text(data = filter(case_data_projecting, date != timenow), mapping = aes(label = Num_Local_Cases_Projected), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-    #geom_text(data = filter(case_data_projecting, date == timenow), mapping = aes(label = Num_Local_Cases_Projected), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -1.4, size = 1.5) + 
-    
-   
-   ### COLOR SCHEME OLD
-    # CURRENT REVISED values
-    #geom_bar(mapping = aes(y = New_Local_Cases_Revised), stat = "identity", fill = "#EE7E32", position = position_dodge(width = 0)) + # , width = 10
-    
-    # ORIGINAL values
-    #geom_bar(mapping = aes(y = New_Local_Cases_Original), stat = "identity", fill = "#5B9CD6", position = position_dodge(width = 0)) + # , width = 10
-    
-    # Show 7-day window with line and error (from plot 5)
-    geom_line(mapping = aes(x = sw_end_date, y = sw_REVISED_cases_mean), color = brewer.pal(9, 'Greys')[6]) + # color = brewer.pal(9, "Oranges")[6]) + #
-    #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_REVISED_cases_mean - sw_REVISED_cases_SE, ymax = sw_REVISED_cases_mean + sw_REVISED_cases_SE),
-    #             alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Greys')[8]) + 
-    geom_text(data = filter(case_data_projecting, sw_end_date == timenow), 
-              mapping = aes(x = sw_end_date, y = sw_REVISED_cases_mean, label = round(x = sw_REVISED_cases_mean, digits = 0)), 
-              color = 'black', fontface = "bold", hjust = -0.3, size = 3.4) + # , hjust = -1
-    geom_point(data = filter(case_data_projecting, sw_end_date == timenow),
-               mapping = aes(x = sw_end_date, y = sw_REVISED_cases_mean), color = brewer.pal(9, 'Greys')[7]) + #color = brewer.pal(9, "Oranges")[8]) + # 
-    
-    
-    #    # REVISED
-    #geom_rect(xmin = as.Date("2021-05-02"), xmax = as.Date("2021-05-10"), ymin = 425, ymax = 625, fill = brewer.pal(9, "YlGn")[3]) + # yellow
-    #geom_text(x = as.Date("2021-05-6"), y = 525, label = "Projected\nTotals", fontface = "bold", color = "black", hjust = 0.5, vjust = 0.5, size = 5.5) + #, size = 2.75) +
-    
-    # Attribution
-    #geom_text(x = as.Date("2021-05-02"), y = 335, color = brewer.pal(9, "Greys")[4], hjust = 0, vjust = 0.5, size = 1.6, 
-    #          label = "Data: Taiwan CECC, MOHW\nAuthors: Chase W. Nelson & Mitch Lin") +
-    
-    #    # Counter for number added
-  #    geom_text(x = as.Date("2021-05-07"), y = 250-50, label = paste0("Total: ", total_count), fontface = "bold", color = brewer.pal(9, "Greys")[6], hjust = 0, vjust = 0.5, size = 4.75) + #, size = 2.75) +
-  #    geom_text(x = as.Date("2021-05-07"), y = 205-50, label = paste0("Backlogged: ", backlog_count), fontface = "bold", color = brewer.pal(9, "Reds")[4], hjust = 0, vjust = 0.5, size = 2.6) + #, size = 2.75) +
-  #    geom_text(x = as.Date("2021-05-07"), y = 175-50, label = paste0("Today: ", today_count), fontface = "bold", color = brewer.pal(9, "Blues")[5], hjust = 0, vjust = 0.5, size = 2.6) + # "#5B9CD6"
-  #    
-  #    # current trendline
-  #    #geom_line(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = brewer.pal(11, "Spectral")[11], inherit.aes = FALSE, size = 1.0) +
-  #    #geom_point(data = this_curr_date_data_CURR_MAX, mapping = aes(x = Date_of_Reporting, y = sum_after_delay_max), color = brewer.pal(11, "Spectral")[11], inherit.aes = FALSE) +
-  #    
-  #    
-  #    # original trendline
-  #    #geom_line(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE, size = 1.0) +
-  #    #geom_point(data = this_curr_date_data_CURR_DAY1, mapping = aes(x = Date_of_Reporting, y = sum_day1), color = brewer.pal(9, "Blues")[8], inherit.aes = FALSE) +
-  
-  ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   Revised   |   ", this_curr_todaystring)) + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
-    
-    #theme_classic() +
-    
-    # Custom axis labels
-    geom_text(x = -Inf, y = 600, label = "600 daily cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    
-    
-    geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-    theme(#panel.grid = element_blank(),
-      panel.background = element_blank(),
-      panel.grid.minor = element_blank(),
-      panel.grid.major.x = element_blank(),
-      panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-      axis.ticks.y = element_blank(),
-      #axis.line = element_blank(),
-      plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
-      plot.title = element_text(face = "bold", size = 10), # family = "sans", hjust = 0.5, 
-      #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-      legend.position = 'none', # c(0.125, 0.525), # 'none',
-      #legend.key.size = unit(x = 0.75, units = 'line'), 
-      #legend.title = element_text(size = 8), #legend.title = element_blank(),
-      #legend.text = element_text(size = 7), #legend.title = element_blank(),
-      axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6]),
-      axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-      axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-      axis.title.y = element_blank(), #element_text(size = 9),
-      strip.background = element_blank()) +
-    xlab("") + #ylab("Daily cases") +
-    #            breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + 
-    scale_x_date(labels = date_format("%b %d"),
-                 expand = expand_scale(mult = c(0, 0.04)),
-                 limits = c(date_chart_start - 1, date_range_end + 1),
-                 breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
-    #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
-    #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
-    #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-    scale_y_continuous(limits = c(0, 730), 
-                       breaks = c(200, 400, 600), expand = expand_scale(mult = c(0, 0.05))))# + , limits = c(0, 600)
-#scale_fill_manual(values = c("#5B9CD6", brewer.pal(9, "Purples")[3], brewer.pal(9, "RdPu")[2:3], brewer.pal(9, "Reds")[3:9]), 
-#                  name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
-
-# SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/revised_total_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-print(localCases_REVISED_PLOT)
-dev.off()
-
-
-
-# LATEST TESTS?
-case_data_projecting$prop_backlogged <- NA
-case_data_projecting[case_data_projecting$New_Local_Cases_Original != case_data_projecting$New_Local_Cases_Revised, ]$prop_backlogged <- 
-  (case_data_projecting[case_data_projecting$New_Local_Cases_Original != case_data_projecting$New_Local_Cases_Revised, ]$New_Local_Cases_Revised -
-   case_data_projecting[case_data_projecting$New_Local_Cases_Original != case_data_projecting$New_Local_Cases_Revised, ]$New_Local_Cases_Original) /
-  case_data_projecting[case_data_projecting$New_Local_Cases_Original != case_data_projecting$New_Local_Cases_Revised, ]$New_Local_Cases_Revised
-  
-max(case_data_projecting$prop_backlogged, na.rm = TRUE)
-sort(case_data_projecting$prop_backlogged)
-filter(case_data_projecting, prop_backlogged > 0.492)
-
-
-###############################################################################
 ### PLOT PROJECTED ###
 (localCases_PROJECTED_PLOT <- ggplot(data = case_data_projecting, 
                                      mapping = aes(x = date, y = Num_Local_Cases_Projected)) +
@@ -1839,7 +1646,7 @@ filter(case_data_projecting, prop_backlogged > 0.492)
     #theme_classic() +
     
     # Custom axis labels
-    geom_text(x = -Inf, y = 600, label = "600 cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
+    geom_text(x = -Inf, y = 600, label = "600 daily cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
     geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
     geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
     
@@ -1868,8 +1675,7 @@ filter(case_data_projecting, prop_backlogged > 0.492)
    #            breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + 
     scale_x_date(labels = date_format("%b %d"),
                  expand = expand_scale(mult = c(0, 0.04)),
-                 limits = c(date_chart_start - 1, date_range_end + 1),
-                 breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
+                 limits = c(date_chart_start - 1, date_range_end + 1)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
     #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
     #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
     #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
@@ -1878,9 +1684,9 @@ filter(case_data_projecting, prop_backlogged > 0.492)
     #                  name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
 
 # SAVE
-#png(filename = paste0("~/Desktop/Taiwan_COVID_data/projected_total_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-#print(localCases_PROJECTED_PLOT)
-#dev.off()
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/projected_total_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
+print(localCases_PROJECTED_PLOT)
+dev.off()
 
 
 ### PLOT THE BACK LOG PROPORTIONS
@@ -1955,9 +1761,9 @@ filter(case_data_projecting, prop_backlogged > 0.492)
     scale_y_continuous(limits = c(0, 55), breaks = c(25, 50), expand = expand_scale(mult = c(0, 0.05))))
 
 
-#png(filename = paste0("~/Desktop/Taiwan_COVID_data/backlog_time_distribution_", timenow, ".png"), width = 5.5, height = 2.75, units = 'in', res = 500)
-#print(localCases_ADDITIONS_PLOT)
-#dev.off()
+png(filename = paste0("~/Desktop/Taiwan_COVID_data/backlog_time_distribution_", timenow, ".png"), width = 5.5, height = 2.75, units = 'in', res = 500)
+print(localCases_ADDITIONS_PLOT)
+dev.off()
 
 
 
@@ -2040,1240 +1846,3 @@ write_tsv(backlog_additions_df,
 #dev.off()
 #
 #
-
-
-
-###############################################################################
-# CASES BY AGE, DEATHS
-###############################################################################
-#library(jsonlite)
-#https://rfaqs.com/reading-and-writing-json-files-in-r/
-
-(cases_by_age <- as_tibble(fromJSON(txt = "~/Desktop/Taiwan_COVID_data/Day_Confirmation_Age_County_Gender_19CoV.json", simplifyDataFrame = TRUE)))
-#typeof(cases_by_age)
-
-# Create id
-cases_by_age$id <- 1:nrow(cases_by_age)
-
-# Order columns
-(cases_by_age <- dplyr::select(cases_by_age, id, everything()))
-
-# Rename columns in English
-names(cases_by_age) <- c('id', 'disease_name', 'date', 'county_city', 'township', 'gender', 'immigration', 'age', 'num_cases')
-cases_by_age
-
-# Replace Chinese with English
-unique(cases_by_age$disease_name) # "嚴重特殊傳染性肺炎"
-cases_by_age[cases_by_age$disease_name == '嚴重特殊傳染性肺炎', ]$disease_name <- 'COVID-19'
-
-unique(cases_by_age$date) # all look good
-
-unique(cases_by_age$county_city) 
-# "空值"   "彰化縣" "南投縣" "台中市" "新北市" "桃園市" "台南市" "台北市" "新竹市" "基隆市" "宜蘭縣" "高雄市" "新竹縣" "苗栗縣" "雲林縣" "屏東縣" "花蓮縣"
-# "嘉義市" "嘉義縣" "台東縣" "連江縣" "澎湖縣"
-cases_by_age[cases_by_age$county_city == '空值', ]$county_city <- 'Unknown'
-cases_by_age[cases_by_age$county_city == '彰化縣', ]$county_city <- 'Changhua County'
-cases_by_age[cases_by_age$county_city == '南投縣', ]$county_city <- 'Nantou County'
-cases_by_age[cases_by_age$county_city == '台中市', ]$county_city <- 'Taichung City'
-cases_by_age[cases_by_age$county_city == '新北市', ]$county_city <- 'New Taipei City'
-cases_by_age[cases_by_age$county_city == '桃園市', ]$county_city <- 'Taoyuan City'
-cases_by_age[cases_by_age$county_city == '台南市', ]$county_city <- 'Tainan City'
-cases_by_age[cases_by_age$county_city == '台北市', ]$county_city <- 'Taipei City'
-cases_by_age[cases_by_age$county_city == '新竹市', ]$county_city <- 'Hsinchu City'
-cases_by_age[cases_by_age$county_city == '基隆市', ]$county_city <- 'Keelung City'
-cases_by_age[cases_by_age$county_city == '宜蘭縣', ]$county_city <- 'Yilan County'
-cases_by_age[cases_by_age$county_city == '高雄市', ]$county_city <- 'Kaohsiung City'
-cases_by_age[cases_by_age$county_city == '新竹縣', ]$county_city <- 'Hsinchu County'
-cases_by_age[cases_by_age$county_city == '苗栗縣', ]$county_city <- 'Miaoli County'
-cases_by_age[cases_by_age$county_city == '雲林縣', ]$county_city <- 'Yunlin County'
-cases_by_age[cases_by_age$county_city == '屏東縣', ]$county_city <- 'Pingtung County'
-cases_by_age[cases_by_age$county_city == '花蓮縣', ]$county_city <- 'Hualien County'
-cases_by_age[cases_by_age$county_city == '嘉義市', ]$county_city <- 'Chiayi City'
-cases_by_age[cases_by_age$county_city == '嘉義縣', ]$county_city <- 'Chiayi County'
-cases_by_age[cases_by_age$county_city == '台東縣', ]$county_city <- 'Taitung County'
-cases_by_age[cases_by_age$county_city == '連江縣', ]$county_city <- 'Lianjiang County'
-cases_by_age[cases_by_age$county_city == '澎湖縣', ]$county_city <- 'Penghu County'
-unique(cases_by_age$county_city) 
-
-
-unique(cases_by_age$township) 
-townships_chinese <- c('空值', '和美鎮', '南投市', '彰化市', '太平區', '林口區', '新莊區', '新店區', '中和區', '蘆竹區', '桃園區', '龜山區', '北屯區', 
-                       '新市區', '五股區', '三重區', '北區', '大同區', '內湖區', '信義區', '汐止區', '東區', '大安區', '仁愛區', '中壢區', '大里區',
-                       '文山區', '淡水區', '平鎮區', '八德區', '大園區', '永和區', '蘆洲區', '土城區', '五結鄉', '冬山鄉', '羅東鎮', '萬華區', '頭城鎮', 
-                       '中正區', '北投區', '板橋區', '萬里區', '樹林區', '蘇澳鎮', '小港區', '龍井區', '松山區', '南港區', '宜蘭市', '中山區', '八里區', 
-                       '三峽區', '田中鎮', '溪湖鎮', '福興鄉', '士林區', '安樂區', '泰山區', '鶯歌區', '竹北市', '溪州鄉', '西屯區', '礁溪鄉', '後龍鎮', 
-                       '七堵區', '石碇區', '金山區', '深坑區', '花壇鄉', '員林市', '楊梅區', '大寮區', '新興區', '元長鄉', '貢寮區', '永靖鄉', '埔心鄉',
-                       '沙鹿區', '潭子區', '霧峰區', '新營區', '龍潭區', '三民區', '前金區', '鼓山區', '鳳山區', '暖暖區', '芳苑鄉', '大溪區', '新屋區', 
-                       '林內鄉', '芬園鄉', '員山鄉', '草屯鎮', '潮州鎮', '左營區', '三芝區', '瑞芳區', '佳里區', '光復鄉', '花蓮市', '竹田鄉', '屏東市', 
-                       '鹽埔鄉', '觀音區', '西螺鎮', '香山區', '新豐鄉', '伸港鄉', '鹿港鎮', '安南區', '麻豆區', '壯圍鄉', '名間鄉', '埔里鎮', '九如鄉', 
-                       '東勢鄉', '西區', '溪口鄉', '大村鄉', '秀水鄉', '安平區', '竹山鎮', '長治鄉', '三灣鄉', '造橋鄉', '前鎮區', '石門區', '大雅區', 
-                       '中區', '太麻里鄉', '成功鎮', '南澳鄉', '吉安鄉', '東港鎮', '萬巒鄉', '大社區', '麥寮鄉', '豐原區', '金峰鄉', '南區', '頭份市', 
-                       '南竿鄉', '斗六市', '卑南鄉', '岡山區', '旗山區', '莒光鄉', '古坑鄉', '二水鄉', '石岡區', '南屯區', '白河區', '西港區', '二林鎮', 
-                       '東勢區', '新埔鎮', '大林鎮', '竹南鎮', '北竿鄉', '田尾鄉', '埤頭鄉', '馬公市', '湖口鄉', '坪林區', '大城鄉', '苗栗市', '竹塘鄉',
-                       '梧棲區', '清水區', '虎尾鎮', '水上鄉', '社頭鄉', '埔鹽鄉', '公館鄉', '台西鄉', '寶山鄉')
-townships_english <- c('Unknown', 'Hemei Town', 'Nantou City', 'Changhua City', 'Taiping District', 'Linkou District', 'Xinzhuang District', 
-                       'Xindian District', 'Zhonghe District', 'Luzhu District', 'Taoyuan District', 'Guishan District', 'Beitun District', 
-                       'New Urban Area', 'Wugu District', 'Sanchong District', 'North District', 'Datong District', 'Neihu District', 'Xinyi District', 
-                       'Xizhi District', 'East District', 'Daan District', 'Renai District', 'Zhongli District', 'Dali District', 'Wenshan District', 
-                       'Tamsui District', 'Pingzhen District', 'Bade District', 'Dayuan District', 'Yonghe District', 'Luzhou District', 
-                       'Tucheng District', 'Wujie Township', 'Dongshan Township', 'Luodong Town', 'Wanhua District', 'Head Town', 
-                       'Zhongzheng District', 'Beitou District', 'Banqiao District', 'Wanli District', 'Forest area', 'Suao Town', 
-                       'Xiaogang District', 'Longjing District', 'Songshan District', 'Nangang District', 'Yilan City', 'Zhongshan Area', 
-                       'Bali District', 'Three Gorges District', 'Tianzhong Town', 'Xihu Town', 'Fuxing Township', 'Shilin District', 
-                       'Anle District', 'Taishan District', 'Yingge District', 'Zhubei', 'Xizhou Township', 'Xitun District', 'Jiaoxi Township', 
-                       'Houlong Town', 'Qidu District', 'Shiding District', 'Jinshan District', 'Shenkeng District', 'Huatan Township', 'Yuanlin', 
-                       'Yangmei District', 'Daliao District', 'Xinxing District', 'Yuanchang Township', 'Gongliao District', 'Yongjing Township', 
-                       'Puxin Township', 'Shalu District', 'Tanzi District', 'Wufeng District', 'Xinying District', 'Longtan District', 'Sanmin District', 
-                       'Qianjin District', 'Gushan District', 'Fengshan District', 'Warm area', 'Fangyuan Township', 'Daxi District', 'Xinwu District', 
-                       'Linnei Township', 'Fenyuan Township', 'Yuanshan Township', 'Caotun Town', 'Chaozhou Town', 'Zuoying District', 'Sanzhi District', 
-                       'Ruifang District', 'Jiali District', 'Guangfu Township', 'Hualien City', 'Zhutian Township', 'Pingtung City', 'Yanpu Township', 
-                       'Guanyin District', 'Xiluo Town', 'Xiangshan District', 'Xinfeng Township', 'Shengang Township', 'Lugang Town', 'Annan District', 
-                       'Madou District', 'Zhuangwei Township', 'Mingjian Township', 'Puli Township', 'Jiuru Township', 'Dongshi Township', 'West End', 
-                       'Xikou Township', 'Dacun Xiang', 'Xiushui Township', 'Anping District', 'Zhushan Town', 'Changzhi Township', 'Sanwan Township', 
-                       'Zaoqiao Township', 'Qianzhen District', 'Shimen District', 'Daya District', 'Central District', 'Taimali Township', 
-                       'Chenggong Town', 'Nanao Township', 'Jian Township', 'Donggang Town', 'Wanluan Township', 'Large community', 'Mailiao Township', 
-                       'Fengyuan District', 'Jinfeng Township', 'South area', 'Toufen', 'Nangan Township', 'Douliu City', 'Beinan Township', 
-                       'Gangshan District', 'Qishan District', 'Juguang Township', 'Gukeng Township', 'Ershui Township', 'Shigang District', 
-                       'Nantun District', 'Baihe District', 'Westport District', 'Erlin Town', 'Dongshi District', 'Xinpu Town', 'Dalin Town', 
-                       'Zhunan Town', 'Beigan Township', 'Tianwei Township', 'Pitou Township', 'Magong City', 'Hukou Township', 'Pinglin District', 
-                       'Dacheng Country', 'Miaoli City', 'Zhutang Township', 'Wuqi District', 'Qingshui District', 'Huwei Town', 'Water Town', 
-                       'Shetou Township', 'Puyan Township', 'Gongguan Township', 'Taixi Township', 'Baoshan Township')
-
-township_key <- townships_english
-names(township_key) <- townships_chinese
-
-cases_by_age$township <- township_key[cases_by_age$township]
-unique(cases_by_age$township)
-
-unique(cases_by_age$gender) # "女" "男"
-cases_by_age[cases_by_age$gender == '女', ]$gender <- "Female"
-cases_by_age[cases_by_age$gender == '男', ]$gender <- "Male"
-cases_by_age
-
-
-unique(cases_by_age$immigration) # "是" "否"
-cases_by_age[cases_by_age$immigration == '是', ]$immigration <- TRUE
-cases_by_age[cases_by_age$immigration == '否', ]$immigration <- FALSE
-cases_by_age
-
-# Specify variable types
-(cases_by_age$date <- as.Date(cases_by_age$date, format = "%Y%m%d"))
-(cases_by_age$immigration <- as.logical(cases_by_age$immigration))
-
-unique(cases_by_age$age)
-# "0"
-# "1"
-# "2"
-# "3"
-# "4"
-# "5-9"
-# "10-14"
-# "15-19"
-# "20-24"
-# "25-29"
-# "30-34"
-# "35-39"
-# "40-44"
-# "45-49"
-# "50-54"
-# "55-59"
-# "60-64"
-# "65-69"
-# "70+"
-
-# factor age cateogry
-(cases_by_age$age <- factor(x = cases_by_age$age,
-                            levels = c("0", "1", "2", "3", "4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", 
-                                       "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70+")))
-
-# New category pooling young
-(cases_by_age$age_category <- as.character(cases_by_age$age))
-cases_by_age[cases_by_age$age_category %in% c('0', '1', '2', '3', '4'), ]$age_category <- "0-4"
-(cases_by_age$age_category <- factor(x = cases_by_age$age_category,
-                            levels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", 
-                                       "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70+")))
-
-(cases_by_age$age_min <- cases_by_age$age)
-(cases_by_age$age_min <- str_replace(string = cases_by_age$age_min, pattern = "\\-\\d+", replacement = ""))
-(cases_by_age$age_min <- as.integer(str_replace(string = cases_by_age$age_min, pattern = "\\+", replacement = "")))
-
-(cases_by_age$age_max <- cases_by_age$age)
-(cases_by_age$age_max <- str_replace(string = cases_by_age$age_max, pattern = "\\d+\\-", replacement = ""))
-(cases_by_age$age_max <- as.integer(str_replace(string = cases_by_age$age_max, pattern = "\\+", replacement = "")))
-
-(cases_by_age$age_spread <- cases_by_age$age_max - cases_by_age$age_min)
-(cases_by_age$age_mean <- (cases_by_age$age_max + cases_by_age$age_min) / 2)
-
-# Inspect
-#View(cases_by_age)
-
-
-
-###############################################################################
-### SUMMARIZE LOCAL CASES BY AGE
-(cases_by_immigration_SUMMARY <- cases_by_age %>%
-    group_by(immigration) %>%
-    summarize(
-      count = n()
-    ))
-
-(cases_by_age_local_SUMMARY <- filter(cases_by_age, immigration == FALSE) %>%
-  group_by(age_category) %>%
-  summarize(
-    count = n()
-  ))
-
-
-
-###############################################################################
-### PLOT CASE AGE DISTRIBUTION ###
-(localCases_CASES_BY_AGE_PLOT <- ggplot(data = cases_by_age_local_SUMMARY, 
-                                   mapping = aes(x = age_category, y = count)) +
-   
-   # Counts
-   geom_bar(stat = "identity", fill = "#E0E0E0", position = position_dodge(width = 0)) + # , width = 10
-   geom_text(mapping = aes(label = count), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   Age distribution   |   ", this_curr_todaystring)) + 
-   
-   # Custom axis labels
-   geom_text(x = -Inf, y = 800, label = "800 cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 600, label = "600", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 400, label = "400", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 200, label = "200", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   
-   xlab("Age") +
-   
-   geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-   
-   theme(#panel.grid = element_blank(),
-     panel.background = element_blank(),
-     panel.grid.minor = element_blank(),
-     panel.grid.major.x = element_blank(),
-     panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-     axis.ticks.y = element_blank(),
-     #axis.line = element_blank(),
-     plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
-     plot.title = element_text(face = "bold", size = 10), # family = "sans", hjust = 0.5, 
-     #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-     legend.position = 'none', # c(0.125, 0.525), # 'none',
-     #legend.key.size = unit(x = 0.75, units = 'line'), 
-     #legend.title = element_text(size = 8), #legend.title = element_blank(),
-     #legend.text = element_text(size = 7), #legend.title = element_blank(),
-     axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6], size = 7.5),
-     axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-     axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-     axis.title.y = element_blank(), #element_text(size = 9),
-     axis.title.x = element_text(colour = brewer.pal(9, "Greys")[7], size = 9),
-     strip.background = element_blank()) +
-   xlab("Age") + #ylab("Daily cases") +
-   scale_y_continuous(limits = c(0, 900), 
-                      breaks = c(200, 400, 600, 800), expand = expand_scale(mult = c(0, 0.05))))
-
-# SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_by_age_PLOT_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-print(localCases_CASES_BY_AGE_PLOT)
-dev.off()
-
-# DON'T sum to 10,000, why not?
-#778+623+638+630+546+485+497+478+409+354+271+165+119+108+144 = 6245
-
-
-###############################################################################
-###############################################################################
-### SUMMARIZE LOCAL DEATHS BY AGE
-# download today's Excel: https://covid-19.nchc.org.tw/deathstatistics.php?dt_name=1&downloadall=yes
-# paste as-is into CSV
-deaths_by_age <- read_tsv("~/Desktop/Taiwan_COVID_data/covidtable_taiwan_cdc_death.tsv", skip = 2,
-                          col_names = c('id', 'date', 'case_number', 'gender', 'age', 'history_of_chronic_disease', 'activity_contact_history',
-                                        'date_onset', 'symptom', 'date_inspection_notes', 'date_hospitalization_isolation', 'date_diagnosis',
-                                        'date_death'))
-deaths_by_age
-
-# Factor age
-unique(deaths_by_age$age)
-# "30"
-# "40"
-# "50"
-# "60"
-# "70"
-# "80"
-# "90"
-
-# factor age cateogry
-(deaths_by_age$age <- factor(x = deaths_by_age$age,
-                            levels = c("30", "40", "50", "60", "70", "80", "90"),
-                            labels = c("30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90+")))
-
-# New category pooling old into previous categories
-(deaths_by_age$age_category <- as.character(deaths_by_age$age))
-deaths_by_age[deaths_by_age$age_category %in% c('70-79', '80-89', '90+'), ]$age_category <- "70+"
-(deaths_by_age$age_category <- factor(x = deaths_by_age$age_category,
-                                     levels = c("0-9", "10-19", "20-29", "30-39", 
-                                                "40-49", "50-59", "60-69", "70+")))
-
-#(deaths_by_age$age_min <- deaths_by_age$age)
-#(deaths_by_age$age_min <- str_replace(string = deaths_by_age$age_min, pattern = "\\-\\d+", replacement = ""))
-#(deaths_by_age$age_min <- as.integer(str_replace(string = deaths_by_age$age_min, pattern = "\\+", replacement = "")))
-#
-#(deaths_by_age$age_max <- deaths_by_age$age)
-#(deaths_by_age$age_max <- str_replace(string = deaths_by_age$age_max, pattern = "\\d+\\-", replacement = ""))
-#(deaths_by_age$age_max <- as.integer(str_replace(string = deaths_by_age$age_max, pattern = "\\+", replacement = "")))
-#
-#(deaths_by_age$age_spread <- deaths_by_age$age_max - deaths_by_age$age_min)
-#(deaths_by_age$age_mean <- (deaths_by_age$age_max + deaths_by_age$age_min) / 2)
-
-# Replace Chinese with English
-deaths_by_age
-
-unique(deaths_by_age$gender) # "女" "男"
-deaths_by_age[deaths_by_age$gender == '女', ]$gender <- "Female"
-deaths_by_age[deaths_by_age$gender == '男', ]$gender <- "Male"
-deaths_by_age
-
-# can add specific disease later! <-- TODO
-#table(deaths_by_age$history_of_chronic_disease) # most common are 有  or 無
-unique(deaths_by_age$history_of_chronic_disease) 
-deaths_by_age[! is.na(deaths_by_age$history_of_chronic_disease) & deaths_by_age$history_of_chronic_disease == '--', ]$history_of_chronic_disease <- NA
-deaths_by_age[! is.na(deaths_by_age$history_of_chronic_disease) & deaths_by_age$history_of_chronic_disease != '無', ]$history_of_chronic_disease <- TRUE
-deaths_by_age[! is.na(deaths_by_age$history_of_chronic_disease) & deaths_by_age$history_of_chronic_disease == '無', ]$history_of_chronic_disease <- FALSE
-unique(deaths_by_age$history_of_chronic_disease) 
-
-# activity_contact_history
-unique(deaths_by_age$activity_contact_history)
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '接觸其他確診者', ]$activity_contact_history <- "contact_with_case"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '萬華區活動史', ]$activity_contact_history <- "Wanhua District"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '調查中', ]$activity_contact_history <- "Survey"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == 'NA', ]$activity_contact_history <- NA
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '萬華活動史', ]$activity_contact_history <- "Wanhua"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '菲律賓回台', ]$activity_contact_history <- "Philippines"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '緬甸回台', ]$activity_contact_history <- "Myanmar"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '境外移入（英國變種病毒）', ]$activity_contact_history <- "Immigration UK Variant"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '奧地利、捷克旅遊史', ]$activity_contact_history <- "Austria and Czech Republic"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '西班牙旅遊史', ]$activity_contact_history <- "Spain"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '埃及旅遊史', ]$activity_contact_history <- "Egypt"
-deaths_by_age[! is.na(deaths_by_age$activity_contact_history) & deaths_by_age$activity_contact_history == '美國旅遊史', ]$activity_contact_history <- "USA"
-unique(deaths_by_age$activity_contact_history)
-
-# do later
-unique(deaths_by_age$symptom)
-
-#View(deaths_by_age)
-
-
-# Separate notes from dates
-unique(deaths_by_age$date_onset)
-# 無症狀 is asymptomatic
-# 調查中 is survey
-deaths_by_age[! is.na(deaths_by_age$date_onset) & deaths_by_age$date_onset == "無症狀", ]$date_onset <- "Asymptomatic"
-deaths_by_age[! is.na(deaths_by_age$date_onset) & deaths_by_age$date_onset == "調查中", ]$date_onset <- "Survey"
-
-unique(deaths_by_age$date_inspection_notes)
-deaths_by_age$date_inspection <- deaths_by_age$date_inspection_notes
-deaths_by_age[! is.na(deaths_by_age$date_inspection) & deaths_by_age$date_inspection == "調查中", ]$date_inspection <- "0"
-deaths_by_age[! is.na(deaths_by_age$date_inspection) & deaths_by_age$date_inspection == "--", ]$date_inspection <- NA
-unique(deaths_by_age$date_inspection)
-deaths_by_age$date_inspection <- str_replace_all(string = deaths_by_age$date_inspection, pattern = "\\D+", replacement = " ")
-unique(deaths_by_age$date_inspection)
-deaths_by_age$date_inspection <- str_replace(string = deaths_by_age$date_inspection, pattern = "^(\\d+) (\\d+) (\\d+)$", replacement = "\\1-\\2-\\3")
-unique(deaths_by_age$date_inspection)
-deaths_by_age$date_inspection <- str_replace(string = deaths_by_age$date_inspection, pattern = "\\s+$", replacement = "")
-unique(deaths_by_age$date_inspection)
-deaths_by_age$date_inspection <- str_replace(string = deaths_by_age$date_inspection, pattern = "^.+(\\d+) (\\d+)$", replacement = "2021-\\1-\\2")
-deaths_by_age[! is.na(deaths_by_age$date_inspection) & deaths_by_age$date_inspection == "0", ]$date_inspection <- "Survey"
-unique(deaths_by_age$date_inspection)
-
-unique(deaths_by_age$date_diagnosis)
-deaths_by_age[! is.na(deaths_by_age$date_diagnosis) & deaths_by_age$date_diagnosis == "5/2o", ]$date_diagnosis <- "2021/5/20"
-unique(deaths_by_age$date_diagnosis)
-
-unique(deaths_by_age$date_death) # all good
-
-
-# Specify variable types
-(deaths_by_age$date_onset <- as.Date(deaths_by_age$date_onset)) # , format = "%Y%m%d")
-(deaths_by_age$date_inspection <- as.Date(deaths_by_age$date_inspection))
-(deaths_by_age$date_diagnosis <- as.Date(deaths_by_age$date_diagnosis))
-(deaths_by_age$date_death <- as.Date(deaths_by_age$date_death))
-
-(deaths_by_age$history_of_chronic_disease <- as.logical(deaths_by_age$history_of_chronic_disease))
-
-
-####################
-#### SUMMARIZE
-(deaths_gender_SUMMARY <- deaths_by_age %>%
-   group_by(gender) %>%
-   summarize(
-     count = n()
-   )) # lots of males
-
-(deaths_history_SUMMARY <- deaths_by_age %>%
-    group_by(history_of_chronic_disease) %>%
-    summarize(
-      count = n()
-    ))
-
-(deaths_activity_SUMMARY <- deaths_by_age %>%
-    group_by(activity_contact_history) %>%
-    summarize(
-      count = n()
-    ))
-
-sort(unique(deaths_by_age$date)) # just do after MIN_DATE_DISPLAYED, 2021/05/01
-
-
-### REFACTOR cases
-# New category pooling young
-(cases_by_age$age_category2 <- as.character(cases_by_age$age_category))
-unique(cases_by_age$age_category2)
-cases_by_age[cases_by_age$age_category2 %in% c('0-4', '5-9'), ]$age_category2 <- "0-9"
-cases_by_age[cases_by_age$age_category2 %in% c('10-14', '15-19'), ]$age_category2 <- "10-19"
-cases_by_age[cases_by_age$age_category2 %in% c('20-24', '25-29'), ]$age_category2 <- "20-29"
-cases_by_age[cases_by_age$age_category2 %in% c('30-34', '35-39'), ]$age_category2 <- "30-39"
-cases_by_age[cases_by_age$age_category2 %in% c('40-44', '45-49'), ]$age_category2 <- "40-49"
-cases_by_age[cases_by_age$age_category2 %in% c('50-54', '55-59'), ]$age_category2 <- "50-59"
-cases_by_age[cases_by_age$age_category2 %in% c('60-64', '65-69'), ]$age_category2 <- "60-69"
-(cases_by_age$age_category2 <- factor(x = cases_by_age$age_category2,
-                                     levels = c("0-9", "10-19", "20-29", "30-39", 
-                                                "40-49", "50-59", "60-69", "70+")))
-
-deaths_by_age
-
-
-
-### SUMMARIZE BOTH
-(cases_by_age_RecentLocal_SUMMARY <- filter(cases_by_age, immigration == FALSE, date >= as.Date(MIN_DATE_DISPLAYED)) %>%
-    group_by(age_category2) %>%
-    summarize(
-      count = n()
-    ))
-
-(deaths_by_age_RecentLocal_SUMMARY <- filter(deaths_by_age, date_death >= as.Date(MIN_DATE_DISPLAYED), 
-                                             activity_contact_history %in% c("contact_with_case", "Survey", "Wanhua", "Wanhua District")) %>%
-    group_by(age_category) %>%
-    summarize(
-      count = n()
-    ))
-
-
-
-###############################################################################
-### PLOT CASE AGE DISTRIBUTION ###
-(local_cases_and_deaths_by_age_PLOT <- ggplot(data = cases_by_age_RecentLocal_SUMMARY, 
-                                        mapping = aes(x = age_category2, y = count)) +
-   
-   # Case counts by age
-   geom_bar(stat = "identity", fill = "#E0E0E0", position = position_dodge(width = 0)) + # , width = 10
-   geom_text(mapping = aes(label = count), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   # Death counts by age
-   geom_bar(data = deaths_by_age_RecentLocal_SUMMARY, mapping = aes(x = age_category),
-            stat = "identity", fill = "pink", position = position_dodge(width = 0)) + # , width = 10
-   geom_text(data = deaths_by_age_RecentLocal_SUMMARY, mapping = aes(x = age_category, label = count), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   Age distribution   |   ", this_curr_todaystring)) + 
-   
-   # Custom axis labels
-   geom_text(x = -Inf, y = 1250, label = "1250 cases or deaths", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 1000, label = "1000", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 750, label = "750", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 500, label = "500", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   #geom_text(x = -Inf, y = 250, label = "250", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   
-   geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-   
-   theme(#panel.grid = element_blank(),
-     panel.background = element_blank(),
-     panel.grid.minor = element_blank(),
-     panel.grid.major.x = element_blank(),
-     panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-     axis.ticks.y = element_blank(),
-     #axis.line = element_blank(),
-     plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
-     plot.title = element_text(face = "bold", size = 10), # family = "sans", hjust = 0.5, 
-     #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-     legend.position = 'none', # c(0.125, 0.525), # 'none',
-     #legend.key.size = unit(x = 0.75, units = 'line'), 
-     #legend.title = element_text(size = 8), #legend.title = element_blank(),
-     #legend.text = element_text(size = 7), #legend.title = element_blank(),
-     axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6], size = 7.5),
-     axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-     axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-     axis.title.y = element_blank(), #element_text(size = 9),
-     axis.title.x = element_text(colour = brewer.pal(9, "Greys")[7], size = 9), 
-     strip.background = element_blank()) +
-   xlab("Age") + #ylab("Daily cases") +
-   scale_y_continuous(#limits = c(0, 1400), 
-                      breaks = c(250, 500, 750, 1000, 1250), expand = expand_scale(mult = c(0, 0.05))))
-
-# SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_and_deaths_by_age_PLOT_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-print(local_cases_and_deaths_by_age_PLOT)
-dev.off()
-
-# DON'T sum to 10,000, why not?
-#778+623+638+630+546+485+497+478+409+354+271+165+119+108+144 = 6245
-
-
-
-###############################################################################
-### sliding window for CASES and DEATHS
-
-### CASES: FILTER for local, recent
-cases_by_age_filtered <- filter(cases_by_age, immigration == FALSE, date >= as.Date(MIN_DATE_DISPLAYED))
-
-### DEATHS: FILTER for local, recent
-deaths_by_age_filtered <- filter(deaths_by_age, date_death >= as.Date(MIN_DATE_DISPLAYED), 
-                                 activity_contact_history %in% c("contact_with_case", "Survey", "Wanhua", "Wanhua District"))
-
-## initialize numbered days
-#cases_by_age_filtered$day <- 1:nrow(cases_by_age_filtered)
-
-# find minimum and maximum dates: WILL USE MIN_DATE_DISPLAYED
-#(time0_PREDICTED <- min(cases_by_age_filtered$date))
-
-# CREATE NEW SLIDING WINDOW DATA FRAME
-cases_deaths_age_sw_data = tibble(
-  sw_start_date = NA,
-  sw_end_date = NA,
-  #sw_num_days_with_data = NA,
-  
-  # Cases
-  sw_cases_lt50yo_sum = NA,
-  sw_cases_lt50yo_mean = NA,
-  #sw_cases_lt50yo_sd = NA,
-  sw_cases_lt50yo_n = NA,
-  #sw_cases_lt50yo_SE = NA,
-  
-  sw_cases_50to59yo_sum = NA,
-  sw_cases_50to59yo_mean = NA,
-  #sw_cases_50to59yo_sd = NA,
-  sw_cases_50to59yo_n = NA,
-  #sw_cases_50to59yo_SE = NA,
-  
-  sw_cases_60to69yo_sum = NA,
-  sw_cases_60to69yo_mean = NA,
-  #sw_cases_60to69yo_sd = NA,
-  sw_cases_60to69yo_n = NA,
-  #sw_cases_60to69yo_SE = NA,
-  
-  sw_cases_gt70yo_sum = NA,
-  sw_cases_gt70yo_mean = NA,
-  #sw_cases_gt70yo_sd = NA,
-  sw_cases_gt70yo_n = NA,
-  #sw_cases_gt70yo_SE = NA,
-  
-  # Deaths
-  sw_deaths_lt50yo_sum = NA,
-  sw_deaths_lt50yo_mean = NA,
-  #sw_deaths_lt50yo_sd = NA,
-  sw_deaths_lt50yo_n = NA,
-  #sw_deaths_lt50yo_SE = NA,
-  
-  sw_deaths_50to59yo_sum = NA,
-  sw_deaths_50to59yo_mean = NA,
-  #sw_deaths_50to59yo_sd = NA,
-  sw_deaths_50to59yo_n = NA,
-  #sw_deaths_50to59yo_SE = NA,
-  
-  sw_deaths_60to69yo_sum = NA,
-  sw_deaths_60to69yo_mean = NA,
-  #sw_deaths_60to69yo_sd = NA,
-  sw_deaths_60to69yo_n = NA,
-  #sw_deaths_60to69yo_SE = NA,
-  
-  sw_deaths_gt70yo_sum = NA,
-  sw_deaths_gt70yo_mean = NA,
-  #sw_deaths_gt70yo_sd = NA,
-  sw_deaths_gt70yo_n = NA,
-  #sw_deaths_gt70yo_SE = NA
-)
-
-#cases_deaths_age_sw_data_NEWROW <- cases_deaths_age_sw_data
-
-# perform sliding window
-this_curr_age_date <- MIN_DATE_DISPLAYED
-this_curr_age_date_MAX <- min(c(max(cases_by_age_filtered$date), max(deaths_by_age_filtered$date_death))) # both have data
-
-while (this_curr_age_date <= (this_curr_age_date_MAX - WINDOW_SIZE + 1)) { # possible start two days before because incomplete
-  #this_curr_age_date <- as.Date("2021-05-01")
-  #this_curr_age_date <- as.Date("2021-05-11")
-  #this_curr_age_date <- as.Date("2021-05-28")
-  #this_curr_age_date <- as.Date("2021-05-31")
-  #this_curr_age_date <- as.Date("2021-06-01")
-  cat(this_curr_age_date, "")
-  
-  this_sw_start <- this_curr_age_date
-  this_sw_end <- this_curr_age_date + WINDOW_SIZE - 1
-  
-  
-  ### CASES
-  this_curr_age_date_data_cases <- filter(cases_by_age_filtered, date >= this_curr_age_date, date <= this_curr_age_date + WINDOW_SIZE - 1)
-  #this_sw_num_days_with_data <- length(unique(this_curr_age_date_data_cases$date))
-  
-  # new age categories
-  this_curr_age_date_data_cases$age_category3 <- as.character(this_curr_age_date_data_cases$age_category2)
-  this_curr_age_date_data_cases[this_curr_age_date_data_cases$age_category2 %in% c('0-9', '10-19', '20-29', '30-39', '40-49'), ]$age_category3 <- "<50"
-  this_curr_age_date_data_cases$age_category3 <- factor(this_curr_age_date_data_cases$age_category3, 
-                                                             levels = c("<50", "50-59", "60-69", "70+"))
-  
-  # Summarize
-  this_curr_age_date_data_cases_SUMMARIZED <- this_curr_age_date_data_cases %>% 
-    group_by(date, age_category3) %>%
-    summarize(
-      count = n()
-    ) # 1129 for 5/28, yes
-  
-  # Cases
-  this_sw_cases_lt50yo_sum <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE)
-  this_sw_cases_lt50yo_mean <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_cases_lt50yo_sd <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE)
-  this_sw_cases_lt50yo_n <- WINDOW_SIZE
-  #this_sw_cases_lt50yo_SE <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  this_sw_cases_50to59yo_sum <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE)
-  this_sw_cases_50to59yo_mean <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_cases_50to59yo_sd <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE)
-  this_sw_cases_50to59yo_n <- WINDOW_SIZE
-  #this_sw_cases_50to59yo_SE <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  this_sw_cases_60to69yo_sum <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE)
-  this_sw_cases_60to69yo_mean <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_cases_60to69yo_sd <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE)
-  this_sw_cases_60to69yo_n <- WINDOW_SIZE
-  #this_sw_cases_60to69yo_SE <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  this_sw_cases_gt70yo_sum <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE)
-  this_sw_cases_gt70yo_mean <- sum(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_cases_gt70yo_sd <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE)
-  this_sw_cases_gt70yo_n <- WINDOW_SIZE
-  #this_sw_cases_gt70yo_SE <- sd(filter(this_curr_age_date_data_cases_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  
-  ## DEATHS
-  this_curr_age_date_data_deaths <- filter(deaths_by_age_filtered, date_death >= this_curr_age_date, date_death <= this_curr_age_date + WINDOW_SIZE - 1)
-  
-  # new age categories
-  this_curr_age_date_data_deaths$age_category3 <- as.character(this_curr_age_date_data_deaths$age_category)
-  if(nrow(filter(this_curr_age_date_data_deaths, age_category %in% c('0-9', '10-19', '20-29', '30-39', '40-49'))) > 0) {
-    this_curr_age_date_data_deaths[this_curr_age_date_data_deaths$age_category %in% c('0-9', '10-19', '20-29', '30-39', '40-49'), ]$age_category3 <- "<50"
-  }
-  this_curr_age_date_data_deaths$age_category3 <- factor(this_curr_age_date_data_deaths$age_category3, 
-                                                  levels = c("<50", "50-59", "60-69", "70+"))
-  
-  # Summarize
-  this_curr_age_date_data_deaths_SUMMARIZED <- this_curr_age_date_data_deaths %>% 
-    group_by(date_death, age_category3) %>%
-    summarize(
-      count = n()
-    ) # 1129 for 5/28, yes
-  
-  # Deaths
-  this_sw_deaths_lt50yo_sum <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE)
-  this_sw_deaths_lt50yo_mean <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_deaths_lt50yo_sd <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE)
-  this_sw_deaths_lt50yo_n <- WINDOW_SIZE
-  #this_sw_deaths_lt50yo_SE <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "<50")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  this_sw_deaths_50to59yo_sum <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE)
-  this_sw_deaths_50to59yo_mean <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_deaths_50to59yo_sd <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE)
-  this_sw_deaths_50to59yo_n <- WINDOW_SIZE
-  #this_sw_deaths_50to59yo_SE <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "50-59")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  this_sw_deaths_60to69yo_sum <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE)
-  this_sw_deaths_60to69yo_mean <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_deaths_60to69yo_sd <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE)
-  this_sw_deaths_60to69yo_n <- WINDOW_SIZE
-  #this_sw_deaths_60to69yo_SE <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "60-69")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  this_sw_deaths_gt70yo_sum <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE)
-  this_sw_deaths_gt70yo_mean <- sum(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE) / WINDOW_SIZE
-  #this_sw_deaths_gt70yo_sd <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE)
-  this_sw_deaths_gt70yo_n <- WINDOW_SIZE
-  #this_sw_deaths_gt70yo_SE <- sd(filter(this_curr_age_date_data_deaths_SUMMARIZED, age_category3 == "70+")$count, na.rm = TRUE) / sqrt(WINDOW_SIZE)
-  
-  
-  
-  # ADD NEW ROW
-  cases_deaths_age_sw_data_NEWROW = tibble(
-    sw_start_date = this_sw_start,
-    sw_end_date = this_sw_end,
-    #sw_num_days_with_data = this_sw_num_days_with_data,
-    
-    # Cases
-    sw_cases_lt50yo_sum = this_sw_cases_lt50yo_sum,
-    sw_cases_lt50yo_mean = this_sw_cases_lt50yo_mean,
-    #sw_cases_lt50yo_sd = this_sw_cases_lt50yo_sd,
-    sw_cases_lt50yo_n = this_sw_cases_lt50yo_n,
-    #sw_cases_lt50yo_SE = this_sw_cases_lt50yo_SE,
-    
-    sw_cases_50to59yo_sum = this_sw_cases_50to59yo_sum,
-    sw_cases_50to59yo_mean = this_sw_cases_50to59yo_mean,
-    #sw_cases_50to59yo_sd = this_sw_cases_50to59yo_sd,
-    sw_cases_50to59yo_n = this_sw_cases_50to59yo_n,
-    #sw_cases_50to59yo_SE = this_sw_cases_50to59yo_SE,
-    
-    sw_cases_60to69yo_sum = this_sw_cases_60to69yo_sum,
-    sw_cases_60to69yo_mean = this_sw_cases_60to69yo_mean,
-    #sw_cases_60to69yo_sd = this_sw_cases_60to69yo_sd,
-    sw_cases_60to69yo_n = this_sw_cases_60to69yo_n,
-    #sw_cases_60to69yo_SE = this_sw_cases_60to69yo_SE,
-    
-    sw_cases_gt70yo_sum = this_sw_cases_gt70yo_sum,
-    sw_cases_gt70yo_mean = this_sw_cases_gt70yo_mean,
-    #sw_cases_gt70yo_sd = this_sw_cases_gt70yo_sd,
-    sw_cases_gt70yo_n = this_sw_cases_gt70yo_n,
-    #sw_cases_gt70yo_SE = this_sw_cases_gt70yo_SE,
-    
-    # Deaths
-    sw_deaths_lt50yo_sum = this_sw_deaths_lt50yo_sum,
-    sw_deaths_lt50yo_mean = this_sw_deaths_lt50yo_mean,
-    #sw_deaths_lt50yo_sd = this_sw_deaths_lt50yo_sd,
-    sw_deaths_lt50yo_n = this_sw_deaths_lt50yo_n,
-    #sw_deaths_lt50yo_SE = this_sw_deaths_lt50yo_SE,
-    
-    sw_deaths_50to59yo_sum = this_sw_deaths_50to59yo_sum,
-    sw_deaths_50to59yo_mean = this_sw_deaths_50to59yo_mean,
-    #sw_deaths_50to59yo_sd = this_sw_deaths_50to59yo_sd,
-    sw_deaths_50to59yo_n = this_sw_deaths_50to59yo_n,
-    #sw_deaths_50to59yo_SE = this_sw_deaths_50to59yo_SE,
-    
-    sw_deaths_60to69yo_sum = this_sw_deaths_60to69yo_sum,
-    sw_deaths_60to69yo_mean = this_sw_deaths_60to69yo_mean,
-    #sw_deaths_60to69yo_sd = this_sw_deaths_60to69yo_sd,
-    sw_deaths_60to69yo_n = this_sw_deaths_60to69yo_n,
-    #sw_deaths_60to69yo_SE = this_sw_deaths_60to69yo_SE,
-    
-    sw_deaths_gt70yo_sum = this_sw_deaths_gt70yo_sum,
-    sw_deaths_gt70yo_mean = this_sw_deaths_gt70yo_mean,
-    #sw_deaths_gt70yo_sd = this_sw_deaths_gt70yo_sd,
-    sw_deaths_gt70yo_n = this_sw_deaths_gt70yo_n,
-    #sw_deaths_gt70yo_SE = thisw_deaths_gt70yo_SE
-  )
-  
-  if(is.na(cases_deaths_age_sw_data[1, ]$sw_start_date)) {
-    cases_deaths_age_sw_data <- cases_deaths_age_sw_data_NEWROW
-  } else {
-    cases_deaths_age_sw_data <- rbind(cases_deaths_age_sw_data, cases_deaths_age_sw_data_NEWROW)
-  }
-  
-  # increment the day
-  this_curr_age_date <- this_curr_age_date + 1
-}
-
-#View(cases_deaths_age_sw_data)
-
-
-
-
-
-###############################################################################
-### CASES PLOT ###
-(cases_byAge_PLOT <- ggplot(data = cases_deaths_age_sw_data, 
-                             mapping = aes(x = sw_end_date, y = sw_cases_lt50yo_mean)) +
-   
-   # LEVEL 3 ALERT - Taipei
-   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 125, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY, y = 125, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   
-   # LEVEL 3 ALERT - COUNTRY
-   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 150, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY_COUNTRY, y = 150, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   
-   # REVISED values <--- CHANGETHIS ***************
-   #geom_bar(stat = "identity", fill = "#F9CFB4", position = position_dodge(width = 0)) + # , width = 10
-   #geom_text(data = case_data_projecting, mapping = aes(label = New_Local_Cases_Revised), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   # CASES: y-day windows
-   geom_line(mapping = aes(x = sw_end_date, y = sw_cases_lt50yo_mean), color = "#0072B2") + # color = brewer.pal(9, "Greys")[8]) + #color = brewer.pal(9, 'Greys')[6]) +
-   geom_line(mapping = aes(x = sw_end_date, y = sw_cases_50to59yo_mean), color = "#009E73") + #color = brewer.pal(9, "Greys")[7]) + #color = brewer.pal(9, 'Greys')[6]) +
-   geom_line(mapping = aes(x = sw_end_date, y = sw_cases_60to69yo_mean), color = "#D55E00") + #color = brewer.pal(9, "Greys")[6]) + #color = brewer.pal(9, 'Greys')[6]) +
-   geom_line(mapping = aes(x = sw_end_date, y = sw_cases_gt70yo_mean), color = "#CC79A7") + #color = brewer.pal(9, "Greys")[5]) + #color = brewer.pal(9, 'Greys')[6]) +
- 
-   # Label lines
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_cases_lt50yo_mean), label = "<50 years", color = '#0072B2', hjust = -0.1, size = 2) +
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_cases_50to59yo_mean - 5), label = "50-59", color = '#009E73', hjust = -0.1, size = 2) +
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_cases_60to69yo_mean + 10), label = "60-69", color = '#D55E00', hjust = -0.1, size = 2) +
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_cases_gt70yo_mean - 8), label = ">70", color = '#CC79A7', hjust = -0.1, size = 2) +
-   #geom_text_repel(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-   #          mapping = aes(x = sw_end_date, y = sw_cases_lt50yo_mean), label = "<50 years", color = '#0072B2', hjust = 0, size = 2,
-   #          xlim = c(as.Date(timenow), Inf)) +
-   #geom_text_repel(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-   #          mapping = aes(x = sw_end_date, y = sw_cases_50to59yo_mean - 2), label = "50-59", color = '#009E73', hjust = 0, size = 2,
-   #          xlim = c(as.Date(timenow), Inf)) +
-   #geom_text_repel(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-   #          mapping = aes(x = sw_end_date, y = sw_cases_60to69yo_mean + 6), label = "60-69", color = '#D55E00',hjust = 0, size = 2,
-   #          xlim = c(as.Date(timenow), Inf)) +
-   #geom_text_repel(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-   #          mapping = aes(x = sw_end_date, y = sw_cases_gt70yo_mean - 2), label = ">70", color = '#CC79A7', hjust = 0, size = 2,
-   #          xlim = c(as.Date(timenow), Inf)) +
-   
- #geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_lt50yo_mean), color = brewer.pal(9, "Reds")[8]) + #color = brewer.pal(9, 'Greys')[6]) +
- #  geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_50to59yo_mean), color = brewer.pal(9, "Oranges")[7]) + #color = brewer.pal(9, 'Greys')[6]) +
- #  geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_60to69yo_mean), color = brewer.pal(9, "Oranges")[6]) + #color = brewer.pal(9, 'Greys')[6]) +
- #  geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_gt70yo_mean), color = brewer.pal(9, "Oranges")[5]) + #color = brewer.pal(9, 'Greys')[6]) +
-   
-   # Show 7-day window with line and error (from plot 5)
-   #geom_line(mapping = aes(x = sw_end_date, y = sw_cases_lt50yo_mean), color = brewer.pal(9, "Oranges")[6]) + #color = brewer.pal(9, 'Greys')[6]) +
-   #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_REVISED_cases_mean - sw_REVISED_cases_SE, ymax = sw_REVISED_cases_mean + sw_REVISED_cases_SE),
-   #             alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Greys')[8]) + 
-   #geom_text(data = filter(case_data_projecting, sw_end_date == timenow), 
-   #          mapping = aes(x = sw_end_date, y = sw_REVISED_cases_mean, label = round(x = sw_REVISED_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.3, size = 3.4) + # , hjust = -1
-   #geom_point(data = filter(case_data_projecting, sw_end_date == timenow),
-   #           mapping = aes(x = sw_end_date, y = sw_REVISED_cases_mean), color = brewer.pal(9, "Oranges")[8]) + # brewer.pal(9, 'Greys')[7]
-   
-   
- #ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   Cases by age   |   ", this_curr_todaystring)) + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
-   
-   #theme_classic() +
-   
-   # Custom axis labels
-   geom_text(x = -Inf, y = 150, label = "150 cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 100, label = "100", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 50, label = "50", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   
-   
-   geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-   theme(#panel.grid = element_blank(),
-     panel.background = element_blank(),
-     panel.grid.minor = element_blank(),
-     panel.grid.major.x = element_blank(),
-     panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-     axis.ticks.y = element_blank(),
-     #axis.line = element_blank(),
-     plot.margin=unit(x = c(1, 1, 0, 1), units = "line"),
-     plot.title = element_text(face = "bold", size = 10), # family = "sans", hjust = 0.5, 
-     #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-     legend.position = 'none', # c(0.125, 0.525), # 'none',
-     #legend.key.size = unit(x = 0.75, units = 'line'), 
-     #legend.title = element_text(size = 8), #legend.title = element_blank(),
-     #legend.text = element_text(size = 7), #legend.title = element_blank(),
-     axis.text.x = element_blank(), # element_text(colour = brewer.pal(9, "Greys")[6]),
-     axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-     axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-     axis.title.y = element_blank(), #element_text(size = 9),
-     strip.background = element_blank()) +
-   xlab("") + #ylab("Daily cases") +
-   #            breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + 
-   scale_x_date(labels = date_format("%b %d"),
-                expand = expand_scale(mult = c(0, 0.04)),
-                limits = c(date_chart_start - 1, date_range_end + 1),
-                breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
-   #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
-   #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
-   #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-   scale_y_continuous(limits = c(0, 180), 
-                      breaks = c(50, 100, 150), 
-                      expand = expand_scale(mult = c(0, 0.05))))# + , limits = c(0, 600)
-#scale_fill_manual(values = c("#5B9CD6", brewer.pal(9, "Purples")[3], brewer.pal(9, "RdPu")[2:3], brewer.pal(9, "Reds")[3:9]), 
-#                  name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
-
-# SAVE
-#png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_byAge_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-#print(cases_byAge_PLOT)
-#dev.off()
-
-
-
-###############################################################################
-### DEATH PLOT ###
-(deaths_byAge_PLOT <- ggplot(data = cases_deaths_age_sw_data, 
-                                   mapping = aes(x = sw_end_date, y = sw_deaths_lt50yo_mean)) +
-   
-   # LEVEL 3 ALERT - Taipei
-   geom_segment(x = LEVEL3_DAY, y = 0, xend = LEVEL3_DAY, yend = 555, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY, y = 555, label = "Level 3 Alert\n(Taipei)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   
-   # LEVEL 3 ALERT - COUNTRY
-   geom_segment(x = LEVEL3_DAY_COUNTRY, y = 0, xend = LEVEL3_DAY_COUNTRY, yend = 630, linetype = "dashed", color = brewer.pal(9, "Blues")[4], size = 0.2) + #, size = 0.4) +
-   geom_text(x = LEVEL3_DAY_COUNTRY, y = 630, label = "Level 3 Alert\n(countrywide)", color = brewer.pal(9, "Blues")[6], hjust = 0.5, vjust = -0.25, size = 2) + #, size = 2.75) +
-   
-   # REVISED values <--- CHANGETHIS ***************
-   #geom_bar(stat = "identity", fill = "#F9CFB4", position = position_dodge(width = 0)) + # , width = 10
-   #geom_text(data = case_data_projecting, mapping = aes(label = New_Local_Cases_Revised), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   
-   # CASES: y-day windows
-   #geom_line(mapping = aes(x = sw_end_date, y = sw_cases_lt50yo_mean), color = brewer.pal(9, "Greys")[9]) + #color = brewer.pal(9, 'Greys')[6]) +
-   #geom_line(mapping = aes(x = sw_end_date, y = sw_cases_50to59yo_mean), color = brewer.pal(9, "Greys")[7]) + #color = brewer.pal(9, 'Greys')[6]) +
-   #geom_line(mapping = aes(x = sw_end_date, y = sw_cases_60to69yo_mean), color = brewer.pal(9, "Greys")[5]) + #color = brewer.pal(9, 'Greys')[6]) +
-   #geom_line(mapping = aes(x = sw_end_date, y = sw_cases_gt70yo_mean), color = brewer.pal(9, "Greys")[3]) + #color = brewer.pal(9, 'Greys')[6]) +
-   
-   geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_lt50yo_mean), color = "#0072B2") + # brewer.pal(9, "Reds")[8]) + #color = brewer.pal(9, 'Greys')[6]) +
-   geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_50to59yo_mean), color = "#009E73") + #color = brewer.pal(9, "Oranges")[7]) + #color = brewer.pal(9, 'Greys')[6]) +
-   geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_60to69yo_mean), color = "#D55E00") + #color = brewer.pal(9, "Oranges")[6]) + #color = brewer.pal(9, 'Greys')[6]) +
-   geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_gt70yo_mean), color = "#CC79A7") + #color = brewer.pal(9, "Oranges")[5]) + #color = brewer.pal(9, 'Greys')[6]) +
-   
-   # Label lines
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_deaths_lt50yo_mean + 0.5), label = "<50", color = '#0072B2', hjust = -0.1, size = 2) +
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_deaths_50to59yo_mean + 1.75), label = "50-59", color = '#009E73', hjust = -0.1, size = 2) +
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_deaths_60to69yo_mean), label = "60-69", color = '#D55E00', hjust = -0.1, size = 2) +
-   geom_text(data = filter(cases_deaths_age_sw_data, sw_end_date == this_curr_age_date_MAX), 
-             mapping = aes(x = sw_end_date, y = sw_deaths_gt70yo_mean), label = ">70 years", color = '#CC79A7', hjust = -0.1, size = 2) +
-   
-   # Show 7-day window with line and error (from plot 5)
-   #geom_line(mapping = aes(x = sw_end_date, y = sw_cases_lt50yo_mean), color = brewer.pal(9, "Oranges")[6]) + #color = brewer.pal(9, 'Greys')[6]) +
-   #geom_ribbon(mapping = aes(x = sw_end_date, ymin = sw_REVISED_cases_mean - sw_REVISED_cases_SE, ymax = sw_REVISED_cases_mean + sw_REVISED_cases_SE),
-   #             alpha = 0.15, linetype = 0, fill = brewer.pal(9, 'Greys')[8]) + 
-   #geom_text(data = filter(case_data_projecting, sw_end_date == timenow), 
-   #          mapping = aes(x = sw_end_date, y = sw_REVISED_cases_mean, label = round(x = sw_REVISED_cases_mean, digits = 0)), color = 'black', fontface = "bold", hjust = -0.3, size = 3.4) + # , hjust = -1
-   #geom_point(data = filter(case_data_projecting, sw_end_date == timenow),
-   #           mapping = aes(x = sw_end_date, y = sw_REVISED_cases_mean), color = brewer.pal(9, "Oranges")[8]) + # brewer.pal(9, 'Greys')[7]
-   
-   
- #ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   Deaths by age   |   ", this_curr_todaystring)) + #, subtitle = this_curr_todaystring) + # , " # vjust = 1.25, , size = 4.25
-   
-   #theme_classic() +
-   
- # Two week ruler
- geom_text(x = as.Date("2021-05-15") + 7, y = 12, label = "Two weeks", color = brewer.pal(9, 'Greys')[6], hjust = 0.5, vjust = -0.4, size = 2) +
- geom_segment(x = as.Date("2021-05-15"), xend = as.Date("2021-05-15") + 14, y = 12, yend = 12, linetype = "solid", #lineend = "square",
-              color = "#F5D000", size = 0.2) + # brewer.pal(9, "Greys")[6], # lighter yellow FFE033 # darker FFDA0A
- 
-   # Custom axis labels
-   geom_text(x = -Inf, y = 15, label = "15 deaths", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 10, label = "10", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 5, label = "5", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   
-   geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-   
-   theme(#panel.grid = element_blank(),
-     panel.background = element_blank(),
-     panel.grid.minor = element_blank(),
-     panel.grid.major.x = element_blank(),
-     panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-     axis.ticks.y = element_blank(),
-     #axis.line = element_blank(),
-     plot.margin=unit(x = c(0, 1, 0, 1), units = "line"),
-     plot.title = element_text(face = "bold", size = 10), # family = "sans", hjust = 0.5, 
-     #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-     legend.position = 'none', # c(0.125, 0.525), # 'none',
-     #legend.key.size = unit(x = 0.75, units = 'line'), 
-     #legend.title = element_text(size = 8), #legend.title = element_blank(),
-     #legend.text = element_text(size = 7), #legend.title = element_blank(),
-     axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6]),
-     axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-     axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-     axis.title.y = element_blank(), #element_text(size = 9),
-     strip.background = element_blank()) +
-   xlab("") + #ylab("Daily cases") +
-   #            breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + 
-   scale_x_date(labels = date_format("%b %d"),
-                expand = expand_scale(mult = c(0, 0.04)),
-                limits = c(date_chart_start - 1, date_range_end + 1),
-                breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME)) + #??, drop = FALSE # , #  c(as.Date(time0 + 7), as.Date(time0 + 91 + 7)),
-   #breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + # by = "7 day"
-   #limits = c(as.Date(time0 + 7), as.Date(time0 + 91)),#  + 7
-   #breaks = seq(as.Date(time0 + 7), as.Date(time0 + 91), by = "14 day")) +#  + 7
-   scale_y_continuous(limits = c(0, 16), 
-                      breaks = c(5, 10, 15), 
-                      expand = expand_scale(mult = c(0, 0.05))))# + , limits = c(0, 600)
-#scale_fill_manual(values = c("#5B9CD6", brewer.pal(9, "Purples")[3], brewer.pal(9, "RdPu")[2:3], brewer.pal(9, "Reds")[3:9]), 
-#                  name = "Days late", guide = guide_legend(reverse = TRUE), drop = FALSE))
-
-# SAVE
-#png(filename = paste0("~/Desktop/Taiwan_COVID_data/deaths_byAge_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-#print(deaths_byAge_PLOT)
-#dev.off()
-
-# SAVE TOGETHER
-
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/deathsANDcases_byAge_", timenow, ".png"), width = 5.5, height = 2.9, units = 'in', res = 500)
-print(cases_byAge_PLOT / deaths_byAge_PLOT)
-dev.off()
-
-
-
-
-###############################################################################
-# Day of week
-case_data_projecting$interpretation_on_day_Confirmed_PLUS_Excluded_per1k <- case_data_projecting$interpretation_on_day_Confirmed_PLUS_Excluded / 1000
-case_data_projecting$day_of_week <- as.character(format(case_data_projecting$date, "%a"))
-case_data_projecting$is_Monday <- case_data_projecting$day_of_week == "Mon"
-case_data_projecting$is_Monday <- factor(case_data_projecting$is_Monday, levels = c("TRUE", "FALSE"), labels = c("Monday", "Other"))
-
-(tests_per_day_PLOT <- ggplot(data = filter(case_data_projecting, date >= as.Date("2021-05-17")), 
-                              mapping = aes(x = date, y = interpretation_on_day_Confirmed_PLUS_Excluded_per1k)) +
-    
-    geom_bar(stat = 'identity', aes(fill = is_Monday)) +
-    geom_text(aes(label = day_of_week), color = brewer.pal(9, "Greys")[7], hjust = 0.5, vjust = -0.25, size = 2) +
-    geom_text(aes(label = paste0(round(interpretation_on_day_Confirmed_PLUS_Excluded_per1k), 'k')), color = brewer.pal(9, "Greys")[1], hjust = 0.5, vjust = 1.5, size = 2) +
-    
-    xlab("") + ylab("Tests reported") +
-    
-    # Custom axis labels
-    geom_text(x = -Inf, y = 40, label = "40k daily tests reported", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 30, label = "30k", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 20, label = "20k", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    geom_text(x = -Inf, y = 10, label = "10k", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-    
-    ggtitle(label = paste0("2021 Taiwan local COVID-19 cases   |   Daily tests reported   |   ", this_curr_todaystring)) + 
-    
-    geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-    
-    theme(#panel.grid = element_blank(),
-      panel.background = element_blank(),
-      panel.grid.minor = element_blank(),
-      panel.grid.major.x = element_blank(),
-      panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-      axis.ticks.y = element_blank(),
-      legend.key.size = unit(x = 1, units = 'line'),
-      #axis.line = element_blank(),
-      plot.margin=unit(x = c(1, 1, 1, 1), units = "line"),
-      plot.title = element_text(face = "bold", size = 10), 
-      legend.position = c(0.2, 0.65), # 'none',
-      legend.title = element_blank(), # legend.title = element_text(size = 8), 
-      #axis.text.x = element_blank(), # element_text(colour = brewer.pal(9, "Greys")[6]),
-      axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-      axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-      axis.title.y = element_blank(), #element_text(size = 9),
-      strip.background = element_blank()) +
-    xlab("") + ylab("") +
-    scale_fill_manual(values = brewer.pal(12, "Paired")[c(2,1)]) +
-    scale_x_date(labels = date_format("%b %d"),
-                 expand = expand_scale(mult = c(0.04, 0.04))) + #,
-                 #limits = c(date_chart_start - 1, date_range_end + 1),
-                 #breaks = seq(as.Date("2021-05-17"), as.Date(timenow), by = INCUBATION_TIME)) + 
-    scale_y_continuous(limits = c(0, 44), 
-                       breaks = c(10, 20, 30, 40), 
-                       expand = expand_scale(mult = c(0, 0.05))))
-
-# SAVE TOGETHER
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/tests_per_day_PLOT_", timenow, ".png"), width = 5.5, height = 3.3, units = 'in', res = 500)
-print(tests_per_day_PLOT)
-dev.off()
-
-
-
-###############################################################################
-###############################################################################
-### UNITED STATES: comparison to a United States example
-###############################################################################
-###############################################################################
-
-MIN_DATE_DISPLAYED_US <- as.Date("2020-03-01")
-MAX_DATE_DISPLAYED_US <-  as.Date("2020-06-01") # as.Date("2020-04-15")
-
-states_of_interest <- "Florida"
-
-
-### case and death data: NYT GitHub
-us_states_data <- read_csv("~/covid-19-data/us-states.csv")
-(us_states_data <- filter(us_states_data, state %in% states_of_interest)) # 463 x 5
-
-# should be equal numbers of dates and rows
-nrow(us_states_data) # 463
-length(unique(us_states_data$date)) # 463
-
-# convert to NEW deaths and NEW cases, not cumulative
-us_states_data <- dplyr::arrange(us_states_data, date)
-us_states_data$new_cases <- 0
-us_states_data$new_deaths <- 0
-
-# initialized row 1
-us_states_data[1, ]$new_cases <- us_states_data[1, ]$cases
-us_states_data[1, ]$new_deaths <- us_states_data[1, ]$deaths
-
-for(i in 2:nrow(us_states_data)) {
-  us_states_data[i, ]$new_cases <- us_states_data[i, ]$cases - us_states_data[i-1, ]$cases
-  us_states_data[i, ]$new_deaths <- us_states_data[i, ]$deaths - us_states_data[i-1, ]$deaths
-  
-}
-
-#View(us_states_data)
-
-
-### test data: https://beta.healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb/data
-(us_states_test_data <- read_csv("~/Desktop/Taiwan_COVID_data/COVID-19_Diagnostic_Laboratory_Testing__PCR_Testing__Time_Series.csv")) # 73,988 x 9
-names(us_states_test_data)[names(us_states_test_data) == "state"] <- "state_abbrev"
-names(us_states_test_data)[names(us_states_test_data) == "state_name"] <- "state"
-(us_states_test_data <- filter(us_states_test_data, state %in% states_of_interest)) #  1,380 x 9
-(us_states_test_data <- pivot_wider(data = us_states_test_data, 
-                                   names_from = overall_outcome, 
-                                   values_from = c(new_results_reported, total_results_reported))) # 462 x 12
-names(us_states_test_data)
-#new_results_reported_Negative""total_results_reported_Negative"     
-#"new_results_reported_Positive"           "total_results_reported_Positive"
-#"new_results_reported_Inconclusive"   "total_results_reported_Inconclusive"
-
-# should be equal numbers of dates and rows
-nrow(us_states_test_data) # 462
-length(unique(us_states_test_data$date)) # 462
-
-
-### JOIN
-us_states_data <- full_join(x = us_states_data, y = us_states_test_data, by = c("date", "state")) # 463 x 15
-
-# add column for total tests performed
-us_states_data$new_tests_performed <- us_states_data$new_results_reported_Negative + 
-  us_states_data$new_results_reported_Positive +
-  us_states_data$new_results_reported_Inconclusive
-  
-
-
-
-###############################################################################
-### UNITED STATES: sliding window for CASES and DEATHS
-
-### FILTER for recent
-us_states_data_filtered <- filter(us_states_data, date >= MIN_DATE_DISPLAYED_US, date <= MAX_DATE_DISPLAYED_US)
-# 62 x 15
-
-# CREATE NEW SLIDING WINDOW DATA FRAME
-cases_deaths_age_US_sw_data = tibble(
-  sw_start_date = NA,
-  sw_end_date = NA,
-  
-  # Cases
-  sw_cases_sum = NA,
-  sw_cases_mean = NA,
-  sw_cases_n = NA,
-  
-  # Deaths
-  sw_deaths_sum = NA,
-  sw_deaths_mean = NA,
-  sw_deaths_n = NA,
-  
-  # Tests
-  sw_tests_sum = NA,
-  sw_tests_mean = NA,
-  sw_tests_n = NA
-)
-
-#cases_deaths_age_US_sw_data_NEWROW <- cases_deaths_age_US_sw_data
-
-# perform sliding window
-this_curr_age_date_US <- MIN_DATE_DISPLAYED_US
-this_curr_age_date_US_MAX <- MAX_DATE_DISPLAYED_US
-
-while (this_curr_age_date_US <= (this_curr_age_date_US_MAX - WINDOW_SIZE + 1)) {
-  cat(this_curr_age_date_US, "")
-  
-  this_sw_start <- this_curr_age_date_US
-  this_sw_end <- this_curr_age_date_US + WINDOW_SIZE - 1
-  
-  
-  # Filter
-  this_curr_age_date_US_data <- filter(us_states_data_filtered, date >= this_curr_age_date_US, date <= this_curr_age_date_US + WINDOW_SIZE - 1)
-  #this_sw_num_days_with_data <- length(unique(this_curr_us_states_data_filtered$date))
-  
-  # Cases
-  this_sw_cases_sum <- sum(this_curr_age_date_US_data$new_cases, na.rm = TRUE)
-  this_sw_cases_mean <- sum(this_curr_age_date_US_data$new_cases, na.rm = TRUE) / WINDOW_SIZE
-  this_sw_cases_n <- WINDOW_SIZE
-  
-  # Deaths
-  this_sw_deaths_sum <- sum(this_curr_age_date_US_data$new_deaths, na.rm = TRUE)
-  this_sw_deaths_mean <- sum(this_curr_age_date_US_data$new_deaths, na.rm = TRUE) / WINDOW_SIZE
-  this_sw_deaths_n <- WINDOW_SIZE
-  
-  # Tests
-  this_sw_tests_sum <- sum(this_curr_age_date_US_data$new_tests_performed, na.rm = TRUE)
-  this_sw_tests_mean <- sum(this_curr_age_date_US_data$new_tests_performed, na.rm = TRUE) / WINDOW_SIZE
-  this_sw_tests_n <- WINDOW_SIZE
-  
-  
-  # ADD NEW ROW
-  cases_deaths_age_US_sw_data_NEWROW = tibble(
-    sw_start_date = this_sw_start,
-    sw_end_date = this_sw_end,
-    
-    # Cases
-    sw_cases_sum = this_sw_cases_sum,
-    sw_cases_mean = this_sw_cases_mean,
-    sw_cases_n = this_sw_cases_n,
-    
-    # Deaths
-    sw_deaths_sum = this_sw_deaths_sum,
-    sw_deaths_mean = this_sw_deaths_mean,
-    sw_deaths_n = this_sw_deaths_n,
-    
-    # Tests
-    sw_tests_sum = this_sw_tests_sum,
-    sw_tests_mean = this_sw_tests_mean,
-    sw_tests_n = this_sw_tests_n
-  )
-  
-  if(is.na(cases_deaths_age_US_sw_data[1, ]$sw_start_date)) {
-    cases_deaths_age_US_sw_data <- cases_deaths_age_US_sw_data_NEWROW
-  } else {
-    cases_deaths_age_US_sw_data <- rbind(cases_deaths_age_US_sw_data, cases_deaths_age_US_sw_data_NEWROW)
-  }
-  
-  # increment the day
-  this_curr_age_date_US <- this_curr_age_date_US + 1
-}
-
-#View(cases_deaths_age_US_sw_data)
-
-
-
-
-
-###############################################################################
-### CASES PLOT ###
-(cases_byAge_US_PLOT <- ggplot(data = cases_deaths_age_US_sw_data, 
-                            mapping = aes(x = sw_end_date, y = sw_tests_mean)) +
-   
-   # REVISED values <--- CHANGETHIS ***************
-   #geom_bar(stat = "identity", fill = "#F9CFB4", position = position_dodge(width = 0)) + # , width = 10
-   #geom_text(data = case_data_projecting, mapping = aes(label = New_Local_Cases_Revised), color = brewer.pal(9, 'Greys')[7], hjust = 0.5, vjust = -0.35, size = 1.5) +
-   
-   # CASES, DEATHS, TESTS: y-day windows
-   #geom_bar(mapping = aes(x = sw_end_date, y = sw_tests_mean), stat = "identity", fill = brewer.pal(12, "Paired")[1], position = position_dodge(width = 0)) + # , width = 10
-   #geom_line(mapping = aes(x = sw_end_date, y = sw_tests_mean), color = brewer.pal(12, "Paired")[2]) + #"#D55E00") + #color = brewer.pal(9, "Greys")[6]) + #color = brewer.pal(9, 'Greys')[6]) +
-   
-   geom_line(mapping = aes(x = sw_end_date, y = sw_cases_mean), color = brewer.pal(9, "Greys")[7]) + # "#0072B2") + # color = brewer.pal(9, "Greys")[8]) + #color = brewer.pal(9, 'Greys')[6]) +
-   geom_line(mapping = aes(x = sw_end_date, y = sw_deaths_mean), color = brewer.pal(9, "Reds")[7]) + # color = "#009E73") + #color = brewer.pal(9, "Greys")[7]) + #color = brewer.pal(9, 'Greys')[6]) +
-   
- 
- # Custom axis labels
- geom_text(x = -Inf, y = 150, label = "150 cases", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 100, label = "100", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   geom_text(x = -Inf, y = 50, label = "50", color = brewer.pal(9, 'Greys')[5], hjust = 0, vjust = -0.4, size = 2.25) +
-   
-   
-   geom_hline(yintercept = 0, color = brewer.pal(9, "Greys")[6]) +
-   theme(#panel.grid = element_blank(),
-     panel.background = element_blank(),
-     panel.grid.minor = element_blank(),
-     panel.grid.major.x = element_blank(),
-     panel.grid.major.y = element_line(colour = "lightgray", linetype = "dotted", size = 0.2),
-     axis.ticks.y = element_blank(),
-     #axis.line = element_blank(),
-     plot.margin=unit(x = c(1, 1, 0, 1), units = "line"),
-     plot.title = element_text(face = "bold", size = 10), # family = "sans", hjust = 0.5, 
-     #plot.subtitle = element_text(hjust = 0.5, face = "bold"),
-     legend.position = 'none', # c(0.125, 0.525), # 'none',
-     #legend.key.size = unit(x = 0.75, units = 'line'), 
-     #legend.title = element_text(size = 8), #legend.title = element_blank(),
-     #legend.text = element_text(size = 7), #legend.title = element_blank(),
-     axis.text.x = element_blank(), # element_text(colour = brewer.pal(9, "Greys")[6]),
-     axis.text.y = element_blank(), # element_text(size = 9, colour = brewer.pal(9, "Greys")[6]),
-     axis.ticks.x = element_line(colour = brewer.pal(9, "Greys")[6]),
-     axis.title.y = element_blank(), #element_text(size = 9),
-     strip.background = element_blank()) +
-   xlab("") + #ylab("Daily cases") +
-   #            breaks = seq(as.Date(MIN_DATE_DISPLAYED), as.Date(timenow), by = INCUBATION_TIME))  + 
-   scale_x_date(labels = date_format("%b %d"),
-                expand = expand_scale(mult = c(0, 0.04)),
-                limits = c(MIN_DATE_DISPLAYED_US - 1, MAX_DATE_DISPLAYED_US + 1),
-                breaks = seq(as.Date(MIN_DATE_DISPLAYED_US), as.Date(MAX_DATE_DISPLAYED_US), by = INCUBATION_TIME)) +
-   scale_y_continuous(#limits = c(0, 180), 
-                      #breaks = c(50, 100, 150), 
-                      expand = expand_scale(mult = c(0, 0.05))))# + , limits = c(0, 600)
-
-# SAVE
-png(filename = paste0("~/Desktop/Taiwan_COVID_data/cases_byAge_US_", timenow, ".png"), width = 5.5, height = 3.2, units = 'in', res = 500)
-print(cases_byAge_US_PLOT)
-dev.off()
-
-
