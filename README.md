@@ -63,6 +63,10 @@ Some non-disjoint (i.e., overlapping) date ranges were reported in the period 4/
 2. 13 deaths per day for the period 4/21–4/27 (7 days, total of 91 deaths)
 3. 12 deaths per day for the period 4/29–4/30 (2 days, total of 24 deaths)
 
+Two days (8/20 and 8/21) were missing from reports; these were resolved as follows:
+
+1. 13 deaths per day for the period 8/20–8/21 (2 days, total of 26 deaths); this was determined as the average of the previous (8/13–8/19, 11 deaths per day) and following (8/22–8/28, 15 deaths per day) periods
+
 Note that because the reported averages are integer-round (e.g., 13 instead of 13.4), these estimates may not exactly match the true cumulative numbers.
 
 ## <a name="results-2023"></a>Results & Files
