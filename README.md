@@ -1,4 +1,4 @@
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/master/vaccination_by_age_time_lapse.gif?raw=true" title="Vaccination by age time lapse" alt="Vaccination by age time lapse" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/accination_by_age_time_lapse.gif?raw=true" title="Vaccination by age time lapse" alt="Vaccination by age time lapse" align="left" size="small">
 
 # Taiwan COVID-19 Data
 Analysis and visualization of Taiwan's COVID-19 data.
@@ -99,7 +99,7 @@ These charts depict the ongoing case numbers in Taiwan since an outbreak began i
 This repository collects the data shown each day and the analysis methods used. Specifically:
 
 * The `data` folder contains data displayed on each date
-* The `visualizations` folder contains visualizations by date
+* The `visualizations_2021` folder contains visualizations by date
 * The R script `Taiwan_COVID19_data.R` contains the code used to produce numerical results and visualizations
 
 I focus on a few key metrics, and make no attempt to be thorough. For example, I do not currently track deaths or *R*<sub>t</sub>, which are [metrics that lag far behind cases](https://www.nature.com/articles/d41586-020-02009-w/). My purpose is not to provide a complete picture, but rather clear ways of understanding the case counts as they are revised, and what they might tell us about the trajectory of the outbreak. All opinions are my own.
@@ -156,37 +156,37 @@ The visualizations below demonstrate the effect backlogging may be having on per
 
 Results below are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago. Based on the backlogging pattern observed thus far, we considered dates >9 days in the past relatively ‘locked in’ (unlikely to change substantially).
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/time_lapse_20210605.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/time_lapse_20210605.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_days_late_20210605.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/cases_by_days_late_20210605.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
 
 
 ### <a name="cases-2021"></a>Cases by Date Added
 
 Results below are instead depicted by **date added** (shade of orange) during backlogging. This is helpful because the original same-day values (blue bars, following the MOHW color scheme), a better metric of trend than the revised values, can be clearly seen.
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_by_date_added_20210605.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/cases_by_date_added_20210605.png?raw=true" title="Cases by date added" alt="Cases by date added" align="left" size="small">
 
 
 ### <a name="seven-2021"></a>Seven-Day Average of Total Reported
 
 Results below are shown as 7-day averages (red line) using non-backlogged TOTALS REPORTED each day (gray bars). Each day is the mean of itself and the previous 6 days. This provides a decent measure of trend when outstanding tests remain unfinished and the extent of possible revisions to previous dates is uncertain.
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/cases_reported_7dayWindow_20210605.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/cases_reported_7dayWindow_20210605.png?raw=true" title="Seven-Day Average of Total Reported" alt="Seven-Day Average of Total Reported" align="left" size="small">
 
 
 ### <a name="backlog-2021"></a>Backlog Time Distribution
 
 On the day shown (June 5, 2021) the backlog was ~10k tests. To that point, 24% of tests had been assigned to the previous day; 19% to the day before that; and so on. This allowed a projection of how the current backlog would be distributed (next section).
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/backlog_time_distribution_20210605.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/backlog_time_distribution_20210605.png?raw=true" title="Backlog Time Distribution" alt="Backlog Time Distribution" align="left" size="small">
 
 
 ### <a name="projected-2021"></a>Projected Totals After Revision
 
 For this date (June 5, 2021), 1.8% of recent targeted tests (likely cases) had been positive. Given this, a simple estimate was that 1.8% of the ~10k backlog would test positive and be distributed to previous dates in the same manner (distribution) observed up to that point in time. Based on this reasoning, Albert Lin 林書弘 and I made the projection below, which is an estimate of the final counts if the full current backlog were completed the next day. Conceptually, it simply takes the projected backlog numbers implied by the [backlog time distribution](#backlog) (above) and places it on top of the current revised counts.
 
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19-2021/blob/main/visualizations/projected_total_20210605.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/projected_total_20210605.png?raw=true" title="Projected Totals After Revision" alt="Projected Totals After Revision" align="left" size="small">
 
 
 ## <a name="notes-2021"></a>Notes and Clarifications 2021
@@ -201,7 +201,7 @@ Mitch (Ming-Hsueh) Lin 林明學 was critical for conceiving visualizations. Alb
 
 ## <a name="contact-2021"></a>Contact and troubleshooting
 
-If you have questions about the methods or results, please first thoroughly read the description and in-line comments relevant to the analysis of interest. If these do not answer your question, please click on the <a target="_blank" href="https://github.com/chasewnelson/Taiwan-COVID-19-2021/issues">Issues</a> tab at the top of this page and search to see if your question has already been answered; if not, please begin a new issue, so that others might benefit from the discussion.
+If you have questions about the methods or results, please first thoroughly read the description and in-line comments relevant to the analysis of interest. If these do not answer your question, please click on the <a target="_blank" href="https://github.com/chasewnelson/Taiwan-COVID-19/issues">Issues</a> tab at the top of this page and search to see if your question has already been answered; if not, please begin a new issue, so that others might benefit from the discussion.
 
 Other queries should be addressed to the author: 
 
