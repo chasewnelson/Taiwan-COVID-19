@@ -1,4 +1,4 @@
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/master/vaccination_by_age_time_lapse.mp4?raw=true" title="Vaccination by age time lapse" alt="Vaccination by age time lapse" align="left" size="small">
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/master/vaccination_by_age_time_lapse.gif?raw=true" title="Vaccination by age time lapse" alt="Vaccination by age time lapse" align="left" size="small">
 
 # Taiwan COVID-19 Data
 Analysis and visualization of Taiwan's COVID-19 data.
