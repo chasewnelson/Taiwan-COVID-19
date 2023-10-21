@@ -79,6 +79,8 @@ The following files are included in this repository:
 
 ***
 
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/cover.png?raw=true" title="Generic trendline" alt="Generic trendline" align="left" size="small">
+
 # <a name="data-2021"></a>Data for 2021
 Data, methods, and results of analyses tracking the 2021 COVID-19 outbreak in Taiwan.
 
