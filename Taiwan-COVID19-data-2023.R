@@ -18,7 +18,7 @@ font_import()
 
 # ------------------------------------------------------------------------------
 # CHANGE THIS TO THE REPOSITORY DIRECTORY ON YOUR MACHINE
-setwd("/Users/chasenelson/scripts_NGS/github_Taiwan-COVID-19/")
+setwd("/github_Taiwan-COVID-19/")  # <== PATH TO THIS REPOSITORY
 
 
 # ------------------------------------------------------------------------------
@@ -518,7 +518,7 @@ for (this_MAX_DATE in seq(as.Date(MIN_DATE_SHOWN) + 30, as.Date(MAX_DATE), by = 
                          # nudge_x = DAYS_TO_NUDGE,
                          direction = "y",
                          xlim = c(this_MAX_DATE + DAYS_TO_NUDGE, Inf),  # xlim = c(this_MAX_DATE + DAYS_TO_NUDGE * 4, Inf),
-                         hjust = 0, size = 3,  # 3.25,
+                         hjust = 0, size = 3.25,  # 3.25,
                          min.segment.length = 0.5,
                          segment.size = 0.2, segment.color = "lightgrey",  # segment.ncp = 5, segment.curvature = 0, segment.angle = 0,
                          box.padding = 0.25) +
