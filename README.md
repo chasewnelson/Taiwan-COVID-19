@@ -10,8 +10,8 @@ Analysis and visualization of Taiwan’s COVID-19 data
 
 **QUICK SUMMARY:** you can find the following two useful files in this repository:
 
-1. `Taiwan_CDC_data_2023.xlsx` - manual compilation of COVID-19 death data given by Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because many press release repeat the numbers for the previous week. There are some slight discrepancies in date ranges, likely typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>
-2. `owid-covid-data-fillTaiwan.csv` - a version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new)
+1. `Taiwan-COVID19-data-2023.xlsx` - manual compilation of COVID-19 death data from Chinese-language Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because press releases often repeat the numbers for the previous week. There are some slight discrepancies in date ranges, e.g., typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>.
+2. `owid-covid-data-Taiwan-only.csv` - a Taiwan-only version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new). Simply replace Taiwan’s rows at OWID with those provided in this file. (Note: rows for Taiwan have been added.)
 
 # <a name="data-2023"></a>Data for 2023
 
@@ -24,20 +24,23 @@ Analysis and visualization of Taiwan’s COVID-19 data
 
 ## <a name="description-2023"></a>Description
 
-Taiwan's COVID-19 situation has become increasingly difficult to ascertain in 2023, due to at least three factors:
+Taiwan's COVID-19 situation has become increasingly difficult to ascertain in 2023, due to several events:
 
-1. **Feb 22** - Taiwan CDC changed its methods of reporting, breaking data pipelines
-2. **Mar 8** - Our World in Data switched to the WHO database, which excludes Taiwan
-3. **Mar 17** - Taiwan CDC stopped reporting cumulative (total) numbers of cases and deaths
+1. **Feb 10:** JHU announces it will stop collecting COVID data
+2. **Feb 24:** Taiwan stops daily reporting
+3. **Feb 28:** OWID announces switch from JHU to WHO database
+4. **Mar 8:** OWID switches to WHO; Taiwan disappears
+5. **Mar 17:** Taiwan stops reporting cumulative deaths, etc.
+
 
 This update has two purposes:
 
 1. Estimate the cumulative number of COVID-19 deaths in Taiwan, using Taiwan CDC press releases for various time intervals
-2. Provide a version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and and death data from the Taiwan CDC (new)
+2. Provide a version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (accessible prior to Mar 8) and death data from the Taiwan CDC (new)
 
 ## <a name="data-sources-2023"></a>Data Sources
 
-Raw data were retrieved from the following sources:
+Data were retrieved from the following sources:
 
 1. **JHU** (Johns Hopkins University), accessed 2023/10/21
 
@@ -54,7 +57,7 @@ Raw data were retrieved from the following sources:
 
 ## <a name="methods-2023"></a>Methods
 
-Data were downloaded or manually recorded from the aforementioned sources. All statistical analyses were performed in R version 4.3.1 (2023-06-16) "Beagle Scouts" (<a target="_blank" href="https://www.R-project.org/">R Development Core Team</a>). Specifically, the R script `Taiwan_COVID_deaths_2023.R` was used to analyze data and produce visualizations. Note that the R script is meant to be run manually, line-by-line in an interactive program such as RStudio.
+Data were downloaded or manually recorded from the aforementioned sources. All statistical analyses were performed in R version 4.3.1 (2023-06-16) "Beagle Scouts" (<a target="_blank" href="https://www.R-project.org/">R Development Core Team</a>). Specifically, the R script `Taiwan-COVID19-data-2023.R` was used to analyze and join data and produce visualizations. Note that the R script is meant to be run interactively, line-by-line in RStudio.
 
 **Estimating numbers of deaths.** The Taiwan CDC provided cumulative (total) numbers of deaths until <a target="_blank" href="https://www.cdc.gov.tw/Bulletin/Detail/AsyuhuNb0uZMzoJxccOugA?typeid=9">March 16, 2023</a> (18,656 deaths). Since that time, it has not provided cumulative numbers to the public. Instead, ~weekly Chinese-language press releases report integer-rounded averages per day. For example, in an <a target="_blank" href="https://www.cdc.gov.tw/Bulletin/Detail/WcWHyfVbjF05aooxyeUsQw?typeid=9">October 17, 2023 press release</a>, it was reported that there were an average of 6 COVID-19 deaths per day over the period 10/10–10/16. Because this period is 7 days long, it can be estimated that there were a total of 7 * 6 = 42 total deaths over this time. This calculation was performed for every period since March 16, with the estimated number of new deaths added to the previous period's total. 
 
@@ -68,14 +71,14 @@ Two days (8/20 and 8/21) were missing from reports; these were resolved as follo
 
 1. 13 deaths per day for the period 8/20–8/21 (2 days, total of 26 deaths); this was determined as the average of the previous (8/13–8/19, 11 deaths per day) and following (8/22–8/28, 15 deaths per day) periods
 
-Note that because the reported averages are integer-round (e.g., 13 instead of 13.4), these estimates may not exactly match the true cumulative numbers.
+Note that because the reported averages are integer-rounded (e.g., 13 instead of 13.4) and cumulative numbers are sometimes subject to revision, these estimates may not exactly match the true cumulative numbers.
 
 ## <a name="results-2023"></a>Results & Files
 
 The following files are included in this repository:
 
-1. `Taiwan_CDC_data_2023.xlsx` - manual compilation of COVID-19 death data given by Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because many press release repeat the numbers for the previous week. There are some slight discrepancies in date ranges, likely typos.
-2. `owid-covid-data-fillTaiwan.csv` - a version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and and death data from the Taiwan CDC (new)
+1. `Taiwan-COVID19-data-2023.xlsx` - manual compilation of COVID-19 death data from Chinese-language Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because press releases often repeat the numbers for the previous week. There are some slight discrepancies in date ranges, e.g., typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>.
+2. `owid-covid-data-Taiwan-only.csv` - a Taiwan-only version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new). Simply replace Taiwan’s rows at OWID with those provided in this file. (Note: rows for Taiwan have been added.)
 
 
 ***
