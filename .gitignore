@@ -1,2 +1,5 @@
 time_lapse_frames/
 .DS_Store
+time_series_covid19_deaths_global.csv
+time_series_covid19_confirmed_global.csv
+owid-covid-data.csv
