@@ -8,7 +8,7 @@ Analysis and visualization of Taiwan’s COVID-19 data
 * [Acknowledgments](#acknowledgments-2021)
 * [Contact](#contact-2021)
 
-**TLDR:** you can find the following two useful files in this repository:
+**QUICK SUMMARY:** you can find the following two useful files in this repository:
 
 1. `Taiwan_CDC_data_2023.xlsx` - manual compilation of COVID-19 death data given by Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because many press release repeat the numbers for the previous week. There are some slight discrepancies in date ranges, likely typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>
 2. `owid-covid-data-fillTaiwan.csv` - a version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new)
@@ -39,15 +39,16 @@ This update has two purposes:
 
 Raw data were retrieved from the following sources:
 
-1. **JHU** (Johns Hopkins University)
+1. **JHU** (Johns Hopkins University), accessed 2023/10/21
 
 `https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv`
+`https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv`
 
-2. **OWID** (Our World in Data)
+2. **OWID** (Our World in Data), accessed 2023/10/21
 
 `https://covid.ourworldindata.org/data/owid-covid-data.csv`
 
-3. **TWCDC** (Taiwan CDC)
+3. **TWCDC** (Taiwan CDC), assembled 2023/10/21
 
 `https://www.cdc.gov.tw/`
 
