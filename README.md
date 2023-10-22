@@ -1,7 +1,7 @@
 <img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/cover.png?raw=true" title="Generic trendline" alt="Generic trendline" align="left" size="small">
 
 # Taiwan COVID-19 Data
-Analysis and visualization of Taiwan's COVID-19 data.
+Analysis and visualization of Taiwan’s COVID-19 data
 
 * [Data for 2023](#data-2023)
 * [Data for 2021](#data-2021)
@@ -10,7 +10,7 @@ Analysis and visualization of Taiwan's COVID-19 data.
 
 **TLDR:** you can find the following two useful files in this repository:
 
-1. `Taiwan_CDC_data_2023.xlsx` - manual compilation of COVID-19 death data given by Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because many press release repeat the numbers for the previous week. There are some slight discrepancies in date ranges, likely typos.
+1. `Taiwan_CDC_data_2023.xlsx` - manual compilation of COVID-19 death data given by Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because many press release repeat the numbers for the previous week. There are some slight discrepancies in date ranges, likely typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>
 2. `owid-covid-data-fillTaiwan.csv` - a version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new)
 
 # <a name="data-2023"></a>Data for 2023
