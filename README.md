@@ -80,6 +80,11 @@ The following files are included in this repository:
 1. `Taiwan-COVID19-data-2023.xlsx` - manual compilation of COVID-19 death data from Chinese-language Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because press releases often repeat the numbers for the previous week. There are some slight discrepancies in date ranges, e.g., typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>.
 2. `owid-covid-data-Taiwan-only.csv` - a Taiwan-only version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new). Simply replace Taiwan’s rows at OWID with those provided in this file. (Note: rows for Taiwan have been added.)
 
+Current results for various countries that continue to report are shown as of 2023-10-18 in OWID style below.
+
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/cumulative_deaths.png?raw=true" title="Cumulative deaths as of 2023-10-18" alt="Cumulative deaths as of 2023-10-18" align="left" size="small">
+
+Time lapse and static versions of this comparison can be found in the files `cumulative_deaths.png` and `cumulative_deaths_time_lapse.mp4`.
 
 ***
 
