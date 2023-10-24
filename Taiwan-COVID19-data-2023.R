@@ -104,6 +104,8 @@ JHU_data_LONG_Taiwan  # 1,143 × 7 QED
 # INPUT DATA from Our World in Data (OWID)
 
 # source: https://covid.ourworldindata.org/data/owid-covid-data.csv
+# source2: https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv
+# wget https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv
 
 OWID_data <- read_csv("owid-covid-data.csv")
 OWID_data
@@ -154,7 +156,7 @@ OWID_data_Taiwan
 
 TWCDC_data <- read_csv("Taiwan-COVID19-data-2023.csv")
 TWCDC_data
-# 36 × 24
+# 36 × 24 on 20231021
 
 # retain only columns withn exact names/correspondences in the OWID data
 col_to_keep <- c(
@@ -312,6 +314,7 @@ for (this_date in seq(as.Date('2023-03-16'), max(OWID_data_Taiwan$date), by = "d
    OWID_data_Taiwan[OWID_data_Taiwan$date == this_date, ]$population <- max(OWID_data_Taiwan$population, na.rm = TRUE)
 }
 
+(OWID_data_Taiwan <- arrange(OWID_data_Taiwan, date))
 view(OWID_data_Taiwan)
 
 # -----
@@ -349,6 +352,16 @@ OWID_data_Taiwan_added
 
 # SAVE
 # write_csv(OWID_data_Taiwan_added, "owid-covid-data-Taiwan-added.csv")
+
+
+# ------------------------------------------------------------------------------
+# DOUBLE CHECK VALUES
+
+# equality
+identical(
+   dplyr::select(filter(OWID_data_Taiwan_added, location == 'Taiwan', date %in% filter(OWID_data, location == 'Taiwan')$date), -total_deaths, -new_deaths, -total_cases, -new_cases, -total_deaths_per_million, -total_cases_per_million),
+   dplyr::select(filter(OWID_data, location == 'Taiwan', date %in% OWID_data_Taiwan_added$date), -total_deaths, -new_deaths, -total_cases, -new_cases, -total_deaths_per_million, -total_cases_per_million))
+# TRUE
 
 
 # ------------------------------------------------------------------------------
@@ -635,6 +648,7 @@ for (i in 1:num_additional_frames) {
 # SAVE latest image static
 # png(filename = paste0("cumulative_deaths_", str_replace_all(this_MAX_DATE, '-', ''), ".png"), width = 5.5, height = (9/16) * 5.5, units = 'in', res = 500)
 png(filename = "cumulative_deaths.png", width = 5.5, height = (9/16) * 5.5, units = 'in', res = 500)
+# png(filename = "cumulative_deaths_SMALL.png", width = 5.5, height = (9/16) * 5.5, units = 'in', res = 250)
 print(total_deaths_time_PLOT)
 dev.off()
 
@@ -650,36 +664,53 @@ dev.off()
 
 # ------------------------------------------------------------------------------
 # Taiwan's current number
-filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths  # 22659
-filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths_per_million  # 948.3374
+filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths  # 22659 | 22661
+filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths_per_million  # 948.3374 | 948.4211
 
 
-# ----------
-# Compare China and Taiwan
-# view(arrange(filter(OWID_data_Taiwan_added, location %in% c('China', 'Taiwan')), date))
-# view(arrange(filter(OWID_data_Taiwan_added, location %in% c('Taiwan')), date))
+# # ----------
+# # Compare China and Taiwan
+# # view(arrange(filter(OWID_data_Taiwan_added, location %in% c('China', 'Taiwan')), date))
+# # view(arrange(filter(OWID_data_Taiwan_added, location %in% c('Taiwan')), date))
+# 
+# # create side-by-side table
+# 
+# # CHN
+# CHN_for_comparison <- dplyr::select(filter(OWID_data_Taiwan_added, location == 'China', date > as.Date('2023-01-01')),
+#                                     date, total_cases, new_cases, total_deaths, new_deaths, population)
+# names(CHN_for_comparison) <- c('date', paste0(setdiff(names(CHN_for_comparison), 'date'), '_CHN'))
+# CHN_for_comparison  # 290 × 6
+# 
+# # TWN
+# TWN_for_comparison <- dplyr::select(filter(OWID_data_Taiwan_added, location == 'Taiwan', date > as.Date('2023-01-01')),
+#                                     date, total_cases, new_cases, total_deaths, new_deaths, population)
+# names(TWN_for_comparison) <- c('date', paste0(setdiff(names(TWN_for_comparison), 'date'), '_TWN'))
+# TWN_for_comparison  # 292 × 6
+# 
+# # join
+# all(TWN_for_comparison$date %in% CHN_for_comparison$date)  # FALSE
+# all(CHN_for_comparison$date %in% TWN_for_comparison$date)  # TRUE <== TWN left side
+# (TWN_CHN_comparison <- left_join(TWN_for_comparison,
+#                                  CHN_for_comparison,
+#                                  by = 'date'))
+# 
+# # SAVE
+# # write_csv(TWN_CHN_comparison, "TWN_CHN_comparison_2023.csv")
 
-# create side-by-side table
 
-# CHN
-CHN_for_comparison <- dplyr::select(filter(OWID_data_Taiwan_added, location == 'China', date > as.Date('2023-01-01')),
-                                    date, total_cases, new_cases, total_deaths, new_deaths, population)
-names(CHN_for_comparison) <- c('date', paste0(setdiff(names(CHN_for_comparison), 'date'), '_CHN'))
-CHN_for_comparison  # 290 × 6
-
-# TWN
-TWN_for_comparison <- dplyr::select(filter(OWID_data_Taiwan_added, location == 'Taiwan', date > as.Date('2023-01-01')),
-                                    date, total_cases, new_cases, total_deaths, new_deaths, population)
-names(TWN_for_comparison) <- c('date', paste0(setdiff(names(TWN_for_comparison), 'date'), '_TWN'))
-TWN_for_comparison  # 292 × 6
-
-# join
-all(TWN_for_comparison$date %in% CHN_for_comparison$date)  # FALSE
-all(CHN_for_comparison$date %in% TWN_for_comparison$date)  # TRUE <== TWN left side
-(TWN_CHN_comparison <- left_join(TWN_for_comparison,
-                                 CHN_for_comparison,
-                                 by = 'date'))
-
-# SAVE
-# write_csv(TWN_CHN_comparison, "TWN_CHN_comparison_2023.csv")
+# # ------------------------------------------------------------------------------
+# # POPULATION SIZES
+# (OWID_pop_sizes <- OWID_data_Taiwan_added |>
+#    group_by(location) |>
+#    summarise(
+#       min_pop_size = min(population, na.rm = TRUE),
+#       max_pop_size = max(population, na.rm = TRUE),
+#    ) |>
+#     arrange(min_pop_size))
+# 
+# # write_tsv(OWID_pop_sizes, "OWID_pop_sizes.tsv")
+# 
+# pop_size_ecdf <- ecdf(OWID_pop_sizes$max_pop_size)
+# (TWN_pop_size_percentile <- pop_size_ecdf(OWID_pop_sizes[OWID_pop_sizes$location == 'Taiwan',]$max_pop_size))
+# # 0.7294118
 
