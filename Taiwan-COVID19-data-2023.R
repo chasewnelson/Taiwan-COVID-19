@@ -3,7 +3,8 @@
 # ------------------------------------------------------------------------------
 
 # Author: Chase W. Nelson, cnelson AT amnh DOT org
-# Date created: 2023/10/21
+# Date created: 2023-10-21
+# Last date modified: 2023-11-01
 
 # Import libraries
 library(tidyverse)
@@ -112,7 +113,7 @@ OWID_data
 # 350,019 × 67 on 20231021
 
 # NON-TAIWAN ROWS
-(non_TW_row_count <- nrow(filter(OWID_data, location != 'Taiwan')))  # 348671
+(non_TW_row_count <- nrow(filter(OWID_data, location != 'Taiwan')))  # 348671 on 20231021
 
 # ----------
 # Filter to Taiwan
@@ -531,7 +532,7 @@ for (this_MAX_DATE in seq(as.Date(MIN_DATE_SHOWN) + 30, as.Date(MAX_DATE), by = 
                          # nudge_x = DAYS_TO_NUDGE,
                          direction = "y",
                          xlim = c(this_MAX_DATE + DAYS_TO_NUDGE, Inf),  # xlim = c(this_MAX_DATE + DAYS_TO_NUDGE * 4, Inf),
-                         hjust = 0, size = 3.25,  # 3.25,
+                         hjust = 0, size = 3.4,  # 3.25,
                          min.segment.length = 0.5,
                          segment.size = 0.2, segment.color = "lightgrey",  # segment.ncp = 5, segment.curvature = 0, segment.angle = 0,
                          box.padding = 0.25) +
@@ -583,10 +584,10 @@ for (this_MAX_DATE in seq(as.Date(MIN_DATE_SHOWN) + 30, as.Date(MAX_DATE), by = 
          plot.margin = unit(x = c(0.75, 0.25, 0.5, 0.5), units = "line"),
          legend.position = 'none',
          # legend.title = element_blank(),
-         plot.title = element_text(size = 13.5, color = brewer.pal(9, "Greys")[9], family = "Georgia",  # "EB Garamond" face = "bold", 
+         plot.title = element_text(size = 12, color = brewer.pal(9, "Greys")[9], family = "Arial", face = "bold",  # "Georgia"=owid "EB Garamond" face = "bold", 
                                    margin = unit(x = c(0, 0, 0, 0), units = "line")), #, size = 12),hjust = 0.5, 
          plot.subtitle = element_text(size = 6, color = brewer.pal(9, "Greys")[6], family = 'Arial', margin = unit(c(0.5, 0, 1, 0), units = "line")), #, size = 10), hjust = 0.5, 
-         plot.caption = element_markdown(size = 6, color = brewer.pal(9, "Greys")[4], family = 'Arial'),  # element_text(color = brewer.pal(9, "Greys")[4], size = 6),
+         plot.caption = element_markdown(size = 5.5, color = brewer.pal(9, "Greys")[4], family = 'Arial'),  # element_text(color = brewer.pal(9, "Greys")[4], size = 6),
          #axis.text.x = element_text(size = 7),
          # axis.text.x = element_blank(),
          axis.text.x = element_text(colour = brewer.pal(9, "Greys")[6], size = 7),
@@ -648,7 +649,7 @@ for (i in 1:num_additional_frames) {
 # SAVE latest image static
 # png(filename = paste0("cumulative_deaths_", str_replace_all(this_MAX_DATE, '-', ''), ".png"), width = 5.5, height = (9/16) * 5.5, units = 'in', res = 500)
 png(filename = "cumulative_deaths.png", width = 5.5, height = (9/16) * 5.5, units = 'in', res = 500)
-# png(filename = "cumulative_deaths_SMALL.png", width = 5.5, height = (9/16) * 5.5, units = 'in', res = 250)
+png(filename = "cumulative_deaths_SMALL.png", width = 5.5, height = (9/16) * 5.5, units = 'in', res = 250)
 print(total_deaths_time_PLOT)
 dev.off()
 
@@ -664,9 +665,11 @@ dev.off()
 
 # ------------------------------------------------------------------------------
 # Taiwan's current number
-filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths  # 22659 | 22661
-filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths_per_million  # 948.3374 | 948.4211
+filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths  # 22659 | 22661 | 22690
+max(filter(OWID_data_Taiwan_added, location == 'Taiwan')$total_deaths, na.rm = TRUE)  # 22659 | 22661 | 22725
 
+filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths_per_million  # 948.3374 | 948.4211 | 949.6348
+max(filter(OWID_data_Taiwan_added, location == 'Taiwan')$total_deaths_per_million, na.rm = TRUE)  # 948.3374 | 948.4211 | 951.0996
 
 # # ----------
 # # Compare China and Taiwan

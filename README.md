@@ -13,6 +13,13 @@ Analysis and visualization of Taiwan’s COVID-19 data
 1. `Taiwan-COVID19-data-2023.xlsx` - manual compilation of COVID-19 death data from Chinese-language Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because press releases often repeat the numbers for the previous week. There are some slight discrepancies in date ranges, e.g., typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>.
 2. `owid-covid-data-Taiwan-only.csv` - a Taiwan-only version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new). Simply replace Taiwan’s rows at OWID with those provided in this file. (Note: rows for Taiwan have been added.)
 
+**LATEST UPDATE:** 2023-11-01
+
+* **Weekly** COVID-19 deaths for the week 2023-10-24 to 2023-10-30: **35 deaths**
+* **Cumulative** total COVID-19 deaths: **22,725 deaths (951.1 per million people)**
+
+<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/cumulative_deaths.png?raw=true" title="Cumulative deaths as of 2023-10-23" alt="Cumulative deaths as of 2023-10-23" align="left" size="small">
+
 # <a name="data-2023"></a>Data for 2023
 
 ## <a name="contents-2023"></a>Contents
@@ -172,8 +179,6 @@ The visualizations below demonstrate the effect backlogging may be having on per
 Results below are depicted by **days late** (shade of red). Late additions to previous days (backlogging) can create the illusion of a downward trend, because recent days will be disproportionately underestimated, having had fewer chances (days) to 'score points' from backlogging. Put another way, many more tests are 1-day-late than 10-days-late. Thus, these lighter bar portions grow larger closer to the present (right) because they are predicted to be less complete: future revisions should change today’s total a lot more than totals from a week ago. Based on the backlogging pattern observed thus far, we considered dates >9 days in the past relatively ‘locked in’ (unlikely to change substantially).
 
 <img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/time_lapse_20210605.gif?raw=true" title="Time-lapse of Cases" alt="Time-lapse of Cases" align="left" size="small">
-
-<img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/visualizations_2021/cases_by_days_late_20210605.png?raw=true" title="Cases by days late" alt="Cases by days late" align="left" size="small">
 
 
 ### <a name="cases-2021"></a>Cases by Date Added
