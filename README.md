@@ -13,10 +13,10 @@ Analysis and visualization of Taiwan’s COVID-19 data
 1. `Taiwan-COVID19-data-2023.xlsx` - manual compilation of COVID-19 death data from Chinese-language Taiwan CDC press releases, along with URL sources. Note that many dates have two sources because press releases often repeat the numbers for the previous week. There are some slight discrepancies in date ranges, e.g., typos. Also available as a <a target="_blank" href="https://docs.google.com/spreadsheets/d/1TwjSULsSgCfXSxsyhMbkrYSgGk_68MeMRA54M7abRxU/edit?usp=sharing">Google Sheet</a>.
 2. `owid-covid-data-Taiwan-only.csv` - a Taiwan-only version of the ***Our World in Data* COVID-19 dataset** that includes Taiwan's data from Johns Hopkins University (previously accessible) and death data from the Taiwan CDC (new). Simply replace Taiwan’s rows at OWID with those provided in this file. (Note: rows for Taiwan have been added.)
 
-**LATEST UPDATE:** 2023-11-01
+**LATEST COVID-19 UPDATE:** 2023-10-31
 
-* **Weekly** COVID-19 deaths for the week 2023-10-24 to 2023-10-30: **35 deaths**
-* **Cumulative** total COVID-19 deaths: **22,725 deaths (951.1 per million people)**
+* Period of Oct 24–30: **35 deaths** 
+* Cumulative deaths: **22,725 deaths (951.1 per million people)**
 
 <img src="https://github.com/chasewnelson/Taiwan-COVID-19/blob/main/cumulative_deaths.png?raw=true" title="Cumulative deaths as of 2023-10-23" alt="Cumulative deaths as of 2023-10-23" align="left" size="small">
 
