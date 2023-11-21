@@ -4,7 +4,7 @@
 
 # Author: Chase W. Nelson, cnelson AT amnh DOT org
 # Date created: 2023-10-21
-# Last date modified: 2023-11-01
+# Last date modified: 2023-11-21
 
 # Import libraries
 library(tidyverse)
@@ -12,14 +12,14 @@ library(scales)
 library(RColorBrewer)
 library(ggrepel)
 library(ggtext)
-library(extrafont)
-font_import()
+# library(extrafont)
+# font_import()
 # sort(fonts())
 
 
 # ------------------------------------------------------------------------------
 # CHANGE THIS TO THE REPOSITORY DIRECTORY ON YOUR MACHINE
-setwd("/github_Taiwan-COVID-19/")  # <== PATH TO THIS REPOSITORY
+# setwd("/github_Taiwan-COVID-19/")  # <== PATH TO THIS REPOSITORY
 
 
 # ------------------------------------------------------------------------------
@@ -649,6 +649,10 @@ for (i in 1:num_additional_frames) {
 # SAVE latest image static
 # png(filename = paste0("cumulative_deaths_", str_replace_all(this_MAX_DATE, '-', ''), ".png"), width = 5.5, height = (9/16) * 5.5, units = 'in', res = 500)
 png(filename = "cumulative_deaths.png", width = 5.5, height = (9/16) * 5.5, units = 'in', res = 500)
+print(total_deaths_time_PLOT)
+dev.off()
+
+# smaller file
 png(filename = "cumulative_deaths_SMALL.png", width = 5.5, height = (9/16) * 5.5, units = 'in', res = 250)
 print(total_deaths_time_PLOT)
 dev.off()
