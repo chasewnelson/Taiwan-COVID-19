@@ -413,11 +413,15 @@ OWID_colors_n8 <- c('#18470F', '#286BBB', '#BE5915', '#2C8465', '#C15065', '#6D3
    # c('#CF0A66', '#18470F', '#2C8465', '#BE5915', 
    #                  '#C15065', '#6D3E91', '#286BBB', '#883039')
 
-# view(filter(OWID_data_Taiwan_added, location %in% LOCATIONS_SHOWN, ! is.na(total_cases_per_million)) %>%
-#    group_by(date) %>%
-#    summarise(
-#       num_non_na = sum(! is.na(total_deaths_per_million))
-#    ))
+OWID_data_Taiwan_added |> 
+   filter(location == "South Korea") |> 
+   view()
+
+view(filter(OWID_data_Taiwan_added, location %in% LOCATIONS_SHOWN, ! is.na(total_cases_per_million)) %>%
+   group_by(date) %>%
+   summarise(
+      num_non_na = sum(! is.na(total_deaths_per_million))
+   ))
 
 (MAX_DATE <- OWID_data_Taiwan_added %>%
    filter(location %in% LOCATIONS_SHOWN) %>% 
@@ -664,16 +668,17 @@ dev.off()
 # # for filename in $(ls *.png); do echo "file '$filename'"; done > images.txt
 # # echo "file $(ls *.png | tail -n 1)" > last_image.txt
 
+# cd time_lapse_frames
 # ffmpeg -framerate 66 -i image_%03d.png -c:v libx264 -pix_fmt yuv420p cumulative_deaths_time_lapse.mp4
 
 
 # ------------------------------------------------------------------------------
 # Taiwan's current number
-filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths  # 22659 | 22661 | 22690
-max(filter(OWID_data_Taiwan_added, location == 'Taiwan')$total_deaths, na.rm = TRUE)  # 22659 | 22661 | 22725
+filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths  # 22659 | 22661 | 22690 | 22782
+max(filter(OWID_data_Taiwan_added, location == 'Taiwan')$total_deaths, na.rm = TRUE)  # 22659 | 22661 | 22725 | 22806
 
-filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths_per_million  # 948.3374 | 948.4211 | 949.6348
-max(filter(OWID_data_Taiwan_added, location == 'Taiwan')$total_deaths_per_million, na.rm = TRUE)  # 948.3374 | 948.4211 | 951.0996
+filter(OWID_data_Taiwan_added, location == 'Taiwan', date == MAX_DATE)$total_deaths_per_million  # 948.3374 | 948.4211 | 949.6348 | 953.4852
+max(filter(OWID_data_Taiwan_added, location == 'Taiwan')$total_deaths_per_million, na.rm = TRUE)  # 948.3374 | 948.4211 | 951.0996 | 954.4897
 
 # # ----------
 # # Compare China and Taiwan
